@@ -1,0 +1,64 @@
+<form class="ltebiddetails" id="lte-bid-details" [formGroup]="ltebiddetails">
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Date" formControlName="date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="RefNo" formControlName="refNo">
+  </mat-form-field>
+  <div formGroupName="proposalDetails" class="row">
+    <mat-form-field class="col-12">
+      <input matInput placeholder="Proposal Ref No" formControlName="proposalRefNo">
+    </mat-form-field>
+    <mat-form-field class="col-5">
+        <input matInput [matDatepicker]="picker1" placeholder="Proposal Date"  formControlName="proposalDate">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="col-5">
+        <input matInput [matDatepicker]="picker2" placeholder="Proposal Recieved Date" formControlName="proposalRecievedDate">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div formGroupName="amountDetails" class="row">
+      <mat-form-field class="col-4">
+        <input matInput placeholder="Estimated Amount" formContorlName="estimatedAmount">
+      </mat-form-field>
+      <mat-form-field class="col-4">
+        <input matInput placeholder="EMD Amount" formControlName="emdAmount">
+      </mat-form-field>
+      <div>
+          <label id="emdwaived">EMD Waived Off</label>
+          <mat-radio-group
+            aria-labelledby="emdwaived" class="row" formControlName="emdwaivedstatus">
+            <mat-radio-button class="col-6"  [value]="true">
+              YES
+            </mat-radio-button>
+            <mat-radio-button class="col-6"  [value]="false">
+                NO
+            </mat-radio-button>
+          </mat-radio-group>
+      </div>
+  </div>
+  <div formArrayName="listOfParties">
+    <div class="row">
+        <h4 class="col-6">List Of Parties</h4>
+
+    </div>
+
+    <div *ngFor="let party of listOfParties.controls;let i = index">
+      <div [formGroupName]="i">
+        <mat-form-field>
+          <input matInput placeholder="Party Name" formControlName="partyName">
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput placeholder="Address" formControlName="Address"></textarea>
+        </mat-form-field>
+        <button *ngIf="i == listOfParties.controls.length-1" (click)="addListOfParty()">ADD</button>
+      </div>
+    </div>
+
+  </div>
+</form>

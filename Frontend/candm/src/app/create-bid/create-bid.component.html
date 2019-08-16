@@ -1,0 +1,44 @@
+<div id ="createbidform">
+    <mat-accordion class="create-bid-form" >
+        <mat-expansion-panel [expanded]="step === 0" (opened) = "setStep(0)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Bid Details
+            </mat-panel-title>
+            <mat-panel-description>
+              General Bid Details
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <form class="generalbiddetails" id="general-bid-details" [formGroup]="generalbiddetails">
+              <mat-form-field>
+                <input matInput formControlName="indentNumber" type="number" required placeholder="Indent Number">
+              </mat-form-field>
+              <mat-form-field>
+                <textarea matInput formControlName="bidSubject" required placeholder="Bid-Subject"></textarea>
+              </mat-form-field>
+              <label id="bid-type">Select type of Bid</label>
+              <mat-radio-group
+                aria-labelledby="bid-type" class="row" formControlName="typeofbid" required [(ngModel)]="typeofBid">
+                <mat-radio-button class="bidtype col-6" *ngFor="let bidtype of bidtypes" [value]="bidtype">
+                  {{bidtype}}
+                </mat-radio-button>
+              </mat-radio-group>
+          </form>
+          <mat-action-row>
+              <button mat-button  color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+        <mat-expansion-panel [expanded]="step === 1" (opened) = "setStep(1)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{typeofBid}} Specific Header
+            </mat-panel-title>
+            <mat-panel-description>
+              Specific Panel Details
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <app-lteform *ngIf="typeofBid === bidtypes[0]"></app-lteform>
+          <app-otform *ngIf="typeofBid === bidtypes[1]"></app-otform>
+        </mat-expansion-panel>
+      </mat-accordion>
+</div>

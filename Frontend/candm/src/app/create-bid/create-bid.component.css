@@ -1,0 +1,18 @@
+#createbidform {
+  background-color: bisque;
+  padding:15px;
+  width: 100%;
+  margin-top: 15px;
+}
+
+mat-form-field{
+  width: 100%;
+}
+
+#bid-type{
+  width: 100%;
+}
+.bidtype{
+  margin-right: 5px;
+
+}
