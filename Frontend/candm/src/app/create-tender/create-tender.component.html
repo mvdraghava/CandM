@@ -1,0 +1,22 @@
+<div class="container" fxFlex fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px">
+  <div *ngFor="let tender of tendermodes"
+  fxFlex="25"
+  fxFlex.md="33"
+  fxFlex.sm="50"
+  fxFlex.xs="100"
+  fxLayout="column"
+  style="padding: 5px;"
+  >
+  <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{tender}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          <a mat-button routerLink="/create-{{tender}}">Create {{tender}} Tender</a>
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

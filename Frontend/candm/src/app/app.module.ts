@@ -19,9 +19,21 @@ import {MatInputModule} from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatCardModule} from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LteformComponent } from './lteform/lteform.component';
 import { OtformComponent } from './otform/otform.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
+import { CreateTenderComponent } from './create-tender/create-tender.component';
+import { CreateLteComponent } from './create-lte/create-lte.component';
+import { CreateOtComponent } from './create-ot/create-ot.component';
+import { CreateLteEprocComponent } from './create-lte-eproc/create-lte-eproc.component';
+import { CreateAmmendmentComponent } from './create-ammendment/create-ammendment.component';
+import { CreateSqComponent } from './create-sq/create-sq.component';
+import { CreateStComponent } from './create-st/create-st.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +46,14 @@ import { OtformComponent } from './otform/otform.component';
     CloseBidsComponent,
     ReportComponent,
     LteformComponent,
-    OtformComponent
+    OtformComponent,
+    CreateTenderComponent,
+    CreateLteComponent,
+    CreateOtComponent,
+    CreateLteEprocComponent,
+    CreateAmmendmentComponent,
+    CreateSqComponent,
+    CreateStComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +67,11 @@ import { OtformComponent } from './otform/otform.component';
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCardModule,
+    MatToolbarModule,
+    HttpClientModule,
+    MatSidenavModule,
+    FlexLayoutModule,
     RouterModule.forRoot([
       { path: '', component: DashboardComponent },
       { path: 'dashboard', component: DashboardComponent},
@@ -55,6 +79,13 @@ import { OtformComponent } from './otform/otform.component';
       { path: 'close-bids', component: CloseBidsComponent},
       { path: 'create-bid', component: CreateBidComponent},
       { path: 'report', component: ReportComponent},
+      { path: 'create-tender', component: CreateTenderComponent},
+      { path: 'create-LTE', component: CreateLteComponent},
+      { path: 'create-OpenTender', component: CreateOtComponent},
+      { path: 'create-LTE_Eprocurement', component: CreateLteEprocComponent},
+      { path: 'create-Ammendment', component: CreateAmmendmentComponent},
+      { path: 'create-SpotQuotation', component: CreateSqComponent},
+      { path: 'create-SingleTender', component: CreateStComponent},
     ])
   ],
   providers: [],

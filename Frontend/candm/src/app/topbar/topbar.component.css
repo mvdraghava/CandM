@@ -4,4 +4,8 @@
   border-radius: 15px;
 }
 
+.container {
+  width: 80%;
+  margin: 10px auto;
+}
 

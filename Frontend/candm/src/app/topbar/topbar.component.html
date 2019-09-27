@@ -1,11 +1,32 @@
-<div class="container" id="topbar">
-  <div class="row">
-    <div class="col-10 col-sm-9 col-md-9 col-lg-9 col-xl-9">
-      <h3>Contracts & Materials</h3>
-      <app-navbar></app-navbar>
-    </div>
-    <div class="col-2 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-      <h2>POSOCO LOGO</h2>
-    </div>
+<mat-toolbar color="primary">
+  <span>Contracts & Materials</span> <span class="example-spacer"></span>
+  <div fxFlex fxShow="”true”" fxHide.lt-md="”true”">
+    <a mat-button  [routerLink]="['/dashboard']">Dashboard</a>
+    <a mat-button  [routerLink]="['/create-bid']">Create Bids</a>
+    <a mat-button  [routerLink]="['/open-bids']">Open Bids</a>
+    <a mat-button  [routerLink]="['/close-bids']">Closed Bids</a>
+    <a mat-button  [routerLink]="['/report']">Report</a>
+    <a mat-button  [routerLink]="['/create-tender']">Create Tender</a>
   </div>
-</div>
+  <div fxShow="true" fxHide.gt-sm="true">
+    <a href="#" (click)="sidenav.toggle()">Show Side Menu</a>
+  </div>
+</mat-toolbar>
+
+<mat-sidenav-container fxFlexFill class="example-container">
+  <mat-sidenav  #sidenav fxLayout="column" mode="side" opened="false">
+    <div fxLayout="column">
+      <a mat-button  [routerLink]="['/dashboard']">Dashboard</a>
+      <a mat-button  [routerLink]="['/create-bid']">Create Bids</a>
+      <a mat-button  [routerLink]="['/open-bids']">Open Bids</a>
+      <a mat-button  [routerLink]="['/close-bids']">Closed Bids</a>
+      <a mat-button  [routerLink]="['/report']">Report</a>
+      <a mat-button  [routerLink]="['/create-tender']">Create Tender</a>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content >
+    <div class="container" >
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
