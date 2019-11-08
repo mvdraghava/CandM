@@ -10,7 +10,7 @@ from datetime import datetime
 from django.views.static import serve
 
 import json
-from .models import  OpenTender,Bid,OpenTender,EprocTender,Proposal,proposalNoteSheet
+from .models import  OpenTender,Bid,OpenTender,EprocTender,Proposal,OtProposalNoteSheet,BidStatus
 from .functions_need import send_file_docx, amount2words
 from django.forms.models import model_to_dict
 
@@ -23,33 +23,31 @@ def getDate(datestr):
    # return JsonResponse({'indentNumber': increment_indent_number()})
 
 
-def create_ot_notesheet(indentNo):
-    ot_obj = OpenTender.objects.get(indentNo = indentNo)
-    ot_obj = model_to_dict( ot_obj )
+def create_ot_notesheet(data):
     context = {
         'ref_no': '',
-        'note_dt': datetime.strftime(ot_obj['noteDate'],"%d.%m.%Y"),
-        'subject': ot_obj['tenderSubject'],
-        'proposal_ref_no': ot_obj['proposalRefNo'],
-        'proposal_date': datetime.strftime(ot_obj['proposalDate'],"%d.%m.%Y"),
-        'proposal_recieved_date': datetime.strftime(ot_obj['proposalRecievedDate'],"%d.%m.%Y"),
-        'est_cost': str(int(ot_obj['estCost'])),
+        'note_dt': datetime.strftime(getDate(data['noteDetails']['noteDate']),"%d.%m.%Y"),
+        'subject': data['tenderDetails']['tenderSubject'],
+        'proposal_ref_no': data['proposalDetails']['proposalRefNo'],
+        'proposal_date': datetime.strftime(getDate(data['proposalDetails']['proposalDate']),"%d.%m.%Y"),
+        'proposal_recieved_date': datetime.strftime(getDate(data['proposalDetails']['proposalRecievedDate']),"%d.%m.%Y"),
+        'est_cost': str(int(data['amountDetails']['estCost'])),
         'est_cost_words': '',
         'emd_price': '',
         'emd_price_words': '',
         'doc_price': '',
         'doc_price_words': '',
         'paper_adv_clause': '',
-        'intend_dpt': ot_obj['indentDept'],
-        'engineer_incharge': ot_obj['engineerIncharge'],
-        'tender_cat': ot_obj['tenderCategory'],
-        'product_cat': ot_obj['productCategory'],
+        'intend_dpt': data['proposalDetails']['indentDept'],
+        'engineer_incharge': data['proposalDetails']['engineerIncharge'],
+        'tender_cat': data['tenderDetails']['tenderCategory'],
+        'product_cat': data['tenderDetails']['productCategory'],
         'bid_open_days': '21',
-        'note_by': ot_obj['noteBy'],
-        'note_by_designation': ot_obj['notebyDesg']
+        'note_by': data['noteDetails']['noteBy'],
+        'note_by_designation': data['noteDetails']['notebyDesg']
     }
-    indent_no = str(ot_obj["indentNo"])
-    context['ref_no'] = "SRLDC/CnM/ET-"+str(ot_obj['etNo'])+"/I-"+str(ot_obj['indentNo'])+"/2019-20"
+    indent_no = str(data['tenderDetails']['indentNo'])
+    context['ref_no'] = "SRLDC/CnM/ET-"+str(data['tenderDetails']['etNo'])+"/I-"+str(data['tenderDetails']['indentNo'])+"/2019-20"
     est_cost = int(context['est_cost'])
     context['est_cost_words'] = amount2words(est_cost)
     doc_price = 0
@@ -83,32 +81,72 @@ def create_ot_notesheet(indentNo):
     doc.save(filename+".docx")
     return filename+".docx"
 
-def create_bid(data,tenderType):
 
-
+def changeStatus(bid,status):
+    bids  =  BidStatus(
+        bid = bid,
+        bid_status = status
+    )
+    bids.save()
 
 def create_ot(request):
     data = json.loads(request.body.decode('utf-8'))
-    ot = OpenTender(
-        indentNo = data['tenderDetails']['indentNo'],
-        tenderSubject = data['tenderDetails']['tenderSubject'],
-        etNo = data['tenderDetails']['etNo'],
-        tenderCategory = data['tenderDetails']['tenderCategory'],
-        productCategory = data['tenderDetails']['productCategory'],
+    bid = Bid(
+        indent_number = data['tenderDetails']['indentNo'],
+        bid_subject = data['tenderDetails']['tenderSubject'],
+        bid_type = 'OpenTender'
+    )
+    bid.save()
+    eproc = EprocTender(
+        bid = bid,
+        etNo = data['tenderDetails']['etNo']
+    )
+    eproc.save()
+    proposal = Proposal(
+        bid = bid,
         proposalRefNo = data['proposalDetails']['proposalRefNo'],
         proposalDate = getDate(data['proposalDetails']['proposalDate']),
         proposalRecievedDate = getDate(data['proposalDetails']['proposalRecievedDate']),
-        indentDept = data['proposalDetails']['indentDept'],
-        engineerIncharge = data['proposalDetails']['engineerIncharge'],
-        addressConsignee = data['proposalDetails']['addressConsignee'],
+        indentDept = data['proposalDetails']['indentDept']
+    )
+    proposal.save()
+    pns = OtProposalNoteSheet(
+        bid = bid,
         estCost = data['amountDetails']['estCost'],
         gstIncl = data['amountDetails']['gstIncl'],
         noteDate = getDate(data['noteDetails']['noteDate']),
         noteBy = data['noteDetails']['noteBy'],
         notebyDesg = data['noteDetails']['notebyDesg'],
+        tenderCategory = data['tenderDetails']['tenderCategory'],
+        productCategory = data['tenderDetails']['productCategory'],
+        engineerIncharge = data['proposalDetails']['engineerIncharge'],
+        addressConsignee = data['proposalDetails']['addressConsignee']
+    )
+    pns.save()
+    ot = OpenTender(
+        bid = bid,
+        et = eproc,
+        proposal = proposal,
+        proposalnotesheet = pns
     )
     ot.save()
-    res = create_ot_notesheet(data['tenderDetails']['indentNo'])
+    import pdb
+    pdb.set_trace()
+    res = create_ot_notesheet(data)
     response = send_file_docx(res)
+    changeStatus(bid,"Created Proposal Notesheet")
     return response
 # Create your views here.
+
+def get_open_bids(request):
+    bids_data = []
+    for i in range(0,1000):
+        bid = {
+            'indent_no': i,
+            'tender_subject': 'ADSDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
+            'bid_status': 'Created Proposal Notesheet',
+            'indent_dept': 'HHDSFGDGDGDGD GDGDGD',
+            'bid_type': 'Open Tender'
+        }
+        bids_data.append(bid)
+    return JsonResponse(bids_data,safe=False)

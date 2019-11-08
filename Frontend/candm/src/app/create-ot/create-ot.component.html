@@ -1,94 +1,103 @@
-<div class="container" >
-  <form [formGroup]="createOtForm" (ngSubmit)="onSubmit()" fxFlex fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px">
-    <div formGroupName="tenderDetails" fxFlex="50%" fxFlexOrder="1" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px">
-      <mat-form-field appearance="outline" fxFlex = "40%" fxFlexOrder="1">
-        <mat-label>Indentor Number</mat-label>
-        <input matInput placeholder="0" formControlName="indentNo">
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex = "80%" fxFlexOrder="3">
-          <mat-label>Tender Subject</mat-label>
-          <textarea matInput formControlName="tenderSubject" placeholder="Tender-Subject"></textarea>
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex = "40%" fxFlexOrder="2">
-          <mat-label>E-Tender Number</mat-label>
-          <input matInput placeholder="0" formControlName="etNo">
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex = "80%" fxFlexOrder="4">
-          <mat-label>Tender Category</mat-label>
-          <input matInput placeholder="Services" formControlName="tenderCategory">
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex = "80%" fxFlexOrder="5">
-          <mat-label>Product Category</mat-label>
-          <input matInput placeholder="Hardware/Man/Software" formControlName="productCategory">
-      </mat-form-field>
-    </div>
-    <div formGroupName="proposalDetails" fxFlexOrder="2" fxFlex="45%" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px">
-      <mat-form-field appearance="outline" fxFlex = "80%">
-          <mat-label>Indenter Proposal RefNo</mat-label>
-          <input matInput placeholder="proposal" formControlName="proposalRefNo">
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex = "40%">
-          <mat-label>Proposal Note Date</mat-label>
-          <input matInput [matDatepicker]="picker" placeholder="Proposal Date"  formControlName="proposalDate">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex = "40%">
-          <mat-label>Proposal Note Recieved on</mat-label>
-          <input matInput [matDatepicker]="picker1" placeholder="Proposal Recieved"  formControlName="proposalRecievedDate">
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex = "80%">
-          <mat-label>Indenting Department</mat-label>
-          <input matInput placeholder="Indent Dept" formControlName="indentDept">
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex = "40%">
-          <mat-label>Engineer Incharge</mat-label>
-          <input matInput placeholder="EnginnerIncharge " formControlName="engineerIncharge">
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex = "40%">
-          <mat-label>Address Consignee</mat-label>
-          <input matInput placeholder="Address Consignee" formControlName="addressConsignee">
-      </mat-form-field>
-    </div>
-    <div formGroupName="amountDetails" fxFlex="45%" fxFlexOrder="4" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px">
-      <mat-form-field appearance="outline" fxFlex = "80%">
-          <mat-label>Estimated Cost</mat-label>
-          <input matInput placeholder="0" formControlName="estCost">
-      </mat-form-field>
-      <div fxFlex = "80%" fxLayout="row wrap" fxLayoutWrap fxLayoutGap="10px">
-          <mat-label id="gstincl" fxFlex = "50%">GST Inclusive</mat-label>
-          <mat-radio-group fxFlex = "40%" fxLayout="row wrap" fxLayoutWrap
-            aria-labelledby="gstincl" formControlName="gstIncl">
-            <mat-radio-button  fxFlex = "45%" [value]="true">
-              YES
-            </mat-radio-button>
-            <mat-radio-button  fxFlex = "45%" [value]="false">
-                NO
-            </mat-radio-button>
-          </mat-radio-group>
-      </div>
-      <div fxFlex="50%">
-        <button mat-raised-button color="primary" type="submit" >Submit</button>
-      </div>
-    </div>
-    <div formGroupName="noteDetails" fxFlex="50%" fxFlexOrder="3" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px">
-      <mat-form-field appearance="outline" fxFlex = "80%">
-          <mat-label>Notesheet Date</mat-label>
-          <input matInput [matDatepicker]="picker2" placeholder="NoteSheet Date"  formControlName="noteDate">
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex = "80%">
-          <mat-label>Note Sheet By</mat-label>
-          <input matInput placeholder="Note Sheet By" formControlName="noteBy">
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex = "80%">
-          <mat-label>Designation of Note Sheet By</mat-label>
-          <input matInput placeholder="Designation" formControlName="notebyDesg">
-      </mat-form-field>
-    </div>
 
-  </form>
-</div>
+  <mat-card>
+    <mat-card-header >
+        <mat-card-title layout="row" layout-align="center center">
+             Create Open Tender
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form  id="otForm" [formGroup]="createOtForm" (ngSubmit)="onSubmit()" fxFlex fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="20px" >
+        <div formGroupName="tenderDetails" fxFlex="50%" fxFlexOrder="1" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px">
+          <mat-form-field appearance="outline" fxFlex = "40%" fxFlexOrder="1">
+            <mat-label>Indentor Number</mat-label>
+            <input matInput placeholder="0" formControlName="indentNo">
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex = "80%" fxFlexOrder="3">
+              <mat-label>Tender Subject</mat-label>
+              <textarea matInput formControlName="tenderSubject" placeholder="Tender-Subject"></textarea>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex = "40%" fxFlexOrder="2">
+              <mat-label>E-Tender Number</mat-label>
+              <input matInput placeholder="0" formControlName="etNo">
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex = "80%" fxFlexOrder="4">
+              <mat-label>Tender Category</mat-label>
+              <input matInput placeholder="Services" formControlName="tenderCategory">
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex = "80%" fxFlexOrder="5">
+              <mat-label>Product Category</mat-label>
+              <input matInput placeholder="Hardware/Man/Software" formControlName="productCategory">
+          </mat-form-field>
+        </div>
+        <div formGroupName="proposalDetails" fxFlexOrder="2" fxFlex="45%" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px">
+          <mat-form-field appearance="outline" fxFlex = "80%">
+              <mat-label>Indenter Proposal RefNo</mat-label>
+              <input matInput placeholder="proposal" formControlName="proposalRefNo">
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex = "40%">
+              <mat-label>Proposal Note Date</mat-label>
+              <input matInput [matDatepicker]="picker" placeholder="Proposal Date"  formControlName="proposalDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex = "40%">
+              <mat-label>Proposal Note Recieved on</mat-label>
+              <input matInput [matDatepicker]="picker1" placeholder="Proposal Recieved"  formControlName="proposalRecievedDate">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex = "80%">
+              <mat-label>Indenting Department</mat-label>
+              <input matInput placeholder="Indent Dept" formControlName="indentDept">
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex = "40%">
+              <mat-label>Engineer Incharge</mat-label>
+              <input matInput placeholder="EnginnerIncharge " formControlName="engineerIncharge">
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex = "40%">
+              <mat-label>Address Consignee</mat-label>
+              <input matInput placeholder="Address Consignee" formControlName="addressConsignee">
+          </mat-form-field>
+        </div>
+        <div formGroupName="amountDetails" fxFlex="45%" fxFlexOrder="4" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px">
+          <mat-form-field appearance="outline" fxFlex = "80%">
+              <mat-label>Estimated Cost</mat-label>
+              <input matInput placeholder="0" formControlName="estCost">
+          </mat-form-field>
+          <div fxFlex = "80%" fxLayout="row wrap" fxLayoutWrap fxLayoutGap="10px">
+              <mat-label id="gstincl" fxFlex = "50%">GST Inclusive</mat-label>
+              <mat-radio-group fxFlex = "40%" fxLayout="row wrap" fxLayoutWrap
+                aria-labelledby="gstincl" formControlName="gstIncl">
+                <mat-radio-button  fxFlex = "45%" [value]="true">
+                  YES
+                </mat-radio-button>
+                <mat-radio-button  fxFlex = "45%" [value]="false">
+                    NO
+                </mat-radio-button>
+              </mat-radio-group>
+          </div>
+          <div fxFlex="50%">
+            <button mat-raised-button color="primary" type="submit" >Submit</button>
+          </div>
+        </div>
+        <div formGroupName="noteDetails" fxFlex="50%" fxFlexOrder="3" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px">
+          <mat-form-field appearance="outline" fxFlex = "80%">
+              <mat-label>Notesheet Date</mat-label>
+              <input matInput [matDatepicker]="picker2" placeholder="NoteSheet Date"  formControlName="noteDate">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex = "80%">
+              <mat-label>Note Sheet By</mat-label>
+              <input matInput placeholder="Note Sheet By" formControlName="noteBy">
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex = "80%">
+              <mat-label>Designation of Note Sheet By</mat-label>
+              <input matInput placeholder="Designation" formControlName="notebyDesg">
+          </mat-form-field>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+

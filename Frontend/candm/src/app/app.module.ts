@@ -34,6 +34,8 @@ import { CreateLteEprocComponent } from './create-lte-eproc/create-lte-eproc.com
 import { CreateAmmendmentComponent } from './create-ammendment/create-ammendment.component';
 import { CreateSqComponent } from './create-sq/create-sq.component';
 import { CreateStComponent } from './create-st/create-st.component';
+import { FilterBidsComponent } from './filter-bids/filter-bids.component';
+import { DisplayBidsComponent } from './display-bids/display-bids.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +55,9 @@ import { CreateStComponent } from './create-st/create-st.component';
     CreateLteEprocComponent,
     CreateAmmendmentComponent,
     CreateSqComponent,
-    CreateStComponent
+    CreateStComponent,
+    FilterBidsComponent,
+    DisplayBidsComponent
   ],
   imports: [
     BrowserModule,

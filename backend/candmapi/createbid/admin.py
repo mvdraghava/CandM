@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import Bid,OpenTender,EprocTender,Proposal,proposalNoteSheet
+from .models import Bid,OpenTender,EprocTender,Proposal,OtProposalNoteSheet
 
 
-admin.site.register([OpenTender,Bid,EprocTender,Proposal,proposalNoteSheet])
+admin.site.register([OpenTender,Bid,EprocTender,Proposal,OtProposalNoteSheet])
 
 # Register your models here.
