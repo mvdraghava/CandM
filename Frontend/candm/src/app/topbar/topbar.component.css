@@ -1,4 +1,4 @@
-#topbar{
+/*#topbar{
   background-color: cornflowerblue;
   color: white;
   border-radius: 15px;
@@ -7,5 +7,18 @@
 .container {
   width: 80%;
   margin: 10px auto;
+}*/
+
+.menu-spacer {
+  flex: 1 1 auto;
+}
+
+.container{
+  width:80%;
+  margin: 10px auto;
+}
+
+.topbarcontent {
+  max-width: fit-content;
 }
 

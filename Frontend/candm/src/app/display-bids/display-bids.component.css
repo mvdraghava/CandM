@@ -21,3 +21,7 @@ mat-card-header {
 .mat-card-header .mat-card-title {
   margin-bottom: 0px;
 }
+
+mat-card-content {
+  word-break: break-all;
+}

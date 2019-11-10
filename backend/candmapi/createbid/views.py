@@ -140,13 +140,13 @@ def create_ot(request):
 
 def get_open_bids(request):
     bids_data = []
-    for i in range(0,1000):
+    for i in range(0,150):
         bid = {
-            'indent_no': i,
-            'tender_subject': 'ADSDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
-            'bid_status': 'Created Proposal Notesheet',
-            'indent_dept': 'HHDSFGDGDGDGD GDGDGD',
-            'bid_type': 'Open Tender'
+            'Indentno': i,
+            'TenderSubject': 'ADSDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD DDDDDDDDDDDDDDDDDDDDD',
+            'BidStatus': 'Created Proposal Notesheet',
+            'IndentDepartment': 'HHDSFGDGDGDGD GDGDGD',
+            'BidType': 'Open Tender'
         }
         bids_data.append(bid)
     return JsonResponse(bids_data,safe=False)

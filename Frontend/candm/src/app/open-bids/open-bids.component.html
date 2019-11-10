@@ -1,2 +1,11 @@
-<app-filter-bids></app-filter-bids>
-<app-display-bids [allBids]="allbids"></app-display-bids>
+<mat-card>
+  <mat-card-header >
+        <mat-card-title>
+             Active Bids
+        </mat-card-title>
+    </mat-card-header>
+  <mat-card-content>
+    <app-filter-bids [allbids]="allbids" (emitDisplayBids)="changeDisplayBids($event)"></app-filter-bids>
+    <app-display-bids [allBids]="displaybids"></app-display-bids>
+  </mat-card-content>
+</mat-card>

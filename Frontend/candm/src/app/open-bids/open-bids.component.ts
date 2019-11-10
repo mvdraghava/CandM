@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 
 import { GetopenbidsService } from './getopenbids.service';
 
@@ -11,20 +11,25 @@ import { Bid } from '../bid-data-type';
 })
 export class OpenBidsComponent implements OnInit {
 
-  allbids: Array<Bid>;
-
   constructor(private openbidservice: GetopenbidsService) { }
 
+  allbids: Array<Bid>;
+  displaybids: Bid[] = [];
   ngOnInit() {
     this.openbidservice.getopenbids().subscribe(
       response => {
         this.allbids = response;
-        console.log(response);
+        this.displaybids = this.allbids;
       },
       error => {
         console.log(error);
       }
     );
+  }
+
+  changeDisplayBids(bids: Array<Bid>) {
+    this.displaybids = bids;
+    console.log(this.displaybids);
   }
 
 }

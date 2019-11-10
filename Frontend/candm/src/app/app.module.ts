@@ -22,7 +22,10 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCardModule} from '@angular/material/card';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { LteformComponent } from './lteform/lteform.component';
 import { OtformComponent } from './otform/otform.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -36,6 +39,9 @@ import { CreateSqComponent } from './create-sq/create-sq.component';
 import { CreateStComponent } from './create-st/create-st.component';
 import { FilterBidsComponent } from './filter-bids/filter-bids.component';
 import { DisplayBidsComponent } from './display-bids/display-bids.component';
+
+import { InfiniteScrollModule } from '../../node_modules/ngx-infinite-scroll';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +70,7 @@ import { DisplayBidsComponent } from './display-bids/display-bids.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    FormsModule,
     MatButtonModule,
     MatIconModule,
     MatExpansionModule,
@@ -71,11 +78,13 @@ import { DisplayBidsComponent } from './display-bids/display-bids.component';
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatAutocompleteModule,
     MatCardModule,
     MatToolbarModule,
     HttpClientModule,
     MatSidenavModule,
     FlexLayoutModule,
+    InfiniteScrollModule,
     RouterModule.forRoot([
       { path: '', component: DashboardComponent },
       { path: 'dashboard', component: DashboardComponent},
