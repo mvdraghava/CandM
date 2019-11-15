@@ -4,48 +4,48 @@
         <mat-icon aria-hidden="false" aria-label="Example home icon">search</mat-icon>
         <mat-form-field appearance="outline">
           <mat-label>Indent Number</mat-label>
-          <input matInput  type="number" placeholder="" [(ngModel)]="filterBid.Indentno" name="Indentno" [matAutocomplete]="auto"  (ngModelChange)="sendDisplayBids()">
-          <mat-autocomplete #auto="matAutocomplete">
+          <input matInput  type="number" placeholder="" [(ngModel)]="filterBid.Indentno" name="Indentno" (ngModelChange)="sendDisplayBids()">
+          <!-- <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let onebid of allbids" [value]="onebid.Indentno">
               {{onebid.Indentno}}
             </mat-option>
-          </mat-autocomplete>
+          </mat-autocomplete> -->
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Tender Subject</mat-label>
-          <input matInput placeholder="" [(ngModel)]="filterBid.TenderSubject" name="TenderSubject" (ngModelChange)="sendDisplayBids()" [matAutocomplete]="auto1">
-          <mat-autocomplete #auto1="matAutocomplete">
+          <input matInput placeholder="" [(ngModel)]="filterBid.TenderSubject" name="TenderSubject" (ngModelChange)="sendDisplayBids()">
+          <!-- <mat-autocomplete #auto1="matAutocomplete">
             <mat-option *ngFor="let onebid of allbids" [value]="onebid.TenderSubject">
               {{onebid.TenderSubject}}
             </mat-option>
-          </mat-autocomplete>
+          </mat-autocomplete> -->
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Indent Department</mat-label>
-          <input matInput placeholder="" [(ngModel)]="filterBid.IndentDepartment" name="IndentDepartment" (ngModelChange)="sendDisplayBids()" [matAutocomplete]="auto2">
-          <mat-autocomplete #auto2="matAutocomplete">
+          <input matInput placeholder="" [(ngModel)]="filterBid.IndentDepartment" name="IndentDepartment" (ngModelChange)="sendDisplayBids()">
+          <!-- <mat-autocomplete #auto2="matAutocomplete">
             <mat-option *ngFor="let dept of indentdepts" [value]="dept">
               {{dept}}
             </mat-option>
-          </mat-autocomplete>
+          </mat-autocomplete> -->
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Tender Type</mat-label>
-          <input matInput placeholder="" [(ngModel)]="filterBid.BidType" name="BidType" (ngModelChange)="sendDisplayBids()" [matAutocomplete]="auto3">
-          <mat-autocomplete #auto3="matAutocomplete">
+          <input matInput placeholder="" [(ngModel)]="filterBid.BidType" name="BidType" (ngModelChange)="sendDisplayBids()">
+          <!-- <mat-autocomplete #auto3="matAutocomplete">
             <mat-option *ngFor="let btype of bidtypes" [value]="btype">
               {{btype}}
             </mat-option>
-          </mat-autocomplete>
+          </mat-autocomplete> -->
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Bid Status</mat-label>
-          <input matInput placeholder="" [(ngModel)]="filterBid.BidStatus" name="BidStatus" (ngModelChange)="sendDisplayBids()" [matAutocomplete]="auto4">
-          <mat-autocomplete #auto4="matAutocomplete">
+          <input matInput placeholder="" [(ngModel)]="filterBid.BidStatus" name="BidStatus" (ngModelChange)="sendDisplayBids()">
+          <!-- <mat-autocomplete #auto4="matAutocomplete">
             <mat-option *ngFor="let bstatus of bidstatuses" [value]="bstatus">
               {{bstatus}}
             </mat-option>
-          </mat-autocomplete>
+          </mat-autocomplete> -->
         </mat-form-field>
       </form>
   </mat-card-content>

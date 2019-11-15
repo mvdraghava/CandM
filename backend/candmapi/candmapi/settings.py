@@ -52,6 +52,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+MEDIA_ROOT = '../candmapi/I-321/'
+MEDIA_URL = '/media/'
+
 ROOT_URLCONF = 'candmapi.urls'
 
 TEMPLATES = [

@@ -43,4 +43,19 @@ export class DisplayBidsComponent implements OnInit, OnChanges{
     this.displaybids = this.allBids.slice(0, this.bidsDisplayed);
   }
 
+  checkUrgent(bidstatus) {
+    let re = RegExp('\\d{2}/\\d{2}/\\d{4}');
+    let endDate = re.exec(bidstatus);
+    if (endDate) {
+      let dateData = endDate[0].split('/');
+      let deadDate = new Date(Number(dateData[2]), Number(dateData[1])-1, Number(dateData[0]));
+      let todayDate = new Date();
+      let daysbetween = todayDate.getTime() - deadDate.getTime();
+      daysbetween = daysbetween / (1000 * 3600 * 24);
+      if (daysbetween < 3) {
+        return 'urgent';
+      }
+    }
+  }
+
 }

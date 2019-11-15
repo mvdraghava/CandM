@@ -1,0 +1,16 @@
+<mat-card>
+  <mat-card-content>
+    <mat-sidenav-container class="example-container" >
+      <mat-sidenav mode="side" opened>
+        <div fxFlex fxLayout="column">
+          <a mat-button  routerLink="candmmsg">Status</a>
+          <a mat-button  routerLink='showfiles'>Files</a>
+          <a mat-button  [routerLink]="['uploadfiles']">Upload Files</a>
+        </div>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </mat-card-content>
+</mat-card>

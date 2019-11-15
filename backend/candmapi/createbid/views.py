@@ -69,12 +69,12 @@ def create_ot_notesheet(data):
     context['emd_price'] = str(emd_price)
     context['emd_price_words'] = amount2words(emd_price)
     if est_cost<5000000:
-        context['paper_adv_clause'] = "The subject proposal NIT estimate is less than 50 Lakhs, as per Clause B4.7.5 (i) (a) of WPPP, the Newspaper advertisement is not required. But the NIT shall be uploaded in CPP Portal and also in SRLDC Website. The copy of NIT shall be sent to all RLDCs, NLDC, KPTCL, BESCOM etc., to display in their respective notice boards  for wide circulation" 
+        context['paper_adv_clause'] = "The subject proposal NIT estimate is less than 50 Lakhs, as per Clause B4.7.5 (i) (a) of WPPP, the Newspaper advertisement is not required. But the NIT shall be uploaded in CPP Portal and also in SRLDC Website. The copy of NIT shall be sent to all RLDCs, NLDC, KPTCL, BESCOM etc., to display in their respective notice boards  for wide circulation"
     else:
         context['paper_adv_clause'] = "As per Clause B4.7.5 (i) (a) of WPPP, the details of Newspaper where NIT shall be published together with the cost of publication may be furnished by HR/SRLDC. "
     foldername = "I-"+indent_no+"/"
     if not os.path.exists(os.path.dirname(foldername)):
-        os.makedirs(os.path.dirname(foldername)) 
+        os.makedirs(os.path.dirname(foldername))
     filename = foldername+"I-"+indent_no+"_OpenTender_Notesheet"
     doc = DocxTemplate("Template_OpenTender_Notesheet.docx")
     doc.render(context)
@@ -130,8 +130,6 @@ def create_ot(request):
         proposalnotesheet = pns
     )
     ot.save()
-    import pdb
-    pdb.set_trace()
     res = create_ot_notesheet(data)
     response = send_file_docx(res)
     changeStatus(bid,"Created Proposal Notesheet")
@@ -140,13 +138,27 @@ def create_ot(request):
 
 def get_open_bids(request):
     bids_data = []
-    for i in range(0,150):
+    for get_bid in Bid.objects.all():
         bid = {
-            'Indentno': i,
-            'TenderSubject': 'ADSDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD DDDDDDDDDDDDDDDDDDDDD',
-            'BidStatus': 'Created Proposal Notesheet',
-            'IndentDepartment': 'HHDSFGDGDGDGD GDGDGD',
-            'BidType': 'Open Tender'
+            'Indentno': get_bid.indent_number,
+            'TenderSubject': get_bid.bid_subject,
+            'BidStatus': get_status(get_bid),
+            'IndentDepartment': get_indentdept(get_bid),
+            'BidType': get_bid.bid_type
         }
         bids_data.append(bid)
     return JsonResponse(bids_data,safe=False)
+
+def get_status(bid):
+    sbid = BidStatus.objects.get(bid = bid)
+    return sbid.bid_status
+
+def get_indentdept(bid):
+    pbid = Proposal.objects.get(bid = bid)
+    return pbid.indentDept
+
+def get_filenames(request):
+    data = json.loads(request.body.decode('utf-8'))
+    import pdb
+    pdb.set_trace()
+    indentno = data['indentno']

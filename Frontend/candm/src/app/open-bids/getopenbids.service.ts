@@ -13,7 +13,7 @@ export class GetopenbidsService {
 
   constructor(private http: HttpClient) { }
 
-  private getbidurl = "http://127.0.0.1:8000/createbid/getopenbids";
+  private getbidurl = "http://192.168.57.52:521/createbid/getopenbids";
 
   getopenbids(): Observable<Bid[]> {
     return this.http.get<Bid[]>(this.getbidurl);

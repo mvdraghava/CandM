@@ -11,6 +11,11 @@ mat-card {
   color: black;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 mat-card-header {
   background: #1976d2;
   color: #fff;
@@ -24,4 +29,11 @@ mat-card-header {
 
 mat-card-content {
   word-break: break-all;
+}
+
+.urgent {
+  background-color: crimson;
+  color: white;
+  border-radius: 4px;
+  padding: 4px;
 }

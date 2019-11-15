@@ -1,17 +1,21 @@
 <div fxFlex fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px" infiniteScroll (scrolled)="onScroll()">
   <div *ngFor="let bid of displaybids" fxFlex class="bidCardDiv">
+    <a routerLink="/main-details/{{bid.Indentno}}">
     <mat-card class="bidCard" fxFlex fxLayout="column">
       <mat-card-header fxFlex fxLayoutAlign="center center">
-        <mat-card-title> I-{{bid.Indentno}} </mat-card-title>
+        <mat-card-title> <a routerLink="/main-details/{{bid.Indentno}}">I-{{bid.Indentno}}</a> </mat-card-title>
       </mat-card-header>
       <mat-card-content fxFlex fxLayout="column" fxLayoutAlign="start start">
         <div fxFlex fxLayout="column" fxLayoutAlign="space-between space-between">
             <p> {{bid.TenderSubject}} </p>
             <p> {{bid.IndentDepartment}} </p>
             <p> {{bid.BidType}} </p>
-            <p> {{bid.BidStatus}} </p>
+            <p [ngClass]="checkUrgent(bid.BidStatus)">
+              {{bid.BidStatus}}
+            </p>
         </div>
       </mat-card-content>
     </mat-card>
+    </a>
   </div>
 </div>
