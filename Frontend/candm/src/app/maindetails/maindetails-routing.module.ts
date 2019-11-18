@@ -6,7 +6,7 @@ import { ShowfilesComponent } from './showfiles/showfiles.component';
 import { UploadfilesComponent } from './uploadfiles/uploadfiles.component';
 import { CandmmsgComponent } from './candmmsg/candmmsg.component';
 
-const routes: Routes = [{ path: ':indentno', component: MaindetailsComponent , children: [
+const routes: Routes = [{ path: ':indentno/:tendersubject', component: MaindetailsComponent , children: [
   {path: '', component: CandmmsgComponent},
   {path: 'candmmsg', component: CandmmsgComponent},
   {path: 'showfiles', component: ShowfilesComponent},

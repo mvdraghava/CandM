@@ -1,0 +1,44 @@
+h1 {
+  display: none;
+}
+
+hr {
+  display:none;
+}
+
+.dir {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+  padding:10px;
+}
+
+a {
+  text-decoration: none;
+  color:black;
+  font-size: 14px;
+  min-width: 150px;
+  max-width: 150px;
+  word-break: break-all;
+  text-align: center;
+}
+
+svg {
+  width:50;
+  height:50;
+  fill: cornflowerblue;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.filename {
+  max-width: 250px;
+
+}

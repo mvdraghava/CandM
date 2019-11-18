@@ -159,6 +159,6 @@ def get_indentdept(bid):
 
 def get_filenames(request):
     data = json.loads(request.body.decode('utf-8'))
-    import pdb
-    pdb.set_trace()
     indentno = data['indentno']
+    file_names = os.listdir('I-'+indentno)
+    return JsonResponse(file_names,safe = False)
