@@ -11,6 +11,7 @@ from django.views.static import serve
 
 import json
 from .models import  OpenTender,Bid,OpenTender,EprocTender,Proposal,OtProposalNoteSheet,BidStatus
+from .models import Vendor
 from .functions_need import send_file_docx, amount2words
 from django.forms.models import model_to_dict
 
@@ -162,3 +163,59 @@ def get_filenames(request):
     indentno = data['indentno']
     file_names = os.listdir('I-'+indentno)
     return JsonResponse(file_names,safe = False)
+
+def add_vendor(request):
+    result = {
+        'created':''
+    }
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        vendor = Vendor(
+            name = data['address']['name'],
+            street1 = data['address']['street1'],
+            street2 = data['address']['street2'],
+            city = data['address']['city'],
+            state = data['address']['state'],
+            pincode = data['address']['pincode'],
+            mobilenos = data['mobilenos'],
+            emailids = data['emailids'],
+            products = data['products'],
+            services = data['services'],
+            works =data['works'],
+            msme = data['msme'],
+            nsic = data['nsic'],
+            blacklisted = False,
+            remarks = ''
+        )
+        vendor.save()
+        result['created'] = True
+    except Exception as ex:
+        import pdb; pdb.set_trace()
+        result['created'] = False
+    return JsonResponse(result)
+
+def get_vendors(request):
+    vendors_data = []
+    for get_vendor in Vendor.objects.all().order_by('id'):
+        vendor = {
+            'name': get_vendor.name,
+            'street1' : get_vendor.street1,
+            'street2' : get_vendor.street2,
+            'city' : get_vendor.city,
+            'state' : get_vendor.state,
+            'pincode' : get_vendor.pincode,
+            'mobilenos' : get_vendor.mobilenos,
+            'emailids' : get_vendor.emailids,
+            'products' : get_vendor.products,
+            'services' : get_vendor.services,
+            'works' : get_vendor.works,
+            'msme' : get_vendor.msme,
+            'nsic' : get_vendor.nsic,
+            'balcklisted' : get_vendor.blacklisted,
+            'remarks' : get_vendor.remarks
+        }
+        vendors_data.append(vendor)
+    return JsonResponse(vendors_data,safe=False)
+
+def edit_vendor(request):
+    return

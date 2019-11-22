@@ -1,0 +1,137 @@
+<div class="" fxFlex fxLayout="column">
+  <h1 mat-dialog-title>Add Vendor</h1>
+  <div mat-dialog-content>
+    <form id="addvendorform" [formGroup]="addVendorForm" fxFlex>
+      <h5>Vendor Name and Address</h5>
+      <div formGroupName="address" fxLayoutGap="10px" fxLayout="row wrap" fxLayoutAlign="start center">
+        <mat-form-field appearance="outline">
+          <mat-label>Company Name</mat-label>
+          <input matInput formControlName="name" placeholder="Vendor Name">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex = "20%">
+          <mat-label>Street 1</mat-label>
+          <input matInput formControlName="street1" placeholder="Street 1">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Street 2</mat-label>
+          <input matInput formControlName="street2" placeholder="Street 1">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>City</mat-label>
+          <input matInput formControlName="city" placeholder="City">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>State</mat-label>
+          <input matInput formControlName="state" placeholder="State">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Pin Code</mat-label>
+          <input matInput formControlName="pincode" placeholder="Pin Code">
+        </mat-form-field>
+      </div>
+      <div fxLayoutGap="10px" fxLayout="row wrap">
+        <div formArrayName="mobilenos" fxLayoutGap="10px" fxLayout="row wrap">
+          <div *ngFor="let mobileno of mobilenos.controls;let i = index;">
+            <mat-form-field appearance="outline">
+              <mat-label>Mobile No {{i+1}}</mat-label>
+              <input matInput [formControlName]="i" placeholder="+91 9999999999">
+              <button mat-icon-button *ngIf="mobilenos.controls.length != 1" (click)="removeMobileno(i)" type="button" class="icon" matSuffix><mat-icon>delete</mat-icon></button>
+              <button mat-icon-button type="button" *ngIf = "i == mobilenos.controls.length-1 && i==0" class="icon" (click)="addMobileno()" matSuffix><mat-icon>add</mat-icon></button>
+            </mat-form-field>
+            <button mat-icon-button type="button" *ngIf = "i == mobilenos.controls.length-1 && i!=0" class="icon" (click)="addMobileno()"><mat-icon>add</mat-icon></button>
+          </div>
+        </div>
+        <div formArrayName="emailids" fxLayoutGap="10px" fxLayout="row wrap">
+          <div *ngFor="let emailid of emailids.controls;let i = index;">
+            <mat-form-field appearance="outline">
+              <mat-label>Email Id {{i+1}}</mat-label>
+              <input matInput [formControlName]="i" placeholder="aa@bb.com">
+              <button mat-icon-button *ngIf="emailids.controls.length != 1" (click)="removeEmailid(i)" type="button" class="icon" matSuffix><mat-icon>delete</mat-icon></button>
+              <button mat-icon-button type="button" *ngIf = "i == emailids.controls.length-1 && i==0" class="icon" (click)="addEmailid()" matSuffix><mat-icon>add</mat-icon></button>
+            </mat-form-field>
+            <button mat-icon-button type="button" *ngIf = "i == emailids.controls.length-1 && i!=0" class="icon" (click)="addEmailid()"><mat-icon>add</mat-icon></button>
+          </div>
+        </div>
+      </div>
+      <div fxLayoutGap="20px" fxLayout="row wrap" fxLayoutAlign="space-between space-between">
+        <div>
+          <h5>Details of Supply</h5>
+          <div formArrayName="products" fxLayoutGap="10px" fxLayout="column wrap">
+            <div *ngFor="let product of products.controls;let i = index;" >
+              <mat-form-field appearance="outline">
+                <mat-label>Product {{i+1}}</mat-label>
+                <input matInput [formControlName]="i" placeholder="Product">
+                <button mat-icon-button (click)="removeProduct(i)" type="button" *ngIf="products.controls.length != 1" matSuffix><mat-icon>delete</mat-icon></button>
+                <button mat-icon-button type="button" *ngIf = "i == products.controls.length-1 && i == 0" class="icon" (click)="addProduct()" matSuffix><mat-icon>add</mat-icon></button>
+              </mat-form-field>
+              <button mat-icon-button type="button" *ngIf = "i == products.controls.length-1 && i != 0" class="icon" (click)="addProduct()"><mat-icon>add</mat-icon></button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h5>Details of Services</h5>
+          <div formArrayName="services" fxLayoutGap="10px" fxLayout="column wrap">
+            <div *ngFor="let service of services.controls;let i = index;">
+              <mat-form-field appearance="outline">
+                <mat-label>Service {{i+1}}</mat-label>
+                <input matInput [formControlName]="i" placeholder="Service">
+                <button mat-icon-button *ngIf="services.controls.length != 1" (click)="removeService(i)" type="button"  matSuffix><mat-icon>delete</mat-icon></button>
+                <button mat-icon-button type="button" *ngIf = "i == services.controls.length-1 && i==0" class="icon" (click)="addService()" matSuffix><mat-icon>add</mat-icon></button>
+              </mat-form-field>
+              <button mat-icon-button type="button" *ngIf = "i == services.controls.length-1 && i!=0" class="icon" (click)="addService()"><mat-icon>add</mat-icon></button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h5>Details of Works</h5>
+          <div formArrayName="works" fxLayoutGap="10px" fxLayout="column wrap">
+            <div *ngFor="let work of works.controls;let i = index;">
+              <mat-form-field appearance="outline">
+                <mat-label>Work {{i+1}}</mat-label>
+                <input matInput [formControlName]="i" placeholder="Work">
+                <button mat-icon-button *ngIf="works.controls.length != 1" (click)="removeWork(i)" type="button"  matSuffix><mat-icon>delete</mat-icon></button>
+                <button mat-icon-button type="button" *ngIf = "i == works.controls.length-1 && i==0" class="icon" (click)="addWork()" matSuffix><mat-icon>add</mat-icon></button>
+              </mat-form-field>
+              <button mat-icon-button type="button" *ngIf = "i == works.controls.length-1 && i!=0" class="icon" (click)="addWork()"><mat-icon>add</mat-icon></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="msmensic" fxLayoutGap="30px" fxLayout="row wrap">
+        <div fxLayoutGap="15px" fxLayout="row wrap" fxLayoutAlign="center center">
+          <mat-label><h5>MSME</h5></mat-label>
+          <mat-radio-group fxLayoutGap="10px" fxLayout="row wrap" aria-labelledby="msme" formControlName="msme">
+            <mat-radio-button   [value]="true">
+              YES
+            </mat-radio-button>
+            <mat-radio-button  [value]="false">
+                NO
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div fxLayoutGap="15px" fxLayout="row wrap" fxLayoutAlign="center center">
+          <mat-label><h5>NSIC</h5></mat-label>
+          <mat-radio-group fxLayoutGap="10px" fxLayout="row wrap" aria-labelledby="nsic" formControlName="nsic">
+            <mat-radio-button   [value]="true">
+              YES
+            </mat-radio-button>
+            <mat-radio-button  [value]="false">
+                NO
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <div id="actionbar" fxFlex fxLayout="row" fxLayoutAlign="end ">
+      <button mat-button (click)="cancel()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="submit()" cdkFocusInitial>Submit</button>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import *
 
 def increment_indent_number():
    last_indent = Bid.objects.all().order_by('indent_number').last()
@@ -64,6 +65,22 @@ class OpenTender(models.Model):
     et = models.OneToOneField(EprocTender,on_delete=models.CASCADE)
     proposal = models.OneToOneField(Proposal,on_delete=models.CASCADE)
     proposalnotesheet = models.OneToOneField(OtProposalNoteSheet,on_delete=models.CASCADE)
-    
-    
+
+class Vendor(models.Model):
+    name = models.CharField(max_length=100)
+    street1 = models.CharField(max_length=1000)
+    street2 = models.CharField(max_length=1000)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    pincode = models.IntegerField()
+    mobilenos = ArrayField(models.CharField(max_length = 20))
+    emailids = ArrayField(models.CharField(max_length = 50))
+    products = ArrayField(models.CharField(max_length = 100))
+    services = ArrayField(models.CharField(max_length = 100))
+    works = ArrayField(models.CharField(max_length = 100))
+    msme = models.BooleanField()
+    nsic = models.BooleanField()
+    blacklisted = models.BooleanField()
+    remarks = models.CharField(max_length = 1000)
+
 # Create your models here.

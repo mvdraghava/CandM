@@ -14,8 +14,8 @@ export interface IndentNumber {
 })
 export class CreateTenderService {
   constructor(private http: HttpClient) { }
-  private nextIndentUrl = 'http://127.0.0.1:8000/createbid/nextIndentNumber';
-  private createotUrl = 'http://127.0.0.1:8000/createbid/createot'
+  private nextIndentUrl = 'http://192.168.57.52:8000/createbid/nextIndentNumber';
+  private createotUrl = 'http://192.168.57.52:8000/createbid/createot'
   getNextIndentNumber() {
     return this.http.get<IndentNumber>(this.nextIndentUrl);
   }
