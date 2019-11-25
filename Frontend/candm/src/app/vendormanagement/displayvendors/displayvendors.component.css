@@ -7,8 +7,11 @@
 mat-card {
   min-height: 300px;
   max-height: 350px;
+  min-width: 250px;
+  max-width: 250px;
   background-color: aliceblue;
   color: black;
+  cursor: pointer;
 }
 
 a {
@@ -21,6 +24,12 @@ mat-card-header {
   color: #fff;
   padding:5px;
   max-height: 70px;
+  font-size: 15px;
+}
+
+mat-card-title {
+  font-size: 15px !important;
+  word-break: break-all;
 }
 
 .mat-card-header .mat-card-title {

@@ -17,6 +17,7 @@ export class VendorserviceService {
 
   private addvendorurl = environment.apiurl + 'addvendor';
   private getvendorsurl = environment.apiurl + 'getvendors';
+  private editvendorurl = environment.apiurl + 'editvendor';
 
   addvendor(data): Observable<any>{
     return this.http.post(this.addvendorurl, data);
@@ -24,6 +25,10 @@ export class VendorserviceService {
 
   getvendors(): Observable<Vendor[]> {
     return this.http.get<Vendor[]>(this.getvendorsurl);
+  }
+
+  editvendor(data): Observable<any>{
+    return this.http.post(this.editvendorurl, data);
   }
 
 }

@@ -1,7 +1,7 @@
 <div class="" fxFlex fxLayout="column">
-  <h1 mat-dialog-title>Add Vendor</h1>
-  <div mat-dialog-content>
-    <form id="addvendorform" [formGroup]="addVendorForm" fxFlex>
+  <h1 mat-dialog-title>Edit Vendor {{vendor.name}}</h1>
+ <div mat-dialog-content>
+    <form id="editvendorform" [formGroup]="editVendorForm" fxFlex>
       <h5>Vendor Name and Address</h5>
       <div formGroupName="address" fxLayoutGap="10px" fxLayout="row wrap" fxLayoutAlign="start center">
         <mat-form-field appearance="outline">
@@ -125,13 +125,28 @@
             </mat-radio-button>
           </mat-radio-group>
         </div>
+        <div fxLayoutGap="15px" fxLayout="row wrap" fxLayoutAlign="center center">
+          <mat-label><h5>Blacklist</h5></mat-label>
+          <mat-radio-group fxLayoutGap="10px" fxLayout="row wrap" aria-labelledby="blacklisted" formControlName="blacklisted">
+            <mat-radio-button   [value]="true">
+              YES
+            </mat-radio-button>
+            <mat-radio-button  [value]="false">
+                NO
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
       </div>
+      <mat-form-field id="remarks" appearance="outline">
+        <mat-label>Remarks</mat-label>
+        <textarea matInput formControlName="remarks"></textarea>
+      </mat-form-field>
     </form>
   </div>
-  <div mat-dialog-actions>
+<div mat-dialog-actions>
     <div id="actionbar" fxFlex fxLayout="row" fxLayoutAlign="end ">
-      <button mat-button (click)="cancel()">Cancel</button>
-      <button mat-raised-button [disabled]="!addVendorForm.valid" color="primary" (click)="submit()" cdkFocusInitial>Submit</button>
+      <button mat-button (click)="cancel()">Close</button>
+      <button mat-raised-button [disabled]="!editVendorForm.valid" color="primary" (click)="edit()" cdkFocusInitial>Edit</button>
     </div>
   </div>
 </div>

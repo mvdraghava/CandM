@@ -1,0 +1,35 @@
+#remarks {
+  width: 100%;
+}
+
+
+::ng-deep .mat-dialog-container {
+}
+
+::ng-deep .mat-dialog-title {
+  text-align: center;
+  background: #1976d2;
+  color: #fff;
+  padding: 5px;
+}
+
+/**::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 10px 0px 15px 0;
+}
+
+::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 10px;
+}**/
+
+h5 {
+  margin: 5px;
+  padding: 5px;
+}
+
+#actionbar {
+  padding: 15px;
+}
+
+/**#msmensic {
+  padding-top: 20px;
+}**/

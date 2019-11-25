@@ -1,4 +1,5 @@
 export class Vendor {
+  id: number;
   name: string;
   street1: string;
   street2: string;
@@ -12,7 +13,7 @@ export class Vendor {
   works: Array<string>;
   msme: boolean;
   nsic : boolean;
-  blackllisted : boolean;
+  blacklisted : boolean;
   remarks : string;
 
   constructor() {

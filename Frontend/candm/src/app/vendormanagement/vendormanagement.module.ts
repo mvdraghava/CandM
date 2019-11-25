@@ -20,10 +20,11 @@ import { FiltervendorsComponent } from './filtervendors/filtervendors.component'
 import { DisplayvendorsComponent } from './displayvendors/displayvendors.component';
 
 import { InfiniteScrollModule } from '../../../node_modules/ngx-infinite-scroll';
+import { EditvendordialogComponent } from './editvendordialog/editvendordialog.component';
 
 
 @NgModule({
-  declarations: [VendormanagementComponent, CreatevendorComponent, AddvendordialogComponent, FiltervendorsComponent, DisplayvendorsComponent],
+  declarations: [VendormanagementComponent, CreatevendorComponent, AddvendordialogComponent, FiltervendorsComponent, DisplayvendorsComponent, EditvendordialogComponent],
   imports: [
     CommonModule,
     VendormanagementRoutingModule,
@@ -38,7 +39,8 @@ import { InfiniteScrollModule } from '../../../node_modules/ngx-infinite-scroll'
     FlexLayoutModule
   ],
   entryComponents: [
-    AddvendordialogComponent
+    AddvendordialogComponent,
+    EditvendordialogComponent
   ],
 })
 export class VendormanagementModule { }

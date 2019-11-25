@@ -198,6 +198,7 @@ def get_vendors(request):
     vendors_data = []
     for get_vendor in Vendor.objects.all().order_by('id'):
         vendor = {
+            'id' : get_vendor.id,
             'name': get_vendor.name,
             'street1' : get_vendor.street1,
             'street2' : get_vendor.street2,
@@ -211,11 +212,39 @@ def get_vendors(request):
             'works' : get_vendor.works,
             'msme' : get_vendor.msme,
             'nsic' : get_vendor.nsic,
-            'balcklisted' : get_vendor.blacklisted,
+            'blacklisted' : get_vendor.blacklisted,
             'remarks' : get_vendor.remarks
         }
         vendors_data.append(vendor)
     return JsonResponse(vendors_data,safe=False)
 
+
 def edit_vendor(request):
-    return
+    result = {
+        'edited':''
+    }
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        vendor = Vendor.objects.get(id=data["id"])
+        vendor.name = data["address"]["name"]
+        vendor.street1 = data["address"]["street1"]
+        vendor.street2 = data["address"]["street2"]
+        vendor.city = data["address"]["city"]
+        vendor.state = data["address"]["state"]
+        vendor.pincode = data["address"]["pincode"]
+        vendor.mobilenos = data["mobilenos"]
+        vendor.emailids = data['emailids']
+        vendor.products = data['products']
+        vendor.services = data['services']
+        vendor.works =data['works']
+        vendor.msme = data['msme']
+        vendor.nsic = data['nsic']
+        vendor.blacklisted = data['blacklisted']
+        vendor.remarks = data['remarks']
+        vendor.save()
+        result['edited'] = True
+    except Exception as ex:
+        print(ex)
+        import pdb; pdb.set_trace()
+        result['edited'] = False
+    return JsonResponse(result)

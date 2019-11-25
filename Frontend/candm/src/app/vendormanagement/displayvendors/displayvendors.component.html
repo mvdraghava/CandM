@@ -1,9 +1,9 @@
 <div fxFlex fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px" infiniteScroll (scrolled)="onScroll()">
   <div *ngFor="let vendor of displayvendors" fxFlex class="vendorCardDiv">
-    <a routerLink="">
+    <a (click)="openEdit(vendor)">
     <mat-card class="vendorCard" fxFlex fxLayout="column">
       <mat-card-header fxFlex fxLayoutAlign="start start">
-        <mat-card-title> <a routerLink="">M/s {{vendor.name}}</a> </mat-card-title>
+        <mat-card-title> <a>M/s {{vendor.name}}</a> </mat-card-title>
       </mat-card-header>
       <mat-card-content fxFlex fxLayout="column" fxLayoutAlign="start start">
         <div fxFlex fxLayout="column" fxLayoutAlign="space-between space-between">
