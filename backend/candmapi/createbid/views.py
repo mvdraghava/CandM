@@ -7,22 +7,42 @@ import os
 import io
 from docx import Document
 from datetime import datetime
+from datetime import date
 from django.views.static import serve
 
 import json
 from .models import  OpenTender,Bid,OpenTender,EprocTender,Proposal,OtProposalNoteSheet,BidStatus
-from .models import Vendor
+from .models import Vendor,Employee,TECC,BODC,QR
 from .functions_need import send_file_docx, amount2words
 from django.forms.models import model_to_dict
 
 def getDate(datestr):
-    datestr = datestr.split('T')[0]
-    d1 = datetime.strptime(datestr,'%Y-%m-%d')
-    return d1
+    try:
+        datestr = datestr.split('T')[0]
+        d1 = datetime.strptime(datestr,'%Y-%m-%d')
+        return d1
+    except Exception as e:
+        return None
 
-#def next_indentnumber(request):
-   # return JsonResponse({'indentNumber': increment_indent_number()})
 
+def getDocPrice(est_cost):
+    doc_price = 0
+    if est_cost<=2500000:
+        doc_price = 1250
+    elif est_cost>2500000 and est_cost<=5000000:
+        doc_price = 2000
+    elif est_cost>5000000 and est_cost<=10000000:
+        doc_price = 2500
+    elif est_cost>10000000 and est_cost<=20000000:
+        doc_price = 5000
+    elif est_cost>20000000 and est_cost<=50000000:
+        doc_price = 12500
+    elif est_cost>50000000:
+        doc_price = 25000
+    return doc_price
+
+def getEmdPrice(est_cost):
+    return round(math.ceil((est_cost*0.02)/1000.0)*1000.0)
 
 def create_ot_notesheet(data):
     context = {
@@ -66,7 +86,7 @@ def create_ot_notesheet(data):
         doc_price = 25000
     context['doc_price'] = str(doc_price)
     context['doc_price_words'] = amount2words(doc_price)
-    emd_price = round(math.ceil((est_cost*0.02)/500.0)*500.0)
+    emd_price = round(math.ceil((est_cost*0.02)/1000.0)*1000.0)
     context['emd_price'] = str(emd_price)
     context['emd_price_words'] = amount2words(emd_price)
     if est_cost<5000000:
@@ -84,11 +104,16 @@ def create_ot_notesheet(data):
 
 
 def changeStatus(bid,status):
-    bids  =  BidStatus(
-        bid = bid,
-        bid_status = status
-    )
-    bids.save()
+    try:
+        bids = BidStatus.objects.get(bid=bid)
+        bids.bid_status = status
+        bids.save()
+    except:
+        bids  =  BidStatus(
+            bid = bid,
+            bid_status = status
+        )
+        bids.save()
 
 def create_ot(request):
     data = json.loads(request.body.decode('utf-8'))
@@ -111,6 +136,7 @@ def create_ot(request):
         indentDept = data['proposalDetails']['indentDept']
     )
     proposal.save()
+    import pdb; pdb.set_trace()
     pns = OtProposalNoteSheet(
         bid = bid,
         estCost = data['amountDetails']['estCost'],
@@ -121,7 +147,8 @@ def create_ot(request):
         tenderCategory = data['tenderDetails']['tenderCategory'],
         productCategory = data['tenderDetails']['productCategory'],
         engineerIncharge = data['proposalDetails']['engineerIncharge'],
-        addressConsignee = data['proposalDetails']['addressConsignee']
+        addressConsignee = data['proposalDetails']['addressConsignee'],
+        completionperiod = float(data['amountDetails']['completionperiod'])
     )
     pns.save()
     ot = OpenTender(
@@ -135,7 +162,7 @@ def create_ot(request):
     response = send_file_docx(res)
     changeStatus(bid,"Created Proposal Notesheet")
     return response
-# Create your views here.
+
 
 def get_open_bids(request):
     bids_data = []
@@ -245,6 +272,226 @@ def edit_vendor(request):
         result['edited'] = True
     except Exception as ex:
         print(ex)
-        import pdb; pdb.set_trace()
         result['edited'] = False
     return JsonResponse(result)
+
+def getEmployees(request):
+    emp_data = list(Employee.objects.values())
+    return JsonResponse(emp_data, safe=False)
+
+def getEmployee(emp_id):
+    emp = Employee.objects.filter(id = emp_id)
+    emp = list(emp.values())
+    return emp[0]
+
+def getBidDetails(request):
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        bid = Bid.objects.get(indent_number = int(data['indent_no']))
+        response = {
+            'Indentno': bid.indent_number,
+            'TenderSubject': bid.bid_subject,
+            'BidStatus': get_status(bid),
+            'IndentDepartment': get_indentdept(bid),
+            'BidType': bid.bid_type,
+            'estCost': get_est_cost(bid),
+            'completionperiod' : get_completion_period(bid)
+        }
+        if(bid.bid_type == "OpenTender"):
+            try:
+                qr = QR.objects.get(bid=bid)
+                response['qrdetails'] = {
+                    'qrdate' : qr.qrdate,
+                    'qrapproveddate' : qr.qrapproveddate,
+                    'candmQrMem' : getEmployee(qr.candmMem.id),
+                    'fandaQrMem' : getEmployee(qr.fandaMem.id),
+                    'indentQrMem' : getEmployee(qr.indentMem.id),
+                    'maatvalue' : qr.maatvalue,
+                    'oneordervalue' : qr.oneordervalue,
+                    'twoordervalue' : qr.twoordervalue,
+                    'threeordervalue' : qr.threeordervalue
+                }
+                bod = BODC.objects.get(bid=bid)
+                response['bodcomdetails'] = {
+                    'candmBodMem' : getEmployee(bod.candmMem.id),
+                    'indentBodMem' : getEmployee(bod.indentMem.id),
+                    'fandaBodMem' : getEmployee(bod.fandaMem.id)
+                }
+                tec = TECC.objects.get(bid=bid)
+                response['teccomdetails'] = {
+                    'candmTecMem' : getEmployee(tec.candmMem.id),
+                    'indentTecMem' : getEmployee(tec.indentMem.id),
+                    'fandaTecMem' : getEmployee(tec.fandaMem.id)
+                }
+            except Exception as e:
+                pass
+        return JsonResponse(response)
+    except Exception as ex:
+        print(ex)
+        response = {
+            'status':False
+        }
+        return JsonResponse(response)
+
+def create_qr(bid):
+    qr = QR.objects.get(bid = bid)
+    indent_no = str(bid.indent_number)
+    context = {
+        'ref_no' : get_ref_no(bid),
+        'qr_date' : datetime.strftime(qr.qrdate,"%d.%m.%Y"),
+        'subject' : bid.bid_subject,
+        'cnm_qr_member' : qr.candmMem.name,
+        'cnm_desg' : qr.candmMem.designation,
+        'fna_qr_member' : qr.fandaMem.name,
+        'fna_desg' : qr.fandaMem.designation,
+        'intend_qr_member' : qr.indentMem.name,
+        'intend_desg' : qr.indentMem.designation,
+        'intend_dpt' : get_indentdept(bid),
+        'maat_value' : qr.maatvalue,
+        'one_order_value' : qr.oneordervalue,
+        'two_order_value' : qr.twoordervalue,
+        'three_order_value' : qr.threeordervalue
+    }
+    foldername = "I-"+indent_no+"/"
+    if not os.path.exists(os.path.dirname(foldername)):
+        os.makedirs(os.path.dirname(foldername))
+    filename = foldername+"I-"+indent_no+"_QR_Notesheet"
+    doc = DocxTemplate("Template_QR_Notesheet.docx")
+    doc.render(context,autoescape = True)
+    doc.save(filename+".docx")
+    filename = foldername+"I-"+indent_no+"_QR"
+    doc = DocxTemplate("Template_QR.docx")
+    doc.render(context,autoescape = True)
+    doc.save(filename+".docx")
+    return filename+".docx"
+
+def get_ref_no(bid):
+    if(bid.bid_type == "OpenTender"):
+        et = EprocTender.objects.get(bid = bid)
+        ref_no = "SRLDC/C&M/ET-"+str(et.etNo)+"/I-"+str(bid.indent_number)+"/2019-20"
+        return ref_no
+    else:
+        ref_no = "SRLDC/C&M/I-"+str(bid.indent_number)+"/2019-20"
+        return ref_no
+
+def get_est_cost(bid):
+    if(bid.bid_type == "OpenTender"):
+        otpns = OtProposalNoteSheet.objects.get(bid = bid)
+        return otpns.estCost
+
+def get_completion_period(bid):
+    if(bid.bid_type == "OpenTender"):
+        otpns = OtProposalNoteSheet.objects.get(bid = bid)
+        return otpns.completionperiod
+
+def prepareQR(request):
+    data = json.loads(request.body.decode('utf-8'))
+    bid = Bid.objects.get(indent_number=data["indentNo"])
+    qr  = QR(
+        bid = bid,
+        candmMem = Employee.objects.get(id = data["candmQrMem"]["id"]),
+        indentMem = Employee.objects.get(id = data["indentQrMem"]["id"]),
+        fandaMem = Employee.objects.get(id = data["fandaQrMem"]["id"]),
+        maatvalue = data["maatvalue"],
+        oneordervalue = data["oneordervalue"],
+        twoordervalue = data["twoordervalue"],
+        threeordervalue = data["threeordervalue"]
+    )
+    qr.save()
+    bodc = BODC(
+        bid = bid,
+        candmMem = Employee.objects.get(id = data["candmBodMem"]["id"]),
+        indentMem = Employee.objects.get(id = data["indentBodMem"]["id"]),
+        fandaMem = Employee.objects.get(id = data["fandaBodMem"]["id"])
+    )
+    bodc.save()
+    tecc = TECC(
+        bid = bid,
+        candmMem = Employee.objects.get(id = data["candmTecMem"]["id"]),
+        indentMem = Employee.objects.get(id = data["indentTecMem"]["id"]),
+        fandaMem = Employee.objects.get(id = data["fandaTecMem"]["id"])
+    )
+    tecc.save()
+    res = create_qr(bid)
+    response = send_file_docx(res)
+    changeStatus(bid,"QR to be Approved")
+    return response
+
+def editqr(request):
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        bid = Bid.objects.get(indent_number=data["indentNo"])
+        qr = QR.objects.get(bid=bid)
+        bod =BODC.objects.get(bid=bid)
+        tec = TECC.objects.get(bid=bid)
+        qr.qrapproveddate = getDate(data["qrapproveddate"])
+        qr.qrdate = getDate(data["qrdate"])
+        qr.candmMem = Employee.objects.get(id = data["candmQrMem"]["id"])
+        qr.indentMem = Employee.objects.get(id = data["indentQrMem"]["id"])
+        qr.fandaMem = Employee.objects.get(id = data["fandaQrMem"]["id"])
+        qr.maatvalue = data["maatvalue"]
+        qr.oneordervalue = data["oneordervalue"]
+        qr.twoordervalue = data["twoordervalue"]
+        qr.threeordervalue = data["threeordervalue"]
+        bod.candmMem = Employee.objects.get(id = data["candmBodMem"]["id"])
+        bod.indentMem = Employee.objects.get(id = data["indentBodMem"]["id"])
+        bod.fandaMem = Employee.objects.get(id = data["fandaBodMem"]["id"])
+        tec.candmMem = Employee.objects.get(id = data["candmTecMem"]["id"])
+        tec.indentMem = Employee.objects.get(id = data["indentTecMem"]["id"])
+        tec.fandaMem = Employee.objects.get(id = data["fandaTecMem"]["id"])
+        qr.save()
+        bod.save()
+        tec.save()
+        res = create_qr(bid)
+        return JsonResponse({'edited':True})
+    except Exception as e:
+        import pdb; pdb.set_trace()
+        return JsonResponse({'edited':False})
+
+def prepareOtNIT(bid):
+    otpns = OtProposalNoteSheet.objects.get(bid = bid)
+    qr = QR.objects.get(bid = bid)
+    indent_no = str(bid.indent_number)
+    context = {
+    'indent_no': str(bid.indent_number),
+    'ref_no' : get_ref_no(bid),
+    'issue_dt' : "{{issue_dt}}",
+    'subject': bid.bid_subject,
+    'engineer_incharge': otpns.engineerIncharge,
+    'address_consigne': otpns.addressConsignee,
+    'doc_price': str(getDocPrice(otpns.estCost)),
+    'emd_price': str(getEmdPrice(otpns.estCost)),
+    'doc_price_words': amount2words(getDocPrice(otpns.estCost)),
+    'emd_price_words': amount2words(getDocPrice(otpns.estCost)),
+    'bid_sub_dt': "{{bid_sub_dt}}",
+    'pre_bid_dt': "{{pre_bid_dt}}",
+    'bod_dt': "{{bod_dt}}",
+    'est_cost': str(otpns.estCost),
+    'three_order_value': str(qr.threeordervalue),
+    'two_order_value': str(qr.twoordervalue),
+    'one_order_value': str(qr.oneordervalue),
+    'maat_value': str(qr.maatvalue),
+    'est_cost_words': amount2words(otpns.estCost),
+    'bid_open_days': otpns.bidopendays,
+    'tender_cat': otpns.tenderCategory,
+    'product_cat': otpns.productCategory,
+    'intend_dpt': get_indentdept(bid),
+    }
+    foldername = "I-"+indent_no+"/"
+    if not os.path.exists(os.path.dirname(foldername)):
+        os.makedirs(os.path.dirname(foldername))
+    filename = foldername+"I-"+indent_no+"_Tender_Document"
+    doc = DocxTemplate("Template_Tender_Document.docx")
+    doc.render(context,autoescape = True)
+    doc.save(filename+".docx")
+    return filename+".docx"
+
+def getOtNIT(request):
+    data = json.loads(request.body.decode('utf-8'))
+    bid = Bid.objects.get(indent_number=data["indentNo"])
+    qr =QR.objects.get(bid = bid)
+    qr.qrapproveddate = data["qrapproveddate"]
+    res = prepareOtNIT(bid)
+    response = send_file_docx(res)
+    changeStatus(bid,"NIT prepared for Vetting")
+    return response

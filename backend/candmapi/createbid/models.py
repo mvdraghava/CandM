@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import *
+from datetime import date
 
 def increment_indent_number():
    last_indent = Bid.objects.all().order_by('indent_number').last()
@@ -59,6 +60,7 @@ class OtProposalNoteSheet(models.Model):
     productCategory = models.CharField(max_length=100)
     engineerIncharge = models.CharField(max_length=100)
     addressConsignee = models.CharField(max_length=100)
+    completionperiod = models.FloatField(default=1.0)
 
 class OpenTender(models.Model):
     bid = models.OneToOneField(Bid,on_delete = models.CASCADE,primary_key=True)
@@ -83,4 +85,36 @@ class Vendor(models.Model):
     blacklisted = models.BooleanField()
     remarks = models.CharField(max_length = 1000)
 
+class Employee(models.Model):
+    emp_no = models.CharField( max_length=15 )
+    name = models.CharField( max_length=50)
+    designation = models.CharField(max_length=50)
+
+class Indenter(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE,primary_key=True)
+    indenter = models.ForeignKey(Employee,on_delete = models.CASCADE)
+
+class QR(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE,primary_key=True)
+    candmMem = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='qrcandMem')
+    indentMem = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='qrindentMem')
+    fandaMem = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='qrfandaMem')
+    maatvalue = models.FloatField()
+    oneordervalue = models.FloatField()
+    twoordervalue = models.FloatField()
+    threeordervalue = models.FloatField()
+    qrdate = models.DateField(default = date.today)
+    qrapproveddate = models.DateField(blank=True,default =None,null=True)
+
+class BODC(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE,primary_key=True)
+    candmMem = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='bodcandMem')
+    indentMem = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='bodindentMem')
+    fandaMem = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='bodfandaMem')
+
+class TECC(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE,primary_key=True)
+    candmMem = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='teccandMem')
+    indentMem = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='tecindentMem')
+    fandaMem = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='tecfandaMem')
 # Create your models here.

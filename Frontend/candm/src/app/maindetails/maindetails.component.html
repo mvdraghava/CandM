@@ -11,6 +11,9 @@
           <a mat-button  routerLink="candmmsg">Status</a>
           <a mat-button  routerLink='showfiles'>Files</a>
           <a mat-button  [routerLink]="['uploadfiles']">Upload Files</a>
+          <div fxFlex fxLayout="column">
+            <a mat-button  *ngFor="let menu of nextstageMenu" [routerLink]="menu.link">{{menu.stage}}</a>
+          </div>
         </div>
       </mat-sidenav>
       <mat-sidenav-content>

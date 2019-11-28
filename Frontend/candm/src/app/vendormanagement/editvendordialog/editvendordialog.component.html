@@ -145,8 +145,8 @@
   </div>
 <div mat-dialog-actions>
     <div id="actionbar" fxFlex fxLayout="row" fxLayoutAlign="end ">
-      <button mat-button (click)="cancel()">Close</button>
-      <button mat-raised-button [disabled]="!editVendorForm.valid" color="primary" (click)="edit()" cdkFocusInitial>Edit</button>
+      <button mat-button (click)="cancel()" mat-dialog-close>Close</button>
+      <button mat-raised-button [disabled]="!editVendorForm.valid" color="primary" (click)="edit()" [mat-dialog-close]="true" cdkFocusInitial>Edit</button>
     </div>
   </div>
 </div>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateLteComponent } from './create-lte.component';
+import { CreateLTEComponent } from './create-lte.component';
 
-describe('CreateLteComponent', () => {
-  let component: CreateLteComponent;
-  let fixture: ComponentFixture<CreateLteComponent>;
+describe('CreateLTEComponent', () => {
+  let component: CreateLTEComponent;
+  let fixture: ComponentFixture<CreateLTEComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateLteComponent ]
+      declarations: [ CreateLTEComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreateLteComponent);
+    fixture = TestBed.createComponent(CreateLTEComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

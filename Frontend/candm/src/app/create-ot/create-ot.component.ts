@@ -29,6 +29,7 @@ export class CreateOtComponent implements OnInit {
     amountDetails: this.formbuilder.group({
       estCost: '',
       gstIncl: '',
+      completionperiod: ''
     }),
     noteDetails: this.formbuilder.group({
       noteDate: '',

@@ -26,7 +26,7 @@ export class AddvendordialogComponent implements OnInit {
     products: this.fb.array([['']]),
     services: this.fb.array([['']]),
     works : this.fb.array([['']]),
-    mobilenos: this.fb.array([['',Validators.required]]),
+    mobilenos: this.fb.array([['']]),
     emailids : this.fb.array([['']]),
     msme : ['',Validators.required],
     nsic : ['',Validators.required],
@@ -69,7 +69,7 @@ export class AddvendordialogComponent implements OnInit {
   }
 
   addMobileno() {
-    this.mobilenos.push(new FormControl('',Validators.required));
+    this.mobilenos.push(new FormControl(''));
   }
 
   addWork() {
@@ -77,7 +77,7 @@ export class AddvendordialogComponent implements OnInit {
   }
 
   addEmailid() {
-    this.emailids.push(new FormControl('',Validators.required));
+    this.emailids.push(new FormControl(''));
   }
 
   removeProduct(remove_index: number){

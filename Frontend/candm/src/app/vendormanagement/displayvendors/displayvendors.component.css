@@ -12,6 +12,7 @@ mat-card {
   background-color: aliceblue;
   color: black;
   cursor: pointer;
+  filter: drop-shadow(2px 5px 5px black);
 }
 
 a {

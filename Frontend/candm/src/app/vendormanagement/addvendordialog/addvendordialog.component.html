@@ -130,8 +130,8 @@
   </div>
   <div mat-dialog-actions>
     <div id="actionbar" fxFlex fxLayout="row" fxLayoutAlign="end ">
-      <button mat-button (click)="cancel()">Cancel</button>
-      <button mat-raised-button [disabled]="!addVendorForm.valid" color="primary" (click)="submit()" cdkFocusInitial>Submit</button>
+      <button mat-button (click)="cancel()" mat-dialog-close>Cancel</button>
+      <button mat-raised-button [disabled]="!addVendorForm.valid" color="primary" (click)="submit()" [mat-dialog-close]="true">Submit</button>
     </div>
   </div>
 </div>

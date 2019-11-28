@@ -9,5 +9,10 @@ urlpatterns = [
     path('getfilenames',views.get_filenames),
     path('addvendor',views.add_vendor),
     path('getvendors',views.get_vendors),
-    path('editvendor',views.edit_vendor)
+    path('editvendor',views.edit_vendor),
+    path('getemployees',views.getEmployees),
+    path('getbiddetails',views.getBidDetails),
+    path('prepareqr',views.prepareQR),
+    path('editqr',views.editqr),
+    path('getotNIT',views.getOtNIT)
 ]

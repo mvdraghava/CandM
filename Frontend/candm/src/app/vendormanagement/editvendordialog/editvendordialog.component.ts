@@ -25,11 +25,11 @@ export class EditvendordialogComponent implements OnInit {
   }
 
   editVendorForm = this.fb.group({
-    products: this.fb.array([this.vendor.products]),
-    services: this.fb.array([this.vendor.services]),
-    works : this.fb.array([this.vendor.works]),
-    mobilenos: this.fb.array([this.vendor.mobilenos]),
-    emailids : this.fb.array([this.vendor.emailids]),
+    products: this.fb.array(this.vendor.products),
+    services: this.fb.array(this.vendor.services),
+    works : this.fb.array(this.vendor.works),
+    mobilenos: this.fb.array(this.vendor.mobilenos),
+    emailids : this.fb.array(this.vendor.emailids),
     msme : [this.vendor.msme,Validators.required],
     nsic : [this.vendor.nsic,Validators.required],
     blacklisted : [this.vendor.blacklisted,Validators.required],
@@ -74,7 +74,7 @@ export class EditvendordialogComponent implements OnInit {
   }
 
   addMobileno() {
-    this.mobilenos.push(new FormControl('',Validators.required));
+    this.mobilenos.push(new FormControl(''));
   }
 
   addWork() {
@@ -82,7 +82,7 @@ export class EditvendordialogComponent implements OnInit {
   }
 
   addEmailid() {
-    this.emailids.push(new FormControl('',Validators.required));
+    this.emailids.push(new FormControl(''));
   }
 
   removeProduct(remove_index: number){

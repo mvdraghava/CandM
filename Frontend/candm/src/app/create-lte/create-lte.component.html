@@ -1,1 +1,124 @@
-<p>create-lte works!</p>
+
+  <mat-card>
+    <mat-card-header >
+        <mat-card-title layout="row" layout-align="center center">
+             Create Limited Tender Enquiry ( Manual )
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form id="createlteform" [formGroup]="createLte" fxFlex fxLayout="column" fxLayout.xs="column" autocomplete="off">
+          <h4>Tender Details</h4>
+          <div fxLayoutGap="10px" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start center">
+            <mat-form-field appearance="outline">
+              <mat-label>Indent Number</mat-label>
+              <input  matInput formControlName="indent_no" placeholder="IndentNumber" type="number">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Note Sheet Date</mat-label>
+              <input  matInput formControlName="notesheetdate" [matDatepicker]="picker1" (focus)="picker1.open()" placeholder="Choose Date">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Note By</mat-label>
+              <input  type="text" Placeholder="name" matInput formControlName="noteby" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnemp">
+                <mat-option *ngFor="let emp of notebyFilteredEmployees | async" [value]="emp">
+                  {{emp.name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex = "80%">
+                <mat-label>Tender Subject</mat-label>
+                <textarea  matInput formControlName="subject" placeholder="Tender-Subject"></textarea>
+            </mat-form-field>
+          </div>
+          <h4>Vendors</h4>
+          <div formArrayName="ltevendors" fxLayoutGap="10px" fxLayout="row wrap">
+            <div *ngFor="let ltevendor of ltevendors.controls;let i = index;">
+              <mat-form-field appearance="outline">
+                <mat-label>Vendor {{i+1}}</mat-label>
+                <input  autocompete="false" matInput [formControlName]="i" placeholder="" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnvendor">
+                  <mat-option *ngFor="let vendor of lteFilteredVendors[i
+                  ] | async" [value]="vendor">
+                    {{vendor.name}}
+                  </mat-option>
+                </mat-autocomplete>
+                <button mat-icon-button *ngIf="ltevendors.controls.length != 1" (click)="removeLteVendor(i)" type="button" class="icon" matSuffix><mat-icon>delete</mat-icon></button>
+                <button mat-icon-button type="button" *ngIf = "i == ltevendors.controls.length-1 && i==0" class="icon" (click)="addLteVendor()" matSuffix><mat-icon>add</mat-icon></button>
+              </mat-form-field>
+              <button mat-icon-button type="button" *ngIf = "i == ltevendors.controls.length-1 && i!=0" class="icon" (click)="addLteVendor()"><mat-icon>add</mat-icon></button>
+            </div>
+          </div>
+          <h4>Proposal Details</h4>
+          <div formGroupName="proposalDetails" autocomplete="off" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="10px">
+            <mat-form-field appearance="outline">
+                <mat-label>Indenter Proposal RefNo</mat-label>
+                <input  matInput placeholder="proposal" formControlName="proposalRefNo">
+            </mat-form-field>
+            <mat-form-field appearance="outline" >
+                <mat-label>Proposal Note Date</mat-label>
+                <input matInput [matDatepicker]="picker2" placeholder="Proposal Date"   formControlName="proposalDate" (focus)="picker2.open()">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Proposal Note Recieved on</mat-label>
+                <input matInput [matDatepicker]="picker3" placeholder="Proposal Recieved"   formControlName="proposalRecievedDate" (focus)="picker3.open()">
+                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Indenting Department</mat-label>
+                <input matInput placeholder="Indent Dept" formControlName="indentDept" autocomplete="off">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Indented By</mat-label>
+              <input type="text" Placeholder="name" matInput formControlName="indentedBy" [matAutocomplete]="auto1" autocomplete="off">
+              <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFnemp">
+                <mat-option *ngFor="let emp of indentFilteredEmployees | async" [value]="emp">
+                  {{emp.name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <h4>Amount Details</h4>
+          <div formGroupName="amountDetails" autocomplete="off" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="10px">
+            <mat-form-field appearance="outline">
+                <mat-label>Estimated Cost</mat-label>
+                <input matInput placeholder="0" type="number" formControlName="estCost">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Completion Period</mat-label>
+                <input matInput placeholder="" formControlName="completionperiod">
+            </mat-form-field>
+            <div fxLayoutGap="15px" fxLayout="row wrap" fxLayoutAlign="center center">
+              <mat-label><h3>GST Inclusive</h3></mat-label>
+              <mat-radio-group fxLayoutGap="10px" fxLayout="row wrap" aria-labelledby="gstIncl" formControlName="gstIncl">
+                <mat-radio-button   [value]="true">
+                  YES
+                </mat-radio-button>
+                <mat-radio-button  [value]="false">
+                    NO
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div fxLayoutGap="15px" fxLayout="row wrap" fxLayoutAlign="center center">
+              <mat-label><h3>EMD Waived Off</h3></mat-label>
+              <mat-radio-group fxLayoutGap="10px" fxLayout="row wrap" aria-labelledby="emdwaivedoff" formControlName="emdwaivedoff">
+                <mat-radio-button   [value]="true">
+                  YES
+                </mat-radio-button>
+                <mat-radio-button  [value]="false">
+                    NO
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+          <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="end center" fxLayoutGap="10px">
+            <button [disabled]="!this.createLte.valid" mat-raised-button color="primary">Submit</button>
+          </div>
+        </form>
+    </mat-card-content>
+  </mat-card>

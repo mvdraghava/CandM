@@ -1,0 +1,24 @@
+<div fxFlex fxFlexAlign="center center">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Prepare NIT for Vetting
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="prepareotNITForm">
+        <div class="">
+          <mat-form-field appearance="outline">
+            <mat-label>QR Approved Date</mat-label>
+            <input matInput formControlName="qrapproveddate" [matDatepicker]="picker1" (focus)="picker1.open()" placeholder="Choose Date">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <button mat-raised-button [disabled]="!this.prepareotNITForm.valid" (click)="getOtNIT()" color="primary">Submit</button>
+      </form>
+
+    </mat-card-content>
+  </mat-card>
+</div>

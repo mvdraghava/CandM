@@ -1,0 +1,122 @@
+<div fxFlex fxFlexAlign="center center">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Prepare QR
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="qrForm">
+        <div fxLayout="row wrap" fxLayoutGap="25px">
+          <mat-form-field appearance="outline">
+            <mat-label>CandM QR Member</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="candmQrMem" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of candmQrFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Indent QR Member</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="indentQrMem" [matAutocomplete]="auto1">
+            <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of indentQrFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>FandA QR Member</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="fandaQrMem" [matAutocomplete]="auto2">
+            <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of fandaQrFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="boddiv" fxLayout="row wrap" fxLayoutGap="25px">
+          <mat-form-field appearance="outline">
+            <mat-label>CandM BOD Member</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="candmBodMem" [matAutocomplete]="auto3">
+            <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of candmBodFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Indent BOD Member</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="indentBodMem" [matAutocomplete]="auto4">
+            <mat-autocomplete #auto4="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of indentBodFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>FandA BOD Member</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="fandaBodMem" [matAutocomplete]="auto5">
+            <mat-autocomplete #auto5="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of fandaBodFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="tecdiv" fxLayout="row wrap" fxLayoutGap="25px">
+          <mat-form-field appearance="outline">
+            <mat-label>CandM TEC Member</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="candmTecMem" [matAutocomplete]="auto6">
+            <mat-autocomplete #auto6="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of candmTecFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Indent TEC Member</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="indentTecMem" [matAutocomplete]="auto7">
+            <mat-autocomplete #auto7="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of indentTecFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>FandA TEC Member</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="fandaTecMem" [matAutocomplete]="auto8">
+            <mat-autocomplete #auto8="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of fandaTecFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <p>Estimated Cost : Rs. {{estCost}}</p>
+        <div fxLayout="row wrap" fxLayoutGap="15px">
+
+          <mat-form-field appearance="outline" >
+            <mat-label>MAAT Value in Lakhs</mat-label>
+            <input matInput placeholder="" formControlName="maatvalue">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>One order Value</mat-label>
+            <input matInput placeholder="" formControlName="oneordervalue">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Two Orders Value</mat-label>
+            <input matInput placeholder="" formControlName="twoordervalue">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Three Orders Value</mat-label>
+            <input matInput placeholder="" formControlName="threeordervalue">
+          </mat-form-field>
+        </div>
+        <button mat-raised-button [disabled]="!this.qrForm.valid" (click)="getQR()" color="primary">Submit</button>
+      </form>
+
+    </mat-card-content>
+  </mat-card>
+</div>

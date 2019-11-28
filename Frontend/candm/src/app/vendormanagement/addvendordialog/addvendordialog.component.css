@@ -1,4 +1,4 @@
-::ng-deep .mat-dialog-container {
+/**::ng-deep .mat-dialog-container {
 }
 
 ::ng-deep .mat-dialog-title {
@@ -14,7 +14,7 @@
 
 ::ng-deep .mat-form-field-wrapper {
     padding-bottom: 0px;
-}
+}**/
 
 h5 {
   margin: 5px;

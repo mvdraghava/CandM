@@ -52,7 +52,10 @@ export class DisplayvendorsComponent implements OnInit, OnChanges{
 
     dialogRef.afterClosed().subscribe(
       result => {
-        this.edited.emit("Edited");
+        if(result){
+            this.edited.emit("Edited");
+        }
+
       }
     );
   }
