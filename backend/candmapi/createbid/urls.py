@@ -14,5 +14,6 @@ urlpatterns = [
     path('getbiddetails',views.getBidDetails),
     path('prepareqr',views.prepareQR),
     path('editqr',views.editqr),
-    path('getotNIT',views.getOtNIT)
+    path('getotNIT',views.getOtNIT),
+    path('createlte',views.createlte)
 ]

@@ -19,6 +19,7 @@ export class CreatelteserviceService {
 
   private getemployeesurl = environment.apiurl + 'getemployees';
   private getvendorsurl = environment.apiurl + 'getvendors';
+  private createlteurl = environment.apiurl + 'createlte';
 
   getvendors(): Observable<Vendor[]> {
     return this.http.get<Vendor[]>(this.getvendorsurl);
@@ -28,5 +29,7 @@ export class CreatelteserviceService {
     return this.http.get<Employee[]>(this.getemployeesurl);
   }
 
-
+  createlte(data): Observable<Blob> {
+    return this.http.post(this.createlteurl,data,{responseType: 'blob'})
+  }
 }

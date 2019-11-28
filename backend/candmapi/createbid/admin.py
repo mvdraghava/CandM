@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from .models import Bid,OpenTender,EprocTender,Proposal,OtProposalNoteSheet,BidStatus,Vendor,Employee,TECC,BODC,QR
+from .models import *
 
 
 admin.site.register([OpenTender,Bid,EprocTender,Proposal,OtProposalNoteSheet,BidStatus,Vendor,Employee,
-TECC,QR,BODC])
+TECC,QR,BODC,LteDetails,VendorBid])
 
 # Register your models here.

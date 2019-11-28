@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 import { Vendor } from './vendor';
 import { Employee } from '../employee';
 import {map, startWith} from 'rxjs/operators';
-
+import { saveAs } from 'file-saver';
 import {CreatelteserviceService} from './createlteservice.service';
 
 @Component({
@@ -39,7 +39,6 @@ export class CreateLteComponent implements OnInit {
     amountDetails: this.fb.group({
       estCost: ['',Validators.required],
       gstIncl: ['',Validators.required],
-      completionperiod: ['',Validators.required],
       emdwaivedoff : ['',Validators.required]
     }),
     ltevendors: this.fb.array([['',[Validators.required, this.validateVendor]]])
@@ -148,5 +147,17 @@ export class CreateLteComponent implements OnInit {
         valid: false
       }
     };
+  }
+
+  preparelte() {
+    this.ltes.createlte(this.createLte.value).subscribe(
+      data => {
+        saveAs(data, 'I_'+this.createLte.controls.indent_no.value.toString()+'_NoteSheet.docx' );
+        console.log("downloaded")
+      },
+      error => {
+        window.alert('Some Error has occured');
+      }
+    );
   }
 }

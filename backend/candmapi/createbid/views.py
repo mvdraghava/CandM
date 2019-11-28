@@ -15,34 +15,8 @@ from .models import  OpenTender,Bid,OpenTender,EprocTender,Proposal,OtProposalNo
 from .models import Vendor,Employee,TECC,BODC,QR
 from .functions_need import send_file_docx, amount2words
 from django.forms.models import model_to_dict
+from .lteviews import *
 
-def getDate(datestr):
-    try:
-        datestr = datestr.split('T')[0]
-        d1 = datetime.strptime(datestr,'%Y-%m-%d')
-        return d1
-    except Exception as e:
-        return None
-
-
-def getDocPrice(est_cost):
-    doc_price = 0
-    if est_cost<=2500000:
-        doc_price = 1250
-    elif est_cost>2500000 and est_cost<=5000000:
-        doc_price = 2000
-    elif est_cost>5000000 and est_cost<=10000000:
-        doc_price = 2500
-    elif est_cost>10000000 and est_cost<=20000000:
-        doc_price = 5000
-    elif est_cost>20000000 and est_cost<=50000000:
-        doc_price = 12500
-    elif est_cost>50000000:
-        doc_price = 25000
-    return doc_price
-
-def getEmdPrice(est_cost):
-    return round(math.ceil((est_cost*0.02)/1000.0)*1000.0)
 
 def create_ot_notesheet(data):
     context = {
@@ -103,17 +77,7 @@ def create_ot_notesheet(data):
     return filename+".docx"
 
 
-def changeStatus(bid,status):
-    try:
-        bids = BidStatus.objects.get(bid=bid)
-        bids.bid_status = status
-        bids.save()
-    except:
-        bids  =  BidStatus(
-            bid = bid,
-            bid_status = status
-        )
-        bids.save()
+
 
 def create_ot(request):
     data = json.loads(request.body.decode('utf-8'))
@@ -136,7 +100,6 @@ def create_ot(request):
         indentDept = data['proposalDetails']['indentDept']
     )
     proposal.save()
-    import pdb; pdb.set_trace()
     pns = OtProposalNoteSheet(
         bid = bid,
         estCost = data['amountDetails']['estCost'],
@@ -365,14 +328,6 @@ def create_qr(bid):
     doc.save(filename+".docx")
     return filename+".docx"
 
-def get_ref_no(bid):
-    if(bid.bid_type == "OpenTender"):
-        et = EprocTender.objects.get(bid = bid)
-        ref_no = "SRLDC/C&M/ET-"+str(et.etNo)+"/I-"+str(bid.indent_number)+"/2019-20"
-        return ref_no
-    else:
-        ref_no = "SRLDC/C&M/I-"+str(bid.indent_number)+"/2019-20"
-        return ref_no
 
 def get_est_cost(bid):
     if(bid.bid_type == "OpenTender"):

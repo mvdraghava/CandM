@@ -89,10 +89,6 @@
                 <mat-label>Estimated Cost</mat-label>
                 <input matInput placeholder="0" type="number" formControlName="estCost">
             </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Completion Period</mat-label>
-                <input matInput placeholder="" formControlName="completionperiod">
-            </mat-form-field>
             <div fxLayoutGap="15px" fxLayout="row wrap" fxLayoutAlign="center center">
               <mat-label><h3>GST Inclusive</h3></mat-label>
               <mat-radio-group fxLayoutGap="10px" fxLayout="row wrap" aria-labelledby="gstIncl" formControlName="gstIncl">
@@ -117,7 +113,7 @@
             </div>
           </div>
           <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="end center" fxLayoutGap="10px">
-            <button [disabled]="!this.createLte.valid" mat-raised-button color="primary">Submit</button>
+            <button [disabled]="!this.createLte.valid" (click)="preparelte()" mat-raised-button color="primary">Submit</button>
           </div>
         </form>
     </mat-card-content>

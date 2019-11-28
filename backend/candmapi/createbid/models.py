@@ -117,4 +117,17 @@ class TECC(models.Model):
     candmMem = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='teccandMem')
     indentMem = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='tecindentMem')
     fandaMem = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='tecfandaMem')
+
+class LteDetails(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE,primary_key=True)
+    estCost = models.FloatField()
+    gstIncl = models.BooleanField()
+    emdwaivedoff = models.BooleanField()
+    noteby = models.ForeignKey(Employee,on_delete = models.CASCADE)
+    notedate = models.DateField()
+
+class VendorBid(models.Model):
+    bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
+    vendor = models.ForeignKey(Vendor,on_delete = models.CASCADE)
+
 # Create your models here.
