@@ -9,7 +9,6 @@ mat-card {
   max-height: 350px;
   background-color: aliceblue;
   color: black;
-  filter: drop-shadow(2px 5px 5px black);
 }
 
 a {

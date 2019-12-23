@@ -14,6 +14,7 @@ export class Vendor {
   msme: boolean;
   nsic : boolean;
   blacklisted : boolean;
+  cpp : boolean;
   remarks : string;
 
   constructor() {

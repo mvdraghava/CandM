@@ -82,6 +82,7 @@ class Vendor(models.Model):
     works = ArrayField(models.CharField(max_length = 100))
     msme = models.BooleanField()
     nsic = models.BooleanField()
+    cpp = models.BooleanField(default=False)
     blacklisted = models.BooleanField()
     remarks = models.CharField(max_length = 1000)
 
@@ -120,6 +121,8 @@ class TECC(models.Model):
 
 class LteDetails(models.Model):
     bid = models.OneToOneField(Bid,on_delete = models.CASCADE,primary_key=True)
+    tendertype = models.CharField(max_length=50,default="supply")
+    completionperiod = models.CharField(max_length=100,default="45 Days")
     estCost = models.FloatField()
     gstIncl = models.BooleanField()
     emdwaivedoff = models.BooleanField()
@@ -129,5 +132,85 @@ class LteDetails(models.Model):
 class VendorBid(models.Model):
     bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
     vendor = models.ForeignKey(Vendor,on_delete = models.CASCADE)
+
+class LteEprocDetails(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE,primary_key=True)
+    estCost = models.FloatField()
+    gstIncl = models.BooleanField()
+    emdwaivedoff = models.BooleanField()
+    noteby = models.ForeignKey(Employee,on_delete = models.CASCADE)
+    notedate = models.DateField()
+
+class LteGeneralConditions(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE, primary_key=True)
+    proposalnoteapproveddt = models.DateField()
+    boddt = models.DateField()
+    specialconditions = models.BooleanField()
+    scopeofwork = models.BooleanField()
+    scopeofworkText = models.CharField(max_length=50000)
+    emd = models.BooleanField(default=False)
+    emdText = models.CharField(max_length = 50000,default=' ')
+    paymentterms = models.BooleanField()
+    paymenttermsText = models.CharField(max_length=50000)
+    contractperiod = models.BooleanField()
+    contractperiodText = models.CharField(max_length=50000,default=' ')
+    deliveryperiod = models.BooleanField()
+    delivaryperiodText = models.CharField(max_length=50000)
+    pricebasis = models.BooleanField()
+    pricebasisText = models.CharField(max_length=50000)
+    validity = models.BooleanField()
+    validityText = models.CharField(max_length=50000)
+    taxesandduties = models.BooleanField()
+    taxesanddutiestext = models.CharField(max_length=50000)
+    warranty = models.BooleanField()
+    warrantyText = models.CharField(max_length=50000)
+    cpg = models.BooleanField()
+    cpgText = models.CharField(max_length=50000)
+    sd = models.BooleanField()
+    sdText = models.CharField(max_length=50000)
+    ld = models.BooleanField()
+    ldText = models.CharField(max_length=50000)
+    qv = models.BooleanField()
+    qvText = models.CharField(max_length=50000)
+    arbitration = models.BooleanField()
+    arbitrationText = models.CharField(max_length=50000)
+    officerincharge = models.BooleanField()
+    officerinchargeText = models.CharField(max_length=50000)
+
+class ImpDates(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE, primary_key=True)
+    issueddate = models.DateField()
+    boddate = models.DateField(blank=True,default =None,null=True)
+    bidsubdate = models.DateField(blank=True,default =None,null=True)
+    prebiddate = models.DateField(blank=True,default =None,null=True)
+
+class FirstImpDates(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE, primary_key=True)
+    issueddate = models.DateField()
+    boddate = models.DateField(blank=True,default =None,null=True)
+    bidsubdate = models.DateField(blank=True,default =None,null=True)
+    prebiddate = models.DateField(blank=True,default =None,null=True)
+
+class Corrigenda(models.Model):
+    bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
+    description = models.CharField(max_length=50000)
+    reason = models.CharField(max_length=50000)
+    issueddate = models.DateField()
+    boddate = models.DateField(blank=True,default =None,null=True)
+    bidsubdate = models.DateField(blank=True,default =None,null=True)
+    prebiddate = models.DateField(blank=True,default =None,null=True)
+    issuedby = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='issuedby')
+
+class participatedBidders(models.Model):
+    bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
+    vendor = models.ForeignKey(Vendor,on_delete = models.CASCADE)
+    remarks = models.CharField(max_length=10000)
+    emddetail = models.CharField(max_length=100,default='emdwaivedoff')
+    docfee = models.CharField(max_length=100,default='free')
+
+class biddersquotedetails(models.Model):
+    bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
+    vendor = models.ForeignKey(Vendor,on_delete = models.CASCADE)
+    quoteamount = models.FloatField()
 
 # Create your models here.

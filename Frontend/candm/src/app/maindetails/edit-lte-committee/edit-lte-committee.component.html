@@ -1,0 +1,82 @@
+<div fxFlex fxFlexAlign="center center">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Edit LTE Committee Members
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="editcommiteForm">
+        <div fxLayout="row wrap" fxLayoutGap="25px">
+          <mat-form-field appearance="outline">
+            <mat-label>BOD Date</mat-label>
+            <input matInput formControlName="bodDate" [matDatepicker]="picker1" (focus)="picker1.open()" placeholder="Choose Date">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="boddiv" fxLayout="row wrap" fxLayoutGap="25px">
+          <mat-form-field appearance="outline">
+            <mat-label>CandM BOD Member</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="candmBodMem" [matAutocomplete]="auto3">
+            <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of candmBodFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Indent BOD Member</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="indentBodMem" [matAutocomplete]="auto4">
+            <mat-autocomplete #auto4="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of indentBodFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>FandA BOD Member</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="fandaBodMem" [matAutocomplete]="auto5">
+            <mat-autocomplete #auto5="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of fandaBodFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="tecdiv" fxLayout="row wrap" fxLayoutGap="25px">
+          <mat-form-field appearance="outline">
+            <mat-label>CandM TEC Member</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="candmTecMem" [matAutocomplete]="auto6">
+            <mat-autocomplete #auto6="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of candmTecFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Indent TEC Member</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="indentTecMem" [matAutocomplete]="auto7">
+            <mat-autocomplete #auto7="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of indentTecFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>FandA TEC Member</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="fandaTecMem" [matAutocomplete]="auto8">
+            <mat-autocomplete #auto8="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of fandaTecFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <button mat-raised-button [disabled]="!this.editcommiteForm.valid" (click)="editCommitte()" color="primary">Edit</button>
+      </form>
+
+    </mat-card-content>
+  </mat-card>
+</div>

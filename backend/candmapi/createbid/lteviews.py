@@ -10,61 +10,13 @@ from datetime import datetime
 from datetime import date
 from django.views.static import serve
 
-from .views import *
 
 import json
 from .models import  OpenTender,Bid,OpenTender,EprocTender,Proposal,OtProposalNoteSheet,BidStatus
 from .models import Vendor,Employee,TECC,BODC,QR,Indenter
 from .models import *
-from .functions_need import send_file_docx, amount2words
+from .functions_need import *
 from django.forms.models import model_to_dict
-
-def getDate(datestr):
-    try:
-        datestr = datestr.split('T')[0]
-        d1 = datetime.strptime(datestr,'%Y-%m-%d')
-        return d1
-    except Exception as e:
-        return None
-
-def changeStatus(bid,status):
-    try:
-        bids = BidStatus.objects.get(bid=bid)
-        bids.bid_status = status
-        bids.save()
-    except:
-        bids  =  BidStatus(
-            bid = bid,
-            bid_status = status
-        )
-        bids.save()
-
-def get_ref_no(bid):
-    if(bid.bid_type == "OpenTender"):
-        et = EprocTender.objects.get(bid = bid)
-        ref_no = "SRLDC/C&M/ET-"+str(et.etNo)+"/I-"+str(bid.indent_number)+"/2019-20"
-        return ref_no
-    else:
-        ref_no = "SRLDC/C&M/I-"+str(bid.indent_number)+"/2019-20"
-        return ref_no
-def getDocPrice(est_cost):
-    doc_price = 0
-    if est_cost<=2500000:
-        doc_price = 1250
-    elif est_cost>2500000 and est_cost<=5000000:
-        doc_price = 2000
-    elif est_cost>5000000 and est_cost<=10000000:
-        doc_price = 2500
-    elif est_cost>10000000 and est_cost<=20000000:
-        doc_price = 5000
-    elif est_cost>20000000 and est_cost<=50000000:
-        doc_price = 12500
-    elif est_cost>50000000:
-        doc_price = 25000
-    return doc_price
-
-def getEmdPrice(est_cost):
-    return round(math.ceil((est_cost*0.02)/1000.0)*1000.0)
 
 
 def createlte(request):
@@ -90,6 +42,8 @@ def createlte(request):
     indenter.save()
     ltedetails = LteDetails(
         bid = bid,
+        tendertype = data["tendertype"],
+        completionperiod = str(data["completionperiod"]) + " " + data["durationmeasured"],
         estCost = data["amountDetails"]["estCost"],
         gstIncl = data["amountDetails"]["gstIncl"],
         emdwaivedoff = data["amountDetails"]["emdwaivedoff"],
@@ -162,3 +116,446 @@ def prepare_lte_notesheet(bid):
     doc.render(context,autoescape=True)
     doc.save(filename+".docx")
     return filename+".docx"
+
+def get_lte_conditions(ltegc):
+    conditions = []
+    if(ltegc.scopeofwork):
+        cond = {
+            'name': 'Scope of Work',
+            'text' : ltegc.scopeofworkText
+        }
+        conditions.append(cond)
+    if(ltegc.emd):
+        cond = {
+            'name': 'Terms of Payment',
+            'text' : ltegc.emdText
+        }
+        conditions.append(cond)
+    if(ltegc.paymentterms):
+        cond = {
+            'name': 'Terms of Payment',
+            'text' : ltegc.paymenttermsText
+        }
+        conditions.append(cond)
+    if(ltegc.contractperiod):
+        cond = {
+            'name': 'Contract Period',
+            'text' : ltegc.contractperiodText
+        }
+        conditions.append(cond)
+    if(ltegc.deliveryperiod):
+        cond = {
+            'name': 'Delivery Period',
+            'text' : ltegc.delivaryperiodText
+        }
+        conditions.append(cond)
+    if(ltegc.pricebasis):
+        cond = {
+            'name': 'Price Basis',
+            'text' : ltegc.pricebasisText
+        }
+        conditions.append(cond)
+    if(ltegc.validity):
+        cond = {
+            'name': 'Validity',
+            'text' : ltegc.validityText
+        }
+        conditions.append(cond)
+    if(ltegc.taxesandduties):
+        cond = {
+            'name': 'Taxes and Duties',
+            'text' : ltegc.taxesanddutiestext
+        }
+        conditions.append(cond)
+    if(ltegc.warranty):
+        cond = {
+            'name': 'Warranty',
+            'text' : ltegc.warrantyText
+        }
+        conditions.append(cond)
+    if(ltegc.cpg):
+        cond = {
+            'name': 'Contract Performance Guarntee',
+            'text' : ltegc.cpgText
+        }
+        conditions.append(cond)
+    if(ltegc.sd):
+        cond = {
+            'name': 'Security Deposit',
+            'text' : ltegc.sdText
+        }
+        conditions.append(cond)
+    if(ltegc.ld):
+        cond = {
+            'name': 'Liquidity Damage',
+            'text' : ltegc.ldText
+        }
+        conditions.append(cond)
+    if(ltegc.qv):
+        cond = {
+            'name': 'Quantity Variation',
+            'text' : ltegc.qvText
+        }
+        conditions.append(cond)
+    if(ltegc.arbitration):
+        cond = {
+            'name': 'Arbitration',
+            'text' : ltegc.arbitrationText
+        }
+        conditions.append(cond)
+    if(ltegc.officerincharge):
+        cond = {
+            'name': 'Scope of Work',
+            'text' : ltegc.officerinchargeText
+        }
+        conditions.append(cond)
+
+    return conditions
+
+
+def prepare_lte_m_nit_doc(bid):
+    ltegc = LteGeneralConditions.objects.get(bid = bid)
+    indent_no = str(bid.indent_number)
+    conditions = get_lte_conditions(ltegc)
+    context = {
+        'bod_date' : datetime.strftime(ltegc.boddt,"%d.%m.%Y"),
+        'issue_date' : '{{issue_date}}',
+        'ref_no' : get_ref_no(bid),
+        'subject' : bid.bid_subject,
+        'special_conditions' : ltegc.specialconditions,
+        'conditions' : conditions,
+        'li': len(conditions)+1
+    }
+    foldername = "I-"+indent_no+"/"
+    if not os.path.exists(os.path.dirname(foldername)):
+        os.makedirs(os.path.dirname(foldername))
+    filename = foldername+"I-"+indent_no+"_LTE_NIT"
+    doc = DocxTemplate("Template_LTE_M_NIT.docx")
+    doc.render(context,autoescape=True)
+    doc.save(filename+".docx")
+    return filename+".docx"
+
+def prepare_lte_m_nit(request):
+    data = json.loads(request.body.decode('utf-8'))
+    bid  = Bid.objects.get(indent_number = data['indentNo'])
+    bodc = BODC(
+        bid = bid,
+        candmMem = Employee.objects.get(id = data["candmBodMem"]["id"]),
+        indentMem = Employee.objects.get(id = data["indentBodMem"]["id"]),
+        fandaMem = Employee.objects.get(id = data["fandaBodMem"]["id"])
+    )
+    bodc.save()
+    tecc = TECC(
+        bid = bid,
+        candmMem = Employee.objects.get(id = data["candmTecMem"]["id"]),
+        indentMem = Employee.objects.get(id = data["indentTecMem"]["id"]),
+        fandaMem = Employee.objects.get(id = data["fandaTecMem"]["id"])
+    )
+    tecc.save()
+    ltegc = LteGeneralConditions(
+        bid = bid,
+        proposalnoteapproveddt = getDate(data["proposalapprovedDate"]),
+        boddt = getDate(data["bodDate"]),
+        specialconditions = data["specialconditions"],
+        scopeofwork = data["scopeofwork"],
+        scopeofworkText = data["scopeofworkText"] if data["scopeofwork"] else ' ',
+        emd = data["emd"],
+        emdText = data["emdText"] if data["emd"] else '',
+        paymentterms = data["paymentterms"],
+        paymenttermsText = data["paymenttermsText"] if data["paymentterms"] else ' ',
+        contractperiod = data["contractperiod"],
+        contractperiodText = data["contractperiodText"] if data["contractperiod"] else ' ',
+        deliveryperiod = data["deliveryperiod"],
+        delivaryperiodText = data["delivaryperiodText"] if data["deliveryperiod"] else ' ',
+        pricebasis = data["pricebasis"],
+        pricebasisText = data["pricebasisText"] if data["pricebasis"] else ' ',
+        validity = data["validity"],
+        validityText = data["validityText"] if data["validity"] else '',
+        taxesandduties = data["taxesandduties"],
+        taxesanddutiestext = data["taxesanddutiestext"] if data["taxesandduties"] else '',
+        warranty = data["warranty"],
+        warrantyText = data["warrantyText"] if data["warranty"] else '',
+        cpg = data["cpg"],
+        cpgText = data["cpgText"] if data["cpg"] else '',
+        sd = data["sd"],
+        sdText = data["sdText"] if data["sd"] else '',
+        ld = data["ld"],
+        ldText = data["ldText"] if data["ld"] else '',
+        qv = data["qv"],
+        qvText = data["qvText"] if data["qv"] else '',
+        arbitration = data["arbitration"],
+        arbitrationText = data["arbitrationText"] if data["arbitration"] else '',
+        officerincharge = data["officerincharge"],
+        officerinchargeText = data["officerinchargeText"] if data["officerincharge"] else ''
+    )
+    ltegc.save()
+    res = prepare_lte_m_nit_doc(bid)
+    response = send_file_docx(res)
+    changeStatus(bid,"NIT prepared for Vetting")
+    return response
+
+def editltecommittee(request):
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        bid = Bid.objects.get(indent_number=data["indentNo"])
+        ltegc = LteGeneralConditions.objects.get(bid = bid)
+        bod =BODC.objects.get(bid=bid)
+        tec = TECC.objects.get(bid=bid)
+        bod.candmMem = Employee.objects.get(id = data["candmBodMem"]["id"])
+        bod.indentMem = Employee.objects.get(id = data["indentBodMem"]["id"])
+        bod.fandaMem = Employee.objects.get(id = data["fandaBodMem"]["id"])
+        tec.candmMem = Employee.objects.get(id = data["candmTecMem"]["id"])
+        tec.indentMem = Employee.objects.get(id = data["indentTecMem"]["id"])
+        tec.fandaMem = Employee.objects.get(id = data["fandaTecMem"]["id"])
+        bod.save()
+        tec.save()
+        ltegc.boddt = getDate(data["bodDate"])
+        ltegc.save()
+        return JsonResponse({'edited':True})
+    except Exception as e:
+        x = 1
+        return JsonResponse({'edited':False})
+
+def issuelteNIT(request):
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        bid  = Bid.objects.get(indent_number = data['indentNo'])
+        impdates = ImpDates(
+            bid = bid,
+            issueddate = getDate(data["issueDate"]),
+            boddate = getDate(data["bodDate"]),
+            bidsubdate = getDate(data["bodDate"])
+        )
+        impdates.save()
+        firstimpdates = FirstImpDates(
+            bid = bid,
+            issueddate = getDate(data["issueDate"]),
+            boddate = getDate(data["bodDate"]),
+            bidsubdate = getDate(data["bodDate"])
+        )
+        firstimpdates.save()
+        ltegc = LteGeneralConditions.objects.get(bid = bid)
+        ltegc.boddt = getDate(data["bodDate"])
+        ltegc.save()
+        changeStatus(bid,"NIT Issued")
+        return JsonResponse({'issued':True})
+    except Exception as e:
+        x = 1
+        import pdb; pdb.set_trace()
+        return JsonResponse({'issued':False})
+
+def preparedatecorrigendumfiles(corrigendum):
+    indent_no = str(corrigendum.bid.indent_number)
+    corrigenda = Corrigenda.objects.filter(bid = corrigendum.bid)
+    corri_no = str(len(corrigenda))
+    note_by = {
+        'name' : corrigendum.issuedby.name,
+        'desg' : corrigendum.issuedby.designation
+    }
+    context = {
+        'corri_issue_dt' : datetime.strftime(corrigendum.issueddate,"%d.%m.%Y"),
+        'ref_no' : get_ref_no(corrigendum.bid),
+        'subject' : corrigendum.bid.bid_subject,
+        'bid_sub_ext_date' : datetime.strftime(corrigendum.bidsubdate,"%d.%m.%Y"),
+        'bid_open_ext_date' : datetime.strftime(corrigendum.boddate,"%d.%m.%Y"),
+        'note_by' : note_by,
+        'corri_no' : corri_no,
+    }
+    foldername = "I-"+indent_no+"/"
+    if not os.path.exists(os.path.dirname(foldername)):
+        os.makedirs(os.path.dirname(foldername))
+    filename = foldername+"I-"+indent_no+"_corrigendum"+corri_no
+    doc = DocxTemplate("Template_date_corrigendum.docx")
+    doc.render(context,autoescape=True)
+    doc.save(filename+".docx")
+    filename = foldername+"I-"+indent_no+"_notebodext"+corri_no
+    doc = DocxTemplate("Template_BODext_note.docx")
+    doc.render(context,autoescape=True)
+    doc.save(filename+".docx")
+    return filename+".docx"
+
+
+def datecorrigendum(request):
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        bid  = Bid.objects.get(indent_number = data['indentNo'])
+        impdates = ImpDates.objects.get(bid = bid)
+        if bid.bid_type == 'LTE':
+            corrigendum = Corrigenda(
+                bid = bid,
+                description = "Date Corrigendum",
+                reason = data["reason"],
+                issueddate = getDate(data["issueDate"]),
+                boddate = getDate(data["bodDate"]),
+                bidsubdate = getDate(data["bodDate"]),
+                issuedby = Employee.objects.get(id = data["issuedby"]["id"])
+            )
+            corrigendum.save()
+            impdates.boddate =  getDate(data["bodDate"])
+            impdates.save()
+            preparedatecorrigendumfiles(corrigendum)
+        return JsonResponse({'issued':True})
+    except Exception as e:
+        x = 1
+        return JsonResponse({'issued':False})
+
+def prepare_lte_tec(bid):
+    indent_no = str(bid.indent_number)
+    ltegc = LteGeneralConditions.objects.get(bid = bid)
+    ltedetails = LteDetails.objects.get(bid = bid)
+    impdates = ImpDates.objects.get(bid = bid)
+    firstimpdates = FirstImpDates.objects.get(bid = bid)
+    pbs = participatedBidders.objects.filter(bid = bid)
+    bqs = biddersquotedetails.objects.filter(bid = bid)
+    ltevendors = VendorBid.objects.filter(bid = bid)
+    proposal = Proposal.objects.get(bid = bid)
+    bodc = BODC.objects.get(bid = bid)
+    tecc = TECC.objects.get(bid = bid)
+    corrigendadetails = Corrigenda.objects.filter(bid = bid)
+    corrigendadetails = [obj for obj in corrigendadetails]
+    if len(corrigendadetails):
+        corrigenda_b = True
+        corrigenda = []
+        for ind,corrigendum in enumerate(corrigendadetails):
+            corri = {
+                'title' : 'Corrigendum '+str(ind+1),
+                'issued_dt' : datetime.strftime(corrigendum.issueddate,"%d.%m.%Y"),
+                'description' : corrigendum.description,
+                'reason' : corrigendum.reason
+            }
+            corrigenda.append(corri)
+    else:
+        corrigenda_b = False
+        corrigenda = []
+    indent_bod_mem = {
+        'name' : bodc.indentMem.name,
+        'desg' : bodc.indentMem.designation
+    }
+    cnm_bod_mem = {
+        'name' : bodc.candmMem.name,
+        'desg' : bodc.candmMem.designation
+    }
+    fna_bod_mem = {
+        'name' : bodc.fandaMem.name,
+        'desg' : bodc.fandaMem.designation
+    }
+    indent_tec_mem = {
+        'name' : tecc.indentMem.name,
+        'desg' : tecc.indentMem.designation
+    }
+    cnm_tec_mem = {
+        'name' : tecc.candmMem.name,
+        'desg' : tecc.candmMem.designation
+    }
+    fna_tec_mem = {
+        'name' : tecc.fandaMem.name,
+        'desg' : tecc.fandaMem.designation
+    }
+    bqs2 = list(bqs)
+    bqs1 = sorted(bqs2,key = lambda obj1: obj1.quoteamount)
+    l1bq = bqs1[0]
+    submitted_vendors = []
+    for pb in pbs:
+        bqvn = bqs.get(vendor = pb.vendor)
+        s_vendor = {
+            'name' : pb.vendor.name,
+            'quoteamnt' : bqvn.quoteamount,
+            'status' : 'L'+str(bqs1.index(bqvn)+1),
+            'remarks' : pb.remarks
+        }
+        submitted_vendors.append(s_vendor)
+    if l1bq.quoteamount<ltedetails.estCost:
+        l1_est_diff = 'less'
+        l1_est_percent = round(((ltedetails.estCost-l1bq.quoteamount)*100)/ltedetails.estCost,2)
+    else:
+        l1_est_diff = 'greater'
+        l1_est_percent = -1 * round(((ltedetails.estCost-l1bq.quoteamount)*100)/ltedetails.estCost,2)
+    context = {
+        'ref_no' : get_ref_no(bid),
+        'tec_date' : '{{tec_date}}',
+        'subject' : bid.bid_subject,
+        'proposal_approved_dt' : datetime.strftime(ltegc.proposalnoteapproveddt,"%d.%m.%Y"),
+        'estCost' : str(ltedetails.estCost),
+        'estCostWords' : amount2words(ltedetails.estCost),
+        'no_of_vendors' : str(len(ltevendors)),
+        'first_bod_date' : datetime.strftime(firstimpdates.boddate,"%d.%m.%Y"),
+        'indent_dept' : proposal.indentDept,
+        'indent_bod_mem': indent_bod_mem,
+        'cnm_bod_mem': cnm_bod_mem,
+        'fna_bod_mem': fna_bod_mem,
+        'indent_tec_mem': indent_tec_mem,
+        'cnm_tec_mem': cnm_tec_mem,
+        'fna_tec_mem': fna_tec_mem,
+        'corrigenda_b' : corrigenda_b,
+        'corrigenda' : corrigenda,
+        'no_par_ven' : len(pbs),
+        'no_par_ven_words' : amount2words(len(pbs)),
+        'bod_date' : datetime.strftime(impdates.boddate,"%d.%m.%Y"),
+        'submitted_vendors' : submitted_vendors,
+        'l1_vendor' : l1bq.vendor.name,
+        'l1_amount' : str(l1bq.quoteamount),
+        'l1_est_percent' : l1_est_percent,
+        'l1_est_diff' : l1_est_diff,
+        'l1_amount_words' : amount2words(l1bq.quoteamount)
+    }
+    if(ltedetails.gstIncl):
+        context['gstIncl'] = "Inclusive of GST"
+    else:
+        context['gstIncl'] = "Exclusive of GST"
+    foldername = "I-"+indent_no+"/"
+    if not os.path.exists(os.path.dirname(foldername)):
+        os.makedirs(os.path.dirname(foldername))
+    filename = foldername+"I-"+indent_no+"_TEC_Report"
+    doc = DocxTemplate("Template_LTE_TEC_Report.docx")
+    doc.render(context,autoescape=True)
+    doc.save(filename+".docx")
+    return filename+".docx"
+
+
+def ltetecvetting(request):
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        bid  = Bid.objects.get(indent_number = data['indentNo'])
+        ltedetails = LteDetails.objects.get(bid = bid)
+        impdates = ImpDates.objects.get(bid = bid)
+        impdates.boddate =  getDate(data["bodDate"])
+        impdates.save()
+        bod = BODC.objects.get(bid=bid)
+        if bod.candmMem.id != data["candmBodMem"]["id"]:
+            bod.candmMem = Employee.objects.get(id = data["candmBodMem"]["id"])
+        if bod.indentMem.id != data["indentBodMem"]["id"]:
+            bod.indentMem = Employee.objects.get(id = data["indentBodMem"]["id"])
+        if bod.fandaMem.id != data["fandaBodMem"]["id"]:
+            bod.fandaMem = Employee.objects.get(id = data["fandaBodMem"]["id"])
+        bod.save()
+        for quotation in data['quotationDetails']:
+            if quotation['participated'] :
+                pb = participatedBidders(
+                    bid = bid,
+                    vendor = Vendor.objects.get(id = quotation['vendor']['id']),
+                    remarks = quotation['remarks']
+                )
+                if not ltedetails.emdwaivedoff:
+                    if quotation['emd'] == 'Paid EMD':
+                        pb.emddetail = 'paid'
+                    elif quotation['emd'] == 'Submitted MSME':
+                        pb.emddetail = 'msme'
+                    elif quotation['emd'] == 'Submitted NSIC':
+                        pb.emddetail = 'nsic'
+                    elif quotation['emd'] == 'Submitted MSME and NSIC':
+                        pb.emddetail = 'msmeandnsic'
+                pb.save()
+                bq = biddersquotedetails(
+                    bid = bid,
+                    vendor = Vendor.objects.get(id = quotation['vendor']['id']),
+                    quoteamount = quotation['quoteamount']
+                )
+                bq.save()
+        res = prepare_lte_tec(bid)
+        changeStatus(bid,"TEC Prepared for Vetting")
+        response = send_file_docx(res)
+        return response
+    except Exception as e:
+        pass
+        import pdb; pdb.set_trace()
+        return JsonResponse({'issued':False})

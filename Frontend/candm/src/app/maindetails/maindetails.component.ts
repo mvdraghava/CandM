@@ -16,6 +16,37 @@ export class MaindetailsComponent implements OnInit {
 
   bid;
 
+  ltemenustages = {
+    'Created Proposal Notesheet' : [{
+      'stage': 'Prepare NIT',
+      'link' : 'prepareltenit'
+    }],
+    'NIT prepared for Vetting': [{
+      'stage': 'Edit Commitee',
+      'link': 'edit-lte-committee'
+    },
+    {
+      'stage': 'Issue NIT',
+      'link': 'issue-lte-nit'
+    }],
+    'NIT Issued' : [{
+      'stage': 'Edit Commitee',
+      'link': 'edit-lte-committee'
+    },
+    {
+      'stage': 'Date Corrigendum',
+      'link': 'datecorrigendum'
+    },
+    {
+      'stage': 'Other Corrigendum',
+      'link': 'othercorrigendum'
+    },
+    {
+      'stage': 'TEC Report',
+      'link': 'ltetecreport'
+    }]
+  }
+
   menustages = {
     'OpenTender' :{
       'Created Proposal Notesheet' : [{
@@ -34,7 +65,8 @@ export class MaindetailsComponent implements OnInit {
         'stage' : 'Prepare BOQ',
         'link' : 'prepareotboq'
       }],
-    }
+    },
+    'LTE' : this.ltemenustages
   };
 
   nextstageMenu = [];

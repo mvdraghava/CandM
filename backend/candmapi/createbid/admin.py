@@ -4,6 +4,6 @@ from .models import *
 
 
 admin.site.register([OpenTender,Bid,EprocTender,Proposal,OtProposalNoteSheet,BidStatus,Vendor,Employee,
-TECC,QR,BODC,LteDetails,VendorBid])
+TECC,QR,BODC,LteDetails,VendorBid,LteEprocDetails])
 
 # Register your models here.

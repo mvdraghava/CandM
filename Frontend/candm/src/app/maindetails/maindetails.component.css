@@ -13,12 +13,22 @@ mat-card {
 }
 
 mat-card-content {
-  padding: 15px;
+  padding-top: 15px;
 }
+
+#sidediv {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
 
 mat-card-title {
   width: 100%;
   text-align: center;
+}
+
+mat-sidenav-content {
+  /*margin-left: 125px!important;*/
 }
 
 ::ng-deep .mat-card-header-text {
@@ -29,4 +39,11 @@ mat-card-title {
 
 .mat-card-header .mat-card-title {
    margin-bottom: 0px;
+}
+
+a {
+  min-width: 100px;
+  max-width: 100px;
+  white-space: pre-wrap;
+  line-height: 26px;
 }

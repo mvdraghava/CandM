@@ -19,6 +19,11 @@ export class DetailsserviceService {
   private prepareQRurl = environment.apiurl + 'prepareqr';
   private editQRurl = environment.apiurl + 'editqr';
   private getotNITurl = environment.apiurl + 'getotNIT';
+  private getltemNITurl = environment.apiurl + 'getltemNIT';
+  private editltecommitteeurl = environment.apiurl + 'editltecommittee';
+  private issuelteNITurl = environment.apiurl + 'issuelteNIT';
+  private issuedateCorrigendumurl = environment.apiurl + 'datecorrigendum';
+  private prepareltetecurl = environment.apiurl + 'prepareltetec';
 
   getfilenames(reqdata){
     return this.http.post(this.getfilenamesurl,reqdata);
@@ -36,8 +41,28 @@ export class DetailsserviceService {
     return this.http.post(this.editQRurl,data);
   }
 
+  editltecommittee(data) : Observable<any> {
+    return this.http.post(this.editltecommitteeurl,data);
+  }
+
+  issuelteNIT(data) : Observable<any> {
+    return this.http.post(this.issuelteNITurl,data);
+  }
+
   getotNIT(data): Observable<Blob> {
     return this.http.post(this.getotNITurl,data,{responseType: 'blob'});
+  }
+
+  getltemNIT(data): Observable<Blob> {
+    return this.http.post(this.getltemNITurl,data,{responseType: 'blob'})
+  }
+
+  issuedateCorrigendum(data) : Observable<any> {
+    return this.http.post(this.issuedateCorrigendumurl,data);
+  }
+
+  prepareltetec(data) : Observable<any> {
+    return this.http.post(this.prepareltetecurl,data);
   }
 
 }

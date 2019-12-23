@@ -15,5 +15,10 @@ urlpatterns = [
     path('prepareqr',views.prepareQR),
     path('editqr',views.editqr),
     path('getotNIT',views.getOtNIT),
-    path('createlte',views.createlte)
+    path('createlte',views.createlte),
+    path('getltemNIT',views.prepare_lte_m_nit),
+    path('editltecommittee',views.editltecommittee),
+    path('issuelteNIT',views.issuelteNIT),
+    path('datecorrigendum',views.datecorrigendum),
+    path('prepareltetec',views.ltetecvetting)
 ]

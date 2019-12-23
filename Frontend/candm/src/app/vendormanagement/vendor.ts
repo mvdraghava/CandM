@@ -15,6 +15,7 @@ export class Vendor {
   nsic : boolean;
   blacklisted : boolean;
   remarks : string;
+  cpp : boolean;
 
   constructor() {
     this.name = '';

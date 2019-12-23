@@ -13,10 +13,10 @@ from django.views.static import serve
 import json
 from .models import  OpenTender,Bid,OpenTender,EprocTender,Proposal,OtProposalNoteSheet,BidStatus
 from .models import Vendor,Employee,TECC,BODC,QR
-from .functions_need import send_file_docx, amount2words
+from .functions_need import *
 from django.forms.models import model_to_dict
+from .lteEprocViews import *
 from .lteviews import *
-
 
 def create_ot_notesheet(data):
     context = {
@@ -174,6 +174,7 @@ def add_vendor(request):
             works =data['works'],
             msme = data['msme'],
             nsic = data['nsic'],
+            cpp = data['cpp'],
             blacklisted = False,
             remarks = ''
         )
@@ -202,6 +203,7 @@ def get_vendors(request):
             'works' : get_vendor.works,
             'msme' : get_vendor.msme,
             'nsic' : get_vendor.nsic,
+            'cpp' : get_vendor.cpp,
             'blacklisted' : get_vendor.blacklisted,
             'remarks' : get_vendor.remarks
         }
@@ -260,6 +262,16 @@ def getBidDetails(request):
             'estCost': get_est_cost(bid),
             'completionperiod' : get_completion_period(bid)
         }
+        try:
+            impdates = ImpDates.objects.get(bid = bid)
+            response["impdates"] = {
+                'issuedate' : impdates.issueddate,
+                'boddate' : impdates.boddate,
+                'bidsubdate' : impdates.bidsubdate,
+                'prebiddate' : impdates.prebiddate
+            }
+        except Exception as e:
+            pass
         if(bid.bid_type == "OpenTender"):
             try:
                 qr = QR.objects.get(bid=bid)
@@ -288,6 +300,38 @@ def getBidDetails(request):
                 }
             except Exception as e:
                 pass
+        elif(bid.bid_type == "LTE"):
+            try:
+                ltedetails = LteDetails.objects.get(bid = bid)
+                response["emdwaivedoff"] = ltedetails.emdwaivedoff
+                response['tendertype'] = ltedetails.tendertype
+                nitsentvendors = VendorBid.objects.filter(bid = bid)
+                nitsentvendors = nitsentvendors.values()
+                response["nitsentvendors"] = [getVendor(obj['vendor_id']) for obj in nitsentvendors]
+                if (not ltedetails.emdwaivedoff):
+                    response["emd"] = getEmdPrice(ltedetails.estCost)
+                    response["emdwords"] = amount2words(getEmdPrice(ltedetails.estCost))
+            except Exception as e:
+                pass
+            try:
+                ltegc = LteGeneralConditions.objects.get(bid = bid)
+                response["boddate"] = ltegc.boddt
+                response["proposalnoteapproveddt"] = ltegc.proposalnoteapproveddt
+                bod = BODC.objects.get(bid=bid)
+                response['bodcomdetails'] = {
+                    'candmBodMem' : getEmployee(bod.candmMem.id),
+                    'indentBodMem' : getEmployee(bod.indentMem.id),
+                    'fandaBodMem' : getEmployee(bod.fandaMem.id)
+                }
+                tec = TECC.objects.get(bid=bid)
+                response['teccomdetails'] = {
+                    'candmTecMem' : getEmployee(tec.candmMem.id),
+                    'indentTecMem' : getEmployee(tec.indentMem.id),
+                    'fandaTecMem' : getEmployee(tec.fandaMem.id)
+                }
+            except Exception as e:
+                pass
+
         return JsonResponse(response)
     except Exception as ex:
         print(ex)
@@ -333,11 +377,17 @@ def get_est_cost(bid):
     if(bid.bid_type == "OpenTender"):
         otpns = OtProposalNoteSheet.objects.get(bid = bid)
         return otpns.estCost
+    elif(bid.bid_type == "LTE"):
+        ltedetails = LteDetails.objects.get(bid = bid)
+        return ltedetails.estCost
 
 def get_completion_period(bid):
     if(bid.bid_type == "OpenTender"):
         otpns = OtProposalNoteSheet.objects.get(bid = bid)
         return otpns.completionperiod
+    elif(bid.bid_type == "LTE"):
+        ltedetails = LteDetails.objects.get(bid = bid)
+        return ltedetails.completionperiod
 
 def prepareQR(request):
     data = json.loads(request.body.decode('utf-8'))
@@ -400,7 +450,7 @@ def editqr(request):
         res = create_qr(bid)
         return JsonResponse({'edited':True})
     except Exception as e:
-        import pdb; pdb.set_trace()
+        x = 1
         return JsonResponse({'edited':False})
 
 def prepareOtNIT(bid):

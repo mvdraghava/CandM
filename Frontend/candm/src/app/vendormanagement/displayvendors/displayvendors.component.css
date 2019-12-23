@@ -5,14 +5,13 @@
 }
 
 mat-card {
-  min-height: 300px;
+  min-height: 350px;
   max-height: 350px;
   min-width: 250px;
   max-width: 250px;
   background-color: aliceblue;
   color: black;
   cursor: pointer;
-  filter: drop-shadow(2px 5px 5px black);
 }
 
 a {

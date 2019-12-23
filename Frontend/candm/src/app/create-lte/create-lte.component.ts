@@ -20,6 +20,8 @@ export class CreateLteComponent implements OnInit {
   employees:Employee[] = [];
   vendors: Vendor[] = [];
 
+  times = ['Days','Months','Years'];
+
   indentFilteredEmployees: Observable<Employee[]>;
   notebyFilteredEmployees: Observable<Employee[]>;
   lteFilteredVendors: Observable<Vendor[]>[] = [];
@@ -29,6 +31,9 @@ export class CreateLteComponent implements OnInit {
     subject: ['',Validators.required],
     notesheetdate: [new Date(),Validators.required],
     noteby: ['',[Validators.required, this.validateEmployee]],
+    tendertype : ['', Validators.required],
+    completionperiod: ['',Validators.required],
+    durationmeasured: ['',Validators.required],
     proposalDetails: this.fb.group({
       proposalRefNo: ['',Validators.required],
       proposalDate: ['',Validators.required],
@@ -159,5 +164,13 @@ export class CreateLteComponent implements OnInit {
         window.alert('Some Error has occured');
       }
     );
+  }
+
+  contractdelivery() {
+    if(this.createLte.controls.tendertype.value == "supply"){
+      return "Delivery";
+    }
+    else
+      return "Contract"
   }
 }

@@ -32,6 +32,7 @@ export class EditvendordialogComponent implements OnInit {
     emailids : this.fb.array(this.vendor.emailids),
     msme : [this.vendor.msme,Validators.required],
     nsic : [this.vendor.nsic,Validators.required],
+    cpp : [this.vendor.cpp,Validators.required],
     blacklisted : [this.vendor.blacklisted,Validators.required],
     address: this.fb.group({
       name: [this.vendor.name, Validators.required],
@@ -112,11 +113,11 @@ export class EditvendordialogComponent implements OnInit {
   edit() {
     this.vs.editvendor(this.editVendorForm.value).subscribe(
       data => {
-        if(data && !data['edited']){
-          window.alert('Some Error has occured');
+        if(data && data['edited']){
+          this.dialogRef.close();
         }
         else{
-          this.dialogRef.close();
+          window.alert('Some Error has occured');
         }
       }
     );

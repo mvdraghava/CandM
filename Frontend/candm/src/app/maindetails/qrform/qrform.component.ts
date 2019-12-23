@@ -152,8 +152,6 @@ export class QrformComponent implements OnInit {
         saveAs(data, 'QR.docx' );
       }
     );
-    console.log(this.qrForm.value);
-    console.log(this.ds.biddetails);
   }
 
 }

@@ -30,6 +30,7 @@ export class AddvendordialogComponent implements OnInit {
     emailids : this.fb.array([['']]),
     msme : ['',Validators.required],
     nsic : ['',Validators.required],
+    cpp : ['',Validators.required],
     address: this.fb.group({
       name: ['', Validators.required],
       street1 : ['',Validators.required],

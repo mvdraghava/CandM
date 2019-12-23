@@ -32,7 +32,34 @@
                 <mat-label>Tender Subject</mat-label>
                 <textarea  matInput formControlName="subject" placeholder="Tender-Subject"></textarea>
             </mat-form-field>
+            <div fxLayoutGap="15px" fxLayout="row wrap" fxLayoutAlign="start center">
+              <mat-label><h3>Tender Type</h3></mat-label>
+              <mat-radio-group fxLayoutGap="10px" fxLayout="row wrap" aria-labelledby="tendertype" formControlName="tendertype">
+                <mat-radio-button   value="supply">
+                  Supply
+                </mat-radio-button>
+                <mat-radio-button  value="service">
+                  Services
+                </mat-radio-button>
+                <mat-radio-button  value="works">
+                  Works
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <mat-form-field appearance="outline">
+              <mat-label>{{contractdelivery()}} Period</mat-label>
+              <input matInput type="number" placeholder="0" formControlName="completionperiod">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Period In</mat-label>
+                <mat-select formControlName="durationmeasured">
+                  <mat-option *ngFor="let time of times" [value]="time">
+                    {{time}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
           </div>
+
           <h4>Vendors</h4>
           <div formArrayName="ltevendors" fxLayoutGap="10px" fxLayout="row wrap">
             <div *ngFor="let ltevendor of ltevendors.controls;let i = index;">
