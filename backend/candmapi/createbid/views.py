@@ -329,6 +329,44 @@ def getBidDetails(request):
                     'indentTecMem' : getEmployee(tec.indentMem.id),
                     'fandaTecMem' : getEmployee(tec.fandaMem.id)
                 }
+                response['nitgcc'] = {
+                    'scopeofwork' : ltegc.scopeofwork,
+                    'scopeofworkText' : ltegc.scopeofworkText,
+                    'emd' : ltegc.emd,
+                    'emdText' : ltegc.emdText,
+                    'paymentterms' : ltegc.paymentterms,
+                    'paymenttermsText' : ltegc.paymenttermsText,
+                    'contractperiod' : ltegc.contractperiod,
+                    'contractperiodText' : ltegc.contractperiodText,
+                    'deliveryperiod' : ltegc.deliveryperiod,
+                    'delivaryperiodText' : ltegc.delivaryperiodText,
+                    'pricebasis' : ltegc.pricebasis,
+                    'pricebasisText' : ltegc.pricebasisText,
+                    'validity' : ltegc.validity,
+                    'validityText' : ltegc.validityText,
+                    'taxesandduties' : ltegc.taxesandduties,
+                    'taxesanddutiestext' : ltegc.taxesanddutiestext,
+                    'warranty' : ltegc.warranty,
+                    'warrantyText' : ltegc.warrantyText,
+                    'cpg' : ltegc.cpg,
+                    'cpgText' : ltegc.cpgText,
+                    'sd' : ltegc.sd,
+                    'sdText' : ltegc.sdText,
+                    'ld' : ltegc.ld,
+                    'ldText' : ltegc.ldText,
+                    'qv' : ltegc.qv,
+                    'qvText' : ltegc.qvText,
+                    'arbitration' : ltegc.arbitration,
+                    'arbitrationText' : ltegc.arbitrationText,
+                    'officerincharge' : ltegc.officerincharge,
+                    'officerinchargeText' : ltegc.officerinchargeText
+                }
+            except Exception as e:
+                pass
+            try:
+                participatedvendors = participatedBidders.objects.filter(bid = bid)
+                participatedvendors = participatedvendors.values()
+                response['participatedvendors'] = [getVendor(obj['vendor_id']) for obj in participatedvendors]
             except Exception as e:
                 pass
 

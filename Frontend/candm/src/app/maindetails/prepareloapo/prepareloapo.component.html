@@ -1,0 +1,180 @@
+<div fxFlex fxFlexAlign="center center">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Prepare LOA/PO for Vetting
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loapoform">
+        <div fxLayout="row wrap" fxLayoutGap="25px">
+          <h4>Type of Award</h4>
+          <mat-form-field appearance='outline'>
+            <mat-label>LOA/PO</mat-label>
+            <mat-select formControlName='typeofaward'>
+              <mat-option value='LOA'>LOA</mat-option>
+              <mat-option value='PO'>PO</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <h4> {{this.loapoform.controls.typeofaward.value}} Approved Date : </h4>
+          <mat-form-field appearance="outline">
+            <mat-label>{{this.loapoform.controls.typeofaward.value}} Approved Date</mat-label>
+            <input matInput formControlName="loaapproveddate" [matDatepicker]="picker1" (focus)="picker1.open()" placeholder="Choose Date">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+          <h4> {{this.loapoform.controls.typeofaward.value}} Number : </h4>
+          <mat-form-field appearance='outline'>
+            <mat-label>{{this.loapoform.controls.typeofaward.value}} Number</mat-label>
+            <input type="number" matInput formControlName='loapono'>
+          </mat-form-field>
+        </div>
+        <div class="loapodiv" fxLayout="row wrap" fxLayoutGap="25px">
+          <h4>{{this.loapoform.controls.typeofaward.value}} Awarded for :</h4>
+          <mat-form-field appearance="outline">
+            <mat-label>LOA Awarded for</mat-label>
+            <input  autocompete="false" matInput formControlName="awardvendor" placeholder="" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnvendor">
+              <mat-option *ngFor="let vendor of loaFilteredVendors | async" [value]="vendor">
+                {{vendor.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <h3>{{this.loapoform.controls.typeofaward.value}} Amount Details</h3>
+        <div fxLayout="row wrap" fxLayoutGap="25px">
+          <mat-form-field appearance='outline'>
+            <mat-label>{{this.loapoform.controls.typeofaward.value}} Amount</mat-label>
+            <input matInput formControlName = 'awardamount' placeholder="in Rs." type='number'>
+          </mat-form-field>
+          <div fxLayoutGap="15px" fxLayout="row wrap" fxLayoutAlign="center center">
+            <mat-label><h4>GST Inclusive</h4></mat-label>
+            <mat-radio-group fxLayoutGap="10px" fxLayout="row wrap" aria-labelledby="gstIncl" formControlName="awardgstincl">
+              <mat-radio-button   [value]="true">
+                YES
+              </mat-radio-button>
+              <mat-radio-button  [value]="false">
+                  NO
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div fxLayout="column">
+          <mat-checkbox  formControlName="specialconditions"><h4>Include Special Conditions for Contract</h4></mat-checkbox>
+          <mat-checkbox  formControlName="ndaclause"><h4>Include NDA Clause</h4></mat-checkbox>
+          <mat-checkbox  formControlName="saclause"><h4>Include Social Accountability Clause</h4></mat-checkbox>
+          <mat-checkbox  formControlName="cpgclause"><h4>Include Contract Performance Guarantee Format</h4></mat-checkbox>
+        </div>
+        <h3>General Terms and Conditions of Contract</h3>
+        <div formGroupName="gcc" fxLayout="column">
+          <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <mat-checkbox fxFlex="20%" formControlName="scopeofwork" (change)="paymentChanged()">Scope of Work</mat-checkbox>
+            <mat-form-field appearance="outline" fxFlex="60%">
+              <mat-label>Scope of Work</mat-label>
+              <textarea matTextareaAutosize matInput formControlName="scopeofworkText"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <mat-checkbox fxFlex="20%" formControlName="emd" (change)="paymentChanged()">EMD</mat-checkbox>
+            <mat-form-field appearance="outline" fxFlex="60%">
+              <mat-label>EMD</mat-label>
+              <textarea matTextareaAutosize matInput formControlName="emdText"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <mat-checkbox fxFlex="20%" formControlName="paymentterms" (change)="paymentChanged()">Terms of Payment</mat-checkbox>
+            <mat-form-field appearance="outline" fxFlex="60%">
+              <mat-label>Terms of Payment</mat-label>
+              <textarea matTextareaAutosize matInput formControlName="paymenttermsText"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <mat-checkbox fxFlex="20%" formControlName="contractperiod" (change)="paymentChanged()">Contract Period</mat-checkbox>
+            <mat-form-field appearance="outline" fxFlex="60%">
+              <mat-label>Contract Period</mat-label>
+              <textarea matTextareaAutosize matInput formControlName="contractperiodText"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <mat-checkbox fxFlex="20%" formControlName="deliveryperiod" (change)="paymentChanged()">Delivery Period</mat-checkbox>
+            <mat-form-field appearance="outline" fxFlex="60%">
+              <mat-label>Delivery Period</mat-label>
+              <textarea matTextareaAutosize matInput formControlName="delivaryperiodText"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <mat-checkbox fxFlex="20%" formControlName="pricebasis" (change)="paymentChanged()">Price Basis</mat-checkbox>
+            <mat-form-field appearance="outline" fxFlex="60%">
+              <mat-label>Price Basis</mat-label>
+              <textarea matTextareaAutosize matInput formControlName="pricebasisText"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <mat-checkbox fxFlex="20%" formControlName="validity" (change)="paymentChanged()">Validity</mat-checkbox>
+            <mat-form-field appearance="outline" fxFlex="60%">
+              <mat-label>Validity</mat-label>
+              <textarea matTextareaAutosize matInput formControlName="validityText"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <mat-checkbox fxFlex="20%" formControlName="taxesandduties" (change)="paymentChanged()">Taxes and Duties</mat-checkbox>
+            <mat-form-field appearance="outline" fxFlex="60%">
+              <mat-label>Taxes and Duties</mat-label>
+              <textarea matTextareaAutosize matInput formControlName="taxesanddutiestext"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <mat-checkbox fxFlex="20%" formControlName="warranty" (change)="paymentChanged()">Warranty</mat-checkbox>
+            <mat-form-field appearance="outline" fxFlex="60%">
+              <mat-label>Warranty</mat-label>
+              <textarea matTextareaAutosize matInput formControlName="warrantyText"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <mat-checkbox fxFlex="20%" formControlName="cpg" (change)="paymentChanged()">Contract Performance Guarantee</mat-checkbox>
+            <mat-form-field appearance="outline" fxFlex="60%">
+              <mat-label>Contract Performance Guarantee</mat-label>
+              <textarea  matTextareaAutosize matInput formControlName="cpgText"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <mat-checkbox fxFlex="20%" formControlName="sd" (change)="paymentChanged()">Security Deposit</mat-checkbox>
+            <mat-form-field appearance="outline" fxFlex="60%">
+              <mat-label>Security Deposit</mat-label>
+              <textarea matTextareaAutosize  matInput formControlName="sdText"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <mat-checkbox fxFlex="20%" formControlName="ld" (change)="paymentChanged()">Liquidity Damage</mat-checkbox>
+            <mat-form-field appearance="outline" fxFlex="60%">
+              <mat-label>Liquidity Damage</mat-label>
+              <textarea matTextareaAutosize matInput formControlName="ldText"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <mat-checkbox fxFlex="20%" formControlName="qv" (change)="paymentChanged()">Quantity Variation</mat-checkbox>
+            <mat-form-field appearance="outline" fxFlex="60%">
+              <mat-label>Quantity Variation</mat-label>
+              <textarea matTextareaAutosize matInput formControlName="qvText"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <mat-checkbox fxFlex="20%" formControlName="arbitration" (change)="paymentChanged()">Arbitration</mat-checkbox>
+            <mat-form-field appearance="outline" fxFlex="60%">
+              <mat-label>Arbitration</mat-label>
+              <textarea matTextareaAutosize matInput formControlName="arbitrationText"></textarea>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <mat-checkbox fxFlex="20%" formControlName="officerincharge" (change)="paymentChanged()">Officer Incharge</mat-checkbox>
+            <mat-form-field appearance="outline" fxFlex="60%">
+              <mat-label>Officer Incharge</mat-label>
+              <textarea matTextareaAutosize matInput formControlName="officerinchargeText"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

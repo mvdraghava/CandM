@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-tender.component.css']
 })
 export class CreateTenderComponent implements OnInit {
-  tendermodes: string[] = ['LTE', 'LTE_Eprocurement', 'OpenTender', 'Ammendment', 'SpotQuotation', 'SingleTender'];
+  tendermodes: string[] = ['LTE', 'LTE_Eprocurement', 'OpenTender', 'Ammendment', 'SpotQuotation', 'SingleTender', 'GeM', 'TreDs'];
   constructor() { }
 
   ngOnInit() {

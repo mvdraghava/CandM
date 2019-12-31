@@ -4,6 +4,7 @@ import { CreateTenderService } from '../../create-tender.service';
 import {DetailsserviceService} from '../detailsservice.service';
 import { Employee } from '../../employee';
 import {map, startWith} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-lte-tec-report',
@@ -25,7 +26,7 @@ export class LteTecReportComponent implements OnInit {
     'Submitted MSME and NSIC'
   ];
   quotationDetailsChange() {
-    this.tecform.controls.quotationDetails.controls.forEach(
+    this.tecform.controls.quotationDetails['controls'].forEach(
       (quotation) => {
           if(quotation.controls.participated.value){
             quotation.enable();

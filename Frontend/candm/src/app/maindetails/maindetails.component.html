@@ -7,11 +7,11 @@
   <mat-card-content>
     <mat-sidenav-container class="example-container" >
       <mat-sidenav mode="side" opened>
-        <div fxFlex fxLayout="column" fxLayoutGap="15px" id="sidediv">
+        <div class="menua" fxFlex fxLayout="column" fxLayoutGap="15px" id="sidediv">
           <a mat-button  routerLink="candmmsg">Status</a>
           <a mat-button  routerLink='showfiles'>Files</a>
           <a mat-button  [routerLink]="['uploadfiles']">Upload Files</a>
-          <div fxFlex fxLayout="column" fxLayoutGap="15px">
+          <div  fxFlex fxLayout="column" fxLayoutGap="15px">
             <a mat-button  *ngFor="let menu of nextstageMenu" [routerLink]="menu.link">{{menu.stage}}</a>
           </div>
         </div>

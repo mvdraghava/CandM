@@ -44,6 +44,10 @@ export class MaindetailsComponent implements OnInit {
     {
       'stage': 'TEC Report',
       'link': 'ltetecreport'
+    }],
+    'TEC Prepared for Vetting' : [{
+      'stage' : 'Prepare LOA/PO',
+      'link' : 'prepareloapo'
     }]
   }
 
@@ -86,5 +90,6 @@ export class MaindetailsComponent implements OnInit {
       }
     );
   }
+
 
 }

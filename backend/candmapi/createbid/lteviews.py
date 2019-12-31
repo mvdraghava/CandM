@@ -512,6 +512,9 @@ def prepare_lte_tec(bid):
     return filename+".docx"
 
 
+#Function to prepare TEC ltetecvetting
+#stores Quotation Price details and participated bidder LteDetails
+#in the model biddersquotedetails
 def ltetecvetting(request):
     try:
         data = json.loads(request.body.decode('utf-8'))
@@ -555,6 +558,75 @@ def ltetecvetting(request):
         changeStatus(bid,"TEC Prepared for Vetting")
         response = send_file_docx(res)
         return response
+    except Exception as e:
+        pass
+        import pdb; pdb.set_trace()
+        return JsonResponse({'issued':False})
+
+
+#View to prepare LOA/PO for ltetecvetting
+#Request with all GCCs and required LteDetails
+#models stored -- loapovetting, loagcc
+def loapovetting(request):
+    """
+    Recieve request
+    Store the details in the Database Table LOAPO loapovetting
+    And Call the function which returns the LOA docx
+    Return the LOA Docx
+    """
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        bid  = Bid.objects.get(indent_number = data['indentNo'])
+        loapovet = loapovetting(
+            bid = bid,
+            awardvendor = Vendor.objects.get(id = data['awardvendor']['id']),
+            awardquoteamount = data['awardamount'],
+            awardgstincl = data['awardgstincl'],
+            ndaclause = data['ndaclause'],
+            saclause = data['saclause'],
+            cpgclause = data['cpgclause'],
+            specialconditions = data['specialconditions'],
+            typeofaward = data['typeofaward'],
+            loaapproveddate = getDate(data['loaapproveddate']),
+        )
+        loapovet.save()
+        reqloagcc = data['gcc']
+        loagenerals = loagcc(
+            bid = bid,
+            scopeofwork = reqloagcc["scopeofwork"],
+            scopeofworkText = reqloagcc["scopeofworkText"] if reqloagcc["scopeofwork"] else ' ',
+            emd = reqloagcc["emd"],
+            emdText = reqloagcc["emdText"] if reqloagcc["emd"] else '',
+            paymentterms = reqloagcc["paymentterms"],
+            paymenttermsText = reqloagcc["paymenttermsText"] if reqloagcc["paymentterms"] else ' ',
+            contractperiod = reqloagcc["contractperiod"],
+            contractperiodText = reqloagcc["contractperiodText"] if reqloagcc["contractperiod"] else ' ',
+            deliveryperiod = reqloagcc["deliveryperiod"],
+            delivaryperiodText = reqloagcc["delivaryperiodText"] if reqloagcc["deliveryperiod"] else ' ',
+            pricebasis = reqloagcc["pricebasis"],
+            pricebasisText = reqloagcc["pricebasisText"] if reqloagcc["pricebasis"] else ' ',
+            validity = reqloagcc["validity"],
+            validityText = reqloagcc["validityText"] if reqloagcc["validity"] else '',
+            taxesandduties = reqloagcc["taxesandduties"],
+            taxesanddutiestext = reqloagcc["taxesanddutiestext"] if reqloagcc["taxesandduties"] else '',
+            warranty = reqloagcc["warranty"],
+            warrantyText = reqloagcc["warrantyText"] if reqloagcc["warranty"] else '',
+            cpg = reqloagcc["cpg"],
+            cpgText = reqloagcc["cpgText"] if reqloagcc["cpg"] else '',
+            sd = reqloagcc["sd"],
+            sdText = reqloagcc["sdText"] if reqloagcc["sd"] else '',
+            ld = reqloagcc["ld"],
+            ldText = reqloagcc["ldText"] if reqloagcc["ld"] else '',
+            qv = reqloagcc["qv"],
+            qvText = reqloagcc["qvText"] if reqloagcc["qv"] else '',
+            arbitration = reqloagcc["arbitration"],
+            arbitrationText = reqloagcc["arbitrationText"] if reqloagcc["arbitration"] else '',
+            officerincharge = reqloagcc["officerincharge"],
+            officerinchargeText = reqloagcc["officerinchargeText"] if reqloagcc["officerincharge"] else ''
+        )
+        loagenerals.save()
+        response = {'prepared' : True}
+        return JsonResponse(response)
     except Exception as e:
         pass
         import pdb; pdb.set_trace()

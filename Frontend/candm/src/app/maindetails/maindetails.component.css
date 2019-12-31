@@ -1,5 +1,5 @@
 mat-sidenav-container {
-  min-height: 900px;
+  min-height: 80vh;
 }
 
 mat-card-header {
@@ -12,9 +12,9 @@ mat-card {
   padding: 0px!important;
 }
 
-mat-card-content {
+/* mat-card-content {
   padding-top: 15px;
-}
+} */
 
 #sidediv {
   padding-left: 5px;
@@ -46,4 +46,13 @@ a {
   max-width: 100px;
   white-space: pre-wrap;
   line-height: 26px;
+}
+
+.menua {
+  padding-top: 10px;
+}
+
+.menua a {
+  border-bottom: 1px solid darkgray;
+  border-radius: 0px;
 }

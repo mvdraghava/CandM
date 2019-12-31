@@ -20,5 +20,6 @@ urlpatterns = [
     path('editltecommittee',views.editltecommittee),
     path('issuelteNIT',views.issuelteNIT),
     path('datecorrigendum',views.datecorrigendum),
-    path('prepareltetec',views.ltetecvetting)
+    path('prepareltetec',views.ltetecvetting),
+    path('loapovetting',views.loapovetting)
 ]

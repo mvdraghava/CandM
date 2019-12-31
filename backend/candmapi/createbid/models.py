@@ -213,4 +213,52 @@ class biddersquotedetails(models.Model):
     vendor = models.ForeignKey(Vendor,on_delete = models.CASCADE)
     quoteamount = models.FloatField()
 
+#Model for LOA / PO loapovetting
+class loapovetting(models.Model):
+    bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
+    awardvendor = models.ForeignKey(Vendor,on_delete = models.CASCADE)
+    awardquoteamount = models.FloatField()
+    awardgstincl = models.BooleanField()
+    ndaclause = models.BooleanField()
+    saclause = models.BooleanField()
+    cpgclause = models.BooleanField()
+    specialconditions = models.BooleanField()
+    typeofaward = models.CharField(max_length=20)
+    loaapproveddate = models.DateField()
+
+#Model for General Conditions in LOA/property
+class loagcc(models.Model):
+    bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
+    scopeofwork = models.BooleanField()
+    scopeofworkText = models.CharField(max_length=50000)
+    emd = models.BooleanField(default=False)
+    emdText = models.CharField(max_length = 50000,default=' ')
+    paymentterms = models.BooleanField()
+    paymenttermsText = models.CharField(max_length=50000)
+    contractperiod = models.BooleanField()
+    contractperiodText = models.CharField(max_length=50000,default=' ')
+    deliveryperiod = models.BooleanField()
+    delivaryperiodText = models.CharField(max_length=50000)
+    pricebasis = models.BooleanField()
+    pricebasisText = models.CharField(max_length=50000)
+    validity = models.BooleanField()
+    validityText = models.CharField(max_length=50000)
+    taxesandduties = models.BooleanField()
+    taxesanddutiestext = models.CharField(max_length=50000)
+    warranty = models.BooleanField()
+    warrantyText = models.CharField(max_length=50000)
+    cpg = models.BooleanField()
+    cpgText = models.CharField(max_length=50000)
+    sd = models.BooleanField()
+    sdText = models.CharField(max_length=50000)
+    ld = models.BooleanField()
+    ldText = models.CharField(max_length=50000)
+    qv = models.BooleanField()
+    qvText = models.CharField(max_length=50000)
+    arbitration = models.BooleanField()
+    arbitrationText = models.CharField(max_length=50000)
+    officerincharge = models.BooleanField()
+    officerinchargeText = models.CharField(max_length=50000)
+
+
 # Create your models here.
