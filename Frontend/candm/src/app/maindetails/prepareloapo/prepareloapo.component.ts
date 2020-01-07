@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators, FormArray, FormBuilder} from '@angu
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import {Observable} from 'rxjs';
 import { Vendor } from './vendor';
-import { Employee } from '../employee';
+import { Employee } from './../../employee';
 import {map, startWith} from 'rxjs/operators';
 import { saveAs } from 'file-saver';
 import {DetailsserviceService} from '../detailsservice.service';
@@ -26,10 +26,10 @@ export class PrepareloapoComponent implements OnInit {
     awardvendor : ['',Validators.required],
     awardamount : ['',Validators.required],
     awardgstincl : ['',Validators.required],
-    specialconditions : ['',Validators.required],
-    ndaclause : ['',Validators.required],
-    saclause : ['',Validators.required],
-    cpgclause : ['',Validators.required],
+    specialconditions : [false,Validators.required],
+    ndaclause : [false,Validators.required],
+    saclause : [false,Validators.required],
+    cpgclause : [false,Validators.required],
     gcc : this.fb.group({
       scopeofwork: [true,Validators.required],
       scopeofworkText: [{value:'',disabled:false},Validators.required],
@@ -92,7 +92,8 @@ export class PrepareloapoComponent implements OnInit {
     this.loapoform.controls.gcc.controls.sdText.setValue(this.ds.biddetails.nitgcc.sdText);
     this.loapoform.controls.gcc.controls.ld.setValue(this.ds.biddetails.nitgcc.ld);
     this.loapoform.controls.gcc.controls.ldText.setValue(this.ds.biddetails.nitgcc.ldText);
-    this.loapoform.controls.gcc.controls.qv.setValue(this.ds.biddetails.nitgcc.qvText);
+    this.loapoform.controls.gcc.controls.qv.setValue(this.ds.biddetails.nitgcc.qv);
+    this.loapoform.controls.gcc.controls.qvText.setValue(this.ds.biddetails.nitgcc.qvText);
     this.loapoform.controls.gcc.controls.arbitration.setValue(this.ds.biddetails.nitgcc.arbitration);
     this.loapoform.controls.gcc.controls.arbitrationText.setValue(this.ds.biddetails.nitgcc.arbitrationText);
     this.loapoform.controls.gcc.controls.officerincharge.setValue(this.ds.biddetails.nitgcc.officerincharge);
@@ -213,8 +214,18 @@ export class PrepareloapoComponent implements OnInit {
   }
   private _filterVendors(value: string): Vendor[] {
     const filterValue = value.toLowerCase();
-
     return this.vendors.filter(vendor => vendor.name.toLowerCase().includes(filterValue));
+  }
+
+  getloapo() {
+    this.ds.prepareloapovetting(this.loapoform.value).subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
 }

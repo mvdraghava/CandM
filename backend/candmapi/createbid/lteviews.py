@@ -564,6 +564,64 @@ def ltetecvetting(request):
         return JsonResponse({'issued':False})
 
 
+#Function to prepare LOA or PO for the BIDs
+def prepare_loa_po(bid):
+    """
+    Recieves bid as input to prepare LOA/PO.
+    The prepared LOA/PO is stored in the respective folder
+    """
+    indent_no = str(bid.indent_number)
+    loapogcc = loagcc.objects.get(bid=bid)
+    loapodetails = Loapovetting.objects.get(bid=bid)
+    bidimpdates = ImpDates.objects.get(bid = bid)
+    awardvendor = loapodetails.awardvendor
+    loapovendor = {
+        'name' : awardvendor.name,
+        'street1' : awardvendor.street1,
+        'city' : awardvendoe.city,
+        'state' : awardvendor.state,
+        'pincode' : awardvendor.pincode,
+    }
+    if awardvendor.street2:
+        loapovendor['street2'] = awardvendor.street2
+    if len(awardvendor.mobilenos):
+        loapovendor['mobileno'] : awardvendor.mobilenos[0]
+    if len(awardvendor.emailids):
+        loapovendor['emailid'] : awardvendor.emailids[0]
+    RomanLetters = ['I','II','III','IV','V','VI','VII','VIII']
+    romani = 2
+    annexures = {
+     'boq' : 'Annexure - I',
+     'gcc' : 'Annexure - II'
+    }
+    if loapodetails.specialconditions:
+        annexures['scc'] = 'Annexure - ' + RomanLetters[romani]
+        romani = romani + 1
+    if loapodetails.ndaclause:
+        annexures['nda']  ='Annexure - ' + RomanLetters[romani]
+        romani = romani + 1
+    if loapodetails.saclause:
+        annexures['sa'] = 'Annexure - ' + RomanLetters[romani]
+        romani = romani + 1
+    if loapodetails.cpgclause:
+        annexures['cpg'] = 'Annexure - ' + RomanLetters[romani]
+        romani = romani + 1
+    conditions = ''
+    context : {
+        'ref_no' : get_ref_no(bid),
+        'subject' : bid.bid_subject,
+        'tender_ref_no' : get_ref_no(bid),
+        'tender_ref_no_dt' : bidimpdates.issueddate,
+        'loavendor_tender_ref_no' : '{{loavendor_tender_ref_no}}',
+        'loavendor_tender_dt' : '{{loavendor_tender_dt}}',
+        'loa_amount' : loapodetails.awardquoteamount,
+        'loa_amount_words' : amount2words(loapodetails.awardquoteamount)
+    }
+    return ''
+
+
+
+
 #View to prepare LOA/PO for ltetecvetting
 #Request with all GCCs and required LteDetails
 #models stored -- loapovetting, loagcc
@@ -577,7 +635,7 @@ def loapovetting(request):
     try:
         data = json.loads(request.body.decode('utf-8'))
         bid  = Bid.objects.get(indent_number = data['indentNo'])
-        loapovet = loapovetting(
+        loapovet = Loapovetting(
             bid = bid,
             awardvendor = Vendor.objects.get(id = data['awardvendor']['id']),
             awardquoteamount = data['awardamount'],
@@ -630,4 +688,4 @@ def loapovetting(request):
     except Exception as e:
         pass
         import pdb; pdb.set_trace()
-        return JsonResponse({'issued':False})
+        return JsonResponse({'prepared' : False})

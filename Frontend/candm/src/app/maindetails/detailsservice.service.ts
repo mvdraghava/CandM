@@ -24,6 +24,7 @@ export class DetailsserviceService {
   private issuelteNITurl = environment.apiurl + 'issuelteNIT';
   private issuedateCorrigendumurl = environment.apiurl + 'datecorrigendum';
   private prepareltetecurl = environment.apiurl + 'prepareltetec';
+  private loapovettingurl = environment.apiurl + 'loapovetting';
 
   getfilenames(reqdata){
     return this.http.post(this.getfilenamesurl,reqdata);
@@ -63,6 +64,10 @@ export class DetailsserviceService {
 
   prepareltetec(data) : Observable<any> {
     return this.http.post(this.prepareltetecurl,data);
+  }
+
+  prepareloapovetting(reqdata) : Observable<any> {
+    return this.http.post(this.loapovettingurl,reqdata);
   }
 
 }

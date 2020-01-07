@@ -214,8 +214,8 @@ class biddersquotedetails(models.Model):
     quoteamount = models.FloatField()
 
 #Model for LOA / PO loapovetting
-class loapovetting(models.Model):
-    bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
+class Loapovetting(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE)
     awardvendor = models.ForeignKey(Vendor,on_delete = models.CASCADE)
     awardquoteamount = models.FloatField()
     awardgstincl = models.BooleanField()
@@ -228,7 +228,7 @@ class loapovetting(models.Model):
 
 #Model for General Conditions in LOA/property
 class loagcc(models.Model):
-    bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE)
     scopeofwork = models.BooleanField()
     scopeofworkText = models.CharField(max_length=50000)
     emd = models.BooleanField(default=False)
