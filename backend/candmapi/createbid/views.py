@@ -77,8 +77,6 @@ def create_ot_notesheet(data):
     return filename+".docx"
 
 
-
-
 def create_ot(request):
     data = json.loads(request.body.decode('utf-8'))
     bid = Bid(
@@ -129,7 +127,7 @@ def create_ot(request):
 
 def get_open_bids(request):
     bids_data = []
-    for get_bid in Bid.objects.all():
+    for get_bid in Bid.objects.all().order_by('indent_number'):
         bid = {
             'Indentno': get_bid.indent_number,
             'TenderSubject': get_bid.bid_subject,
@@ -272,6 +270,21 @@ def getBidDetails(request):
             }
         except Exception as e:
             pass
+        try:
+            bod = BODC.objects.get(bid=bid)
+            response['bodcomdetails'] = {
+                'candmBodMem' : getEmployee(bod.candmMem.id),
+                'indentBodMem' : getEmployee(bod.indentMem.id),
+                'fandaBodMem' : getEmployee(bod.fandaMem.id)
+            }
+            tec = TECC.objects.get(bid=bid)
+            response['teccomdetails'] = {
+                'candmTecMem' : getEmployee(tec.candmMem.id),
+                'indentTecMem' : getEmployee(tec.indentMem.id),
+                'fandaTecMem' : getEmployee(tec.fandaMem.id)
+            }
+        except Exception as e:
+            pass
         if(bid.bid_type == "OpenTender"):
             try:
                 qr = QR.objects.get(bid=bid)
@@ -286,18 +299,7 @@ def getBidDetails(request):
                     'twoordervalue' : qr.twoordervalue,
                     'threeordervalue' : qr.threeordervalue
                 }
-                bod = BODC.objects.get(bid=bid)
-                response['bodcomdetails'] = {
-                    'candmBodMem' : getEmployee(bod.candmMem.id),
-                    'indentBodMem' : getEmployee(bod.indentMem.id),
-                    'fandaBodMem' : getEmployee(bod.fandaMem.id)
-                }
-                tec = TECC.objects.get(bid=bid)
-                response['teccomdetails'] = {
-                    'candmTecMem' : getEmployee(tec.candmMem.id),
-                    'indentTecMem' : getEmployee(tec.indentMem.id),
-                    'fandaTecMem' : getEmployee(tec.fandaMem.id)
-                }
+
             except Exception as e:
                 pass
         elif(bid.bid_type == "LTE"):
@@ -317,18 +319,6 @@ def getBidDetails(request):
                 ltegc = LteGeneralConditions.objects.get(bid = bid)
                 response["boddate"] = ltegc.boddt
                 response["proposalnoteapproveddt"] = ltegc.proposalnoteapproveddt
-                bod = BODC.objects.get(bid=bid)
-                response['bodcomdetails'] = {
-                    'candmBodMem' : getEmployee(bod.candmMem.id),
-                    'indentBodMem' : getEmployee(bod.indentMem.id),
-                    'fandaBodMem' : getEmployee(bod.fandaMem.id)
-                }
-                tec = TECC.objects.get(bid=bid)
-                response['teccomdetails'] = {
-                    'candmTecMem' : getEmployee(tec.candmMem.id),
-                    'indentTecMem' : getEmployee(tec.indentMem.id),
-                    'fandaTecMem' : getEmployee(tec.fandaMem.id)
-                }
                 response['nitgcc'] = {
                     'scopeofwork' : ltegc.scopeofwork,
                     'scopeofworkText' : ltegc.scopeofworkText,

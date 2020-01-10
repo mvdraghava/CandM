@@ -22,7 +22,9 @@ const routes: Routes = [{ path: ':indentno/:tendersubject', component: Maindetai
   { path: 'othercorrigendum', loadChildren: () => import('./other-corrigendum/other-corrigendum.module').then(m => m.OtherCorrigendumModule) },
   { path: 'ltetecreport', loadChildren: () => import('./lte-tec-report/lte-tec-report.module').then(m => m.LteTecReportModule) },
   { path: 'prepareloapo', loadChildren: () => import('./prepareloapo/prepareloapo.module').then(m => m.PrepareloapoModule) },
+  { path: 'preparelteeprocnit', loadChildren: () => import('./prepare-lte-eproc-nit/prepare-lte-eproc-nit.module').then(m => m.PrepareLteEprocNitModule) },
 ]},
+
 
 
 

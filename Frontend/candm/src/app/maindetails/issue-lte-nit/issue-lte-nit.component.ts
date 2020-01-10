@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators, FormArray, FormBuilder} from '@angu
 
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 import {DetailsserviceService} from '../detailsservice.service';
 @Component({
@@ -20,12 +21,22 @@ export class IssueLteNitComponent implements OnInit {
     issueDate: ['',Validators.required]
   });
 
-  constructor(private fb: FormBuilder,private ds: DetailsserviceService) { }
+
+  constructor(private fb: FormBuilder,private ds: DetailsserviceService,private router: Router) { }
 
   ngOnInit() {
     this.indentNo = this.ds.biddetails.Indentno;
     this.issuenitForm.controls.indentNo.setValue(this.indentNo);
-    this.issuenitForm.controls.bodDate.setValue(this.ds.biddetails.boddate);
+    if(this.ds.biddetails.boddate){
+      this.issuenitForm.controls.bodDate.setValue(this.ds.biddetails.boddate);
+    }
+    if(this.ds.biddetails.BidType == 'LTE-eproc' || this.ds.biddetails.BidType == 'OpenTender'){
+      this.issuenitForm.addControl('bidsubDate',this.fb.control('',Validators.required));
+    }
+    if(this.ds.biddetails.BidType == 'OpenTender'){
+      this.issuenitForm.addControl('prebidDate',this.fb.control('',Validators.required));
+    }
+
   }
 
   issueNIT() {
@@ -33,11 +44,7 @@ export class IssueLteNitComponent implements OnInit {
       data => {
         if(data && data['issued']){
           window.alert('Updated Issue Date');
-          this.ds.getbiddetails({'indent_no':this.indentNo}).subscribe(
-            data => {
-              this.ds.biddetails = data;
-            }
-          );
+          this.router.navigate(['open-bids']);
         }
         else{
           window.alert('Some Error has occured');

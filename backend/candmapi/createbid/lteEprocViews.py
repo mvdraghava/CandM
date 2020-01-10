@@ -15,6 +15,7 @@ import json
 from .models import  OpenTender,Bid,OpenTender,EprocTender,Proposal,OtProposalNoteSheet,BidStatus
 from .models import Vendor,Employee,TECC,BODC,QR,Indenter
 from .models import *
+from .functions_need import *
 from .functions_need import send_file_docx, amount2words
 from django.forms.models import model_to_dict
 
@@ -29,7 +30,7 @@ def createlteEproc(request):
     bid.save()
     et = EprocTender(
         bid = bid,
-        etNo = data['etNo']
+        etNo = data['eproc_no']
     )
     et.save()
     proposal = Proposal(
@@ -69,7 +70,7 @@ def prepare_lte_eproc_notesheet(bid):
     indent_no = str(bid.indent_number)
     proposal = Proposal.objects.get(bid=bid)
     indenter = Indenter.objects.get(bid=bid)
-    ltedetails = LteDetails.objects.get(bid=bid)
+    ltedetails = LteEprocDetails.objects.get(bid=bid)
     ltevendors = VendorBid.objects.filter(bid = bid)
     vendors = []
     for vendor in ltevendors:
@@ -101,7 +102,7 @@ def prepare_lte_eproc_notesheet(bid):
         'emd_price': getEmdPrice(ltedetails.estCost),
         'emd_price_words': amount2words(getEmdPrice(ltedetails.estCost)),
         'note_by' : ltedetails.noteby.name,
-        'note_by_designation': ltedetails.noteby.designation,
+        'note_by_desg': ltedetails.noteby.designation,
         'no_of_parties'  : len(ltevendors),
         'no_of_parties_words' : amount2words(len(ltevendors))
     }
@@ -116,8 +117,70 @@ def prepare_lte_eproc_notesheet(bid):
     foldername = "I-"+indent_no+"/"
     if not os.path.exists(os.path.dirname(foldername)):
         os.makedirs(os.path.dirname(foldername))
-    filename = foldername+"I-"+indent_no+"_LTE_Notesheet"
-    doc = DocxTemplate("Template_LTE_Notesheet.docx")
+    filename = foldername+"I-"+indent_no+"_LTE_EPROC_Notesheet"
+    doc = DocxTemplate("Template_LTE_Eproc_Notesheet.docx")
     doc.render(context,autoescape=True)
     doc.save(filename+".docx")
     return filename+".docx"
+
+def prepare_lte_eproc_nit_doc(bid):
+    nitdetails = LteEprocNitDetails.objects.get(bid = bid)
+    lteeprocdetails = LteEprocDetails.objects.get(bid = bid)
+    indent_no = str(bid.indent_number)
+    context = {
+        'ref_no' : get_ref_no(bid),
+        'subject' : bid.bid_subject,
+        'emd_price' : str(getEmdPrice(lteeprocdetails.estCost)),
+        'emd_price_words' : amount2words(getEmdPrice(lteeprocdetails.estCost)),
+        'tender_category' : nitdetails.tender_category,
+        'type_of_contract': nitdetails.type_of_contract,
+        'prod_category' : nitdetails.product_category,
+        'bid_valid_days': nitdetails.bid_valid_days,
+        'engineer_incharge_type' : nitdetails.engineerincharge_type,
+        'engineer_incharge' : nitdetails.engineerincharge_desg + ', ' + nitdetails.engineerincharge_dept,
+        'address_consignee' : nitdetails.addressconsignee_desg + ', ' + nitdetails.addressconsignee_dept
+    }
+    foldername = "I-"+indent_no+"/"
+    if not os.path.exists(os.path.dirname(foldername)):
+        os.makedirs(os.path.dirname(foldername))
+    filename = foldername+"I-"+indent_no+"_LTE_EPROC_NIT"
+    doc = DocxTemplate("Template_LTE_EPROC_NIT.docx")
+    doc.render(context,autoescape=True)
+    doc.save(filename+".docx")
+    return filename+".docx"
+
+def getlteeprocnit(request):
+    data = json.loads(request.body.decode('utf-8'))
+    bid  = Bid.objects.get(indent_number = data['indentNo'])
+    bodc = BODC(
+        bid = bid,
+        candmMem = Employee.objects.get(id = data["candmBodMem"]["id"]),
+        indentMem = Employee.objects.get(id = data["indentBodMem"]["id"]),
+        fandaMem = Employee.objects.get(id = data["fandaBodMem"]["id"])
+    )
+    bodc.save()
+    tecc = TECC(
+        bid = bid,
+        candmMem = Employee.objects.get(id = data["candmTecMem"]["id"]),
+        indentMem = Employee.objects.get(id = data["indentTecMem"]["id"]),
+        fandaMem = Employee.objects.get(id = data["fandaTecMem"]["id"])
+    )
+    tecc.save()
+    nitdetails = LteEprocNitDetails(
+        bid = bid,
+        engineerincharge_type = data['engineerincharge_type'],
+        engineerincharge_desg = data['engineerincharge_desg'],
+        engineerincharge_dept = data['engineerincharge_dept'],
+        addressconsignee_desg = data['adressconsignee_desg'],
+        addressconsignee_dept = data['adressconsignee_dept'],
+        proposalapprovedDate = getDate(data['proposalapprovedDate']),
+        tender_category = data['tender_category'],
+        product_category = data['product_category'],
+        type_of_contract = data['type_contract'],
+        bid_valid_days = data['bid_valid_days']
+    )
+    nitdetails.save()
+    res = prepare_lte_eproc_nit_doc(bid)
+    response = send_file_docx(res)
+    changeStatus(bid,"NIT prepared for Vetting")
+    return response

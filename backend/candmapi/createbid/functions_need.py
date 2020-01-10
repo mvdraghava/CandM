@@ -80,3 +80,34 @@ def getVendor(vend_id):
     vend = Vendor.objects.filter(id = vend_id)
     vend = vend.values()[0]
     return vend
+
+def getKPIdates(bid):
+    indent_no = bid.indent_number
+    proposal = Proposal.objects.get(bid = bid)
+    impdates = ImpDates.objects.get(bid = bid)
+    kpidates = {}
+    try:
+        kpidates['proposal_recieved_date'] = proposal.proposalRecievedDate
+        try:
+            kpidates['bod_date'] = impdates.bodDate
+            kpidates['issue_date'] = impdates.issueddate
+        except Exception as e:
+            pass
+        if bid.bid_type == 'LTE':
+            ltedetails = LteDetails.objects.get(bid = bid)
+            kpidates['initial_note_date'] = ltedetails.notedate
+            try:
+                ltegcc = LteGeneralConditions.objects.get(bid = bid)
+                kpidates['initial_note_approved_date'] = ltegcc.proposalnoteapproveddt
+            except Exception as e:
+                pass
+            try:
+                loapodetails = Loapovetting.objects.get(bid = bid)
+                kpidates['tec_date'] = loapodetails.tecdate
+                kpidates['loa_approved_date'] = loapodetails.loaapproveddate
+            except Exception as e:
+                pass
+    except Exception as e:
+        kpidates = {}
+        return kpidates
+    return kpidates

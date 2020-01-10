@@ -9,6 +9,7 @@ import { Employee } from '../employee';
 import {map, startWith} from 'rxjs/operators';
 import { saveAs } from 'file-saver';
 import {CreatelteserviceService} from './createlteservice.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-create-lte',
@@ -49,7 +50,7 @@ export class CreateLteComponent implements OnInit {
     ltevendors: this.fb.array([['',[Validators.required, this.validateVendor]]])
   });
 
-  constructor(private ltes:CreatelteserviceService,private fb: FormBuilder) { }
+  constructor(private ltes:CreatelteserviceService,private fb: FormBuilder,private router:Router) { }
 
   ngOnInit() {
     this.ltes.getemployees().subscribe(
@@ -158,7 +159,9 @@ export class CreateLteComponent implements OnInit {
     this.ltes.createlte(this.createLte.value).subscribe(
       data => {
         saveAs(data, 'I_'+this.createLte.controls.indent_no.value.toString()+'_NoteSheet.docx' );
-        console.log("downloaded")
+        console.log("downloaded");
+        window.alert('Created LTE Tender');
+        this.router.navigate(['open-bids']);
       },
       error => {
         window.alert('Some Error has occured');

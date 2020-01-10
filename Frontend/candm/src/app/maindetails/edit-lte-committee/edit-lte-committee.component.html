@@ -7,15 +7,16 @@
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="editcommiteForm">
-        <div fxLayout="row wrap" fxLayoutGap="25px">
+        <!-- <div fxLayout="row wrap" fxLayoutGap="25px">
           <mat-form-field appearance="outline">
             <mat-label>BOD Date</mat-label>
             <input matInput formControlName="bodDate" [matDatepicker]="picker1" (focus)="picker1.open()" placeholder="Choose Date">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
-        </div>
+        </div> -->
 
+        <h4>Bid Opening Committe Members</h4>
         <div class="boddiv" fxLayout="row wrap" fxLayoutGap="25px">
           <mat-form-field appearance="outline">
             <mat-label>CandM BOD Member</mat-label>
@@ -45,6 +46,7 @@
             </mat-autocomplete>
           </mat-form-field>
         </div>
+        <h4>Tender Evaluation Committe Members</h4>
         <div class="tecdiv" fxLayout="row wrap" fxLayoutGap="25px">
           <mat-form-field appearance="outline">
             <mat-label>CandM TEC Member</mat-label>

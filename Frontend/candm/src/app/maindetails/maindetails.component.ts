@@ -48,8 +48,43 @@ export class MaindetailsComponent implements OnInit {
     'TEC Prepared for Vetting' : [{
       'stage' : 'Prepare LOA/PO',
       'link' : 'prepareloapo'
+    }],
+    'LOA Prepared for Vetting' : [{
+      'stage' : 'Issue LOA' ,
+      'link' : 'issueloa'
+    }],
+    'PO Prepared for Vetting' : [{
+      'stage' : 'Issue PO' ,
+      'link' : 'issuepo'
     }]
   }
+
+  lteeprocmenustages = {
+    'Created Proposal Notesheet' : [{
+      'stage': 'Prepare NIT',
+      'link' : 'preparelteeprocnit'
+    }],
+    'NIT prepared for Vetting': [{
+      'stage': 'Edit Commitee',
+      'link': 'edit-lte-committee'
+    },
+    {
+      'stage': 'Issue NIT',
+      'link': 'issue-lte-nit'
+    }],
+    'NIT Issued' : [{
+      'stage': 'Edit Commitee',
+      'link': 'edit-lte-committee'
+    },
+    {
+      'stage': 'Date Corrigendum',
+      'link': 'datecorrigendum'
+    },
+    {
+      'stage': 'Other Corrigendum',
+      'link': 'othercorrigendum'
+    }]
+  };
 
   menustages = {
     'OpenTender' :{
@@ -70,7 +105,8 @@ export class MaindetailsComponent implements OnInit {
         'link' : 'prepareotboq'
       }],
     },
-    'LTE' : this.ltemenustages
+    'LTE' : this.ltemenustages,
+    'LTE-eproc' : this.lteeprocmenustages,
   };
 
   nextstageMenu = [];

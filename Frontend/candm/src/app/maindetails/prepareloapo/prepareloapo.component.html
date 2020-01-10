@@ -23,6 +23,13 @@
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
+          <h4>TEC Date:</h4>
+          <mat-form-field appearance="outline">
+            <mat-label>TEC Date</mat-label>
+            <input matInput formControlName="tecdate" [matDatepicker]="picker2" (focus)="picker2.open()" placeholder="Choose Date">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
           <h4> {{this.loapoform.controls.typeofaward.value}} Number : </h4>
           <mat-form-field appearance='outline'>
             <mat-label>{{this.loapoform.controls.typeofaward.value}} Number</mat-label>

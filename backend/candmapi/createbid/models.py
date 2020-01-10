@@ -119,6 +119,7 @@ class TECC(models.Model):
     indentMem = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='tecindentMem')
     fandaMem = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='tecfandaMem')
 
+#Model to store lte details such as estimated cost, note by details, note date
 class LteDetails(models.Model):
     bid = models.OneToOneField(Bid,on_delete = models.CASCADE,primary_key=True)
     tendertype = models.CharField(max_length=50,default="supply")
@@ -140,7 +141,7 @@ class LteEprocDetails(models.Model):
     emdwaivedoff = models.BooleanField()
     noteby = models.ForeignKey(Employee,on_delete = models.CASCADE)
     notedate = models.DateField()
-
+#Model to store the general conditions and nit proposal approve date
 class LteGeneralConditions(models.Model):
     bid = models.OneToOneField(Bid,on_delete = models.CASCADE, primary_key=True)
     proposalnoteapproveddt = models.DateField()
@@ -191,6 +192,7 @@ class FirstImpDates(models.Model):
     bidsubdate = models.DateField(blank=True,default =None,null=True)
     prebiddate = models.DateField(blank=True,default =None,null=True)
 
+#Model to store all the corrigenda issued
 class Corrigenda(models.Model):
     bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
     description = models.CharField(max_length=50000)
@@ -201,6 +203,7 @@ class Corrigenda(models.Model):
     prebiddate = models.DateField(blank=True,default =None,null=True)
     issuedby = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='issuedby')
 
+#Model to store about who participated in the bid/tender
 class participatedBidders(models.Model):
     bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
     vendor = models.ForeignKey(Vendor,on_delete = models.CASCADE)
@@ -208,6 +211,7 @@ class participatedBidders(models.Model):
     emddetail = models.CharField(max_length=100,default='emdwaivedoff')
     docfee = models.CharField(max_length=100,default='free')
 
+#Model to store the quotations of different participated bidders
 class biddersquotedetails(models.Model):
     bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
     vendor = models.ForeignKey(Vendor,on_delete = models.CASCADE)
@@ -224,6 +228,7 @@ class Loapovetting(models.Model):
     cpgclause = models.BooleanField()
     specialconditions = models.BooleanField()
     typeofaward = models.CharField(max_length=20)
+    tecdate = models.DateField()
     loaapproveddate = models.DateField()
 
 #Model for General Conditions in LOA/property
@@ -260,5 +265,17 @@ class loagcc(models.Model):
     officerincharge = models.BooleanField()
     officerinchargeText = models.CharField(max_length=50000)
 
-
+#Model for LTE Eprocurement NIT details
+class LteEprocNitDetails(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE)
+    engineerincharge_type = models.CharField(max_length = 100)
+    engineerincharge_desg = models.CharField(max_length = 100)
+    engineerincharge_dept = models.CharField(max_length = 100)
+    addressconsignee_desg = models.CharField(max_length = 100)
+    addressconsignee_dept = models.CharField(max_length = 100)
+    proposalapprovedDate = models.DateField()
+    tender_category = models.CharField(max_length = 100)
+    product_category = models.CharField(max_length = 100)
+    type_of_contract = models.CharField(max_length = 100)
+    bid_valid_days = models.IntegerField()
 # Create your models here.

@@ -26,7 +26,6 @@ export class EditLteCommitteeComponent implements OnInit {
 
   editcommiteForm = this.fb.group({
     indentNo: [this.indentNo],
-    bodDate: ['',Validators.required],
     candmBodMem: ['',[Validators.required, this.validateEmployee]],
     indentBodMem: ['',[Validators.required, this.validateEmployee]],
     fandaBodMem: ['',[Validators.required, this.validateEmployee]],
@@ -91,8 +90,6 @@ export class EditLteCommitteeComponent implements OnInit {
       this.editcommiteForm.controls.candmBodMem.setValue(this.ds.biddetails.bodcomdetails.candmBodMem);
       this.editcommiteForm.controls.indentBodMem.setValue(this.ds.biddetails.bodcomdetails.indentBodMem);
       this.editcommiteForm.controls.fandaBodMem.setValue(this.ds.biddetails.bodcomdetails.fandaBodMem);
-      this.editcommiteForm.controls.bodDate.setValue(this.ds.biddetails.boddate);
-      console.log(this.ds.biddetails.boddate);
     }
     if(this.ds.biddetails.teccomdetails) {
       this.editcommiteForm.controls.candmTecMem.setValue(this.ds.biddetails.teccomdetails.candmTecMem);
@@ -120,7 +117,7 @@ export class EditLteCommitteeComponent implements OnInit {
   }
 
   editCommitte() {
-    this.ds.editltecommittee(this.editcommiteForm.value).subscribe(
+    this.ds.editcommittee(this.editcommiteForm.value).subscribe(
       data => {
         if(data && data['edited']){
           window.alert('Edited Committee successfully');

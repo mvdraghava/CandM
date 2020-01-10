@@ -1,0 +1,164 @@
+<div fxFlex fxFlexAlign="center center">
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Prepare NIT for Vetting</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup] = 'nitForm'>
+      <div class="proposaldatediv"  fxLayout="row wrap" fxLayoutGap="25px">
+        <h4>Proposal Approved Date</h4>
+        <mat-form-field appearance="outline">
+          <mat-label>Proposal Approved Date</mat-label>
+          <input  matInput formControlName="proposalapprovedDate" [matDatepicker]="picker1" (focus)="picker1.open()" placeholder="Choose Date">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        <h4>Address Consignee</h4>
+        <mat-form-field appearance='outline'>
+          <mat-label>AdressConsignee Designation</mat-label>
+            <mat-select  formControlName='adressconsignee_desg'>
+              <mat-option *ngFor="let desg of designations" [value]="desg">
+                {{desg}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance='outline'>
+          <mat-label>AdressConsignee Department</mat-label>
+            <mat-select  formControlName='adressconsignee_dept'>
+              <mat-option *ngFor="let dept of departments" [value]="dept">
+                {{dept}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+      <h4>Engineer In Charge/Officer Incharge</h4>
+      <div class="engineerinchargediv"  fxLayout="row wrap" fxLayoutGap="25px">
+        <mat-form-field appearance='outline'>
+          <mat-label>Incharge Type</mat-label>
+            <mat-select  formControlName='engineerincharge_type'>
+              <mat-option *ngFor="let type of typeofincharge" [value]="type">
+                {{type}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance='outline'>
+          <mat-label>Incharge Designation</mat-label>
+            <mat-select  formControlName='engineerincharge_desg'>
+              <mat-option *ngFor="let desg of designations" [value]="desg">
+                {{desg}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance='outline'>
+          <mat-label>Incharge Department</mat-label>
+            <mat-select  formControlName='engineerincharge_dept'>
+              <mat-option *ngFor="let dept of departments" [value]="dept">
+                {{dept}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+
+
+      <!-- This should be implemented as a component -->
+      <h4>Bid Opening Commitee Members</h4>
+      <div class="boddiv" fxLayout="row wrap" fxLayoutGap="25px">
+        <mat-form-field appearance="outline">
+          <mat-label>CandM BOD Member</mat-label>
+          <input type="text" Placeholder="name" matInput formControlName="candmBodMem" [matAutocomplete]="auto3">
+          <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let emp of candmBodFilteredEmployees | async" [value]="emp">
+              {{emp.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Indent BOD Member</mat-label>
+          <input type="text" Placeholder="name" matInput formControlName="indentBodMem" [matAutocomplete]="auto4">
+          <mat-autocomplete #auto4="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let emp of indentBodFilteredEmployees | async" [value]="emp">
+              {{emp.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>FandA BOD Member</mat-label>
+          <input type="text" Placeholder="name" matInput formControlName="fandaBodMem" [matAutocomplete]="auto5">
+          <mat-autocomplete #auto5="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let emp of fandaBodFilteredEmployees | async" [value]="emp">
+              {{emp.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <h4>Tender Evaluation Committee Members</h4>
+      <div class="tecdiv" fxLayout="row wrap" fxLayoutGap="25px">
+        <mat-form-field appearance="outline">
+          <mat-label>CandM TEC Member</mat-label>
+          <input type="text" Placeholder="name" matInput formControlName="candmTecMem" [matAutocomplete]="auto6">
+          <mat-autocomplete #auto6="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let emp of candmTecFilteredEmployees | async" [value]="emp">
+              {{emp.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Indent TEC Member</mat-label>
+          <input type="text" Placeholder="name" matInput formControlName="indentTecMem" [matAutocomplete]="auto7">
+          <mat-autocomplete #auto7="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let emp of indentTecFilteredEmployees | async" [value]="emp">
+              {{emp.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>FandA TEC Member</mat-label>
+          <input type="text" Placeholder="name" matInput formControlName="fandaTecMem" [matAutocomplete]="auto8">
+          <mat-autocomplete #auto8="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let emp of fandaTecFilteredEmployees | async" [value]="emp">
+              {{emp.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <h4>Tender Details</h4>
+      <div class="tenderdiv" fxLayout="row wrap" fxLayoutGap="25px">
+        <mat-form-field appearance='outline'>
+          <mat-label>Tender Category</mat-label>
+            <mat-select  formControlName='tender_category'>
+              <mat-option *ngFor="let cat of tendercategories" [value]="cat">
+                {{cat}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance='outline'>
+          <mat-label>Type of Contract</mat-label>
+            <mat-select  formControlName='type_contract'>
+              <mat-option *ngFor="let type of contracttypes" [value]="type">
+                {{type}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance='outline'>
+          <mat-label>Product Category</mat-label>
+            <mat-select  formControlName='product_category'>
+              <mat-option *ngFor="let cat of productcategories" [value]="cat">
+                {{cat}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance='outline'>
+          <mat-label>Bid Validity Days</mat-label>
+            <mat-select  formControlName='bid_valid_days'>
+              <mat-option *ngFor="let day of bidvaliditydays" [value]="day">
+                {{day}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+    <button mat-raised-button [disabled]="(!this.nitForm.valid) || this.ablesubmit" color='primary' (click)='getNIT()'>Submit</button>
+  </mat-card-content>
+</mat-card>
+</div>

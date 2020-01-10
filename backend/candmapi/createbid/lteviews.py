@@ -294,11 +294,10 @@ def prepare_lte_m_nit(request):
     changeStatus(bid,"NIT prepared for Vetting")
     return response
 
-def editltecommittee(request):
+def editcommittee(request):
     try:
         data = json.loads(request.body.decode('utf-8'))
         bid = Bid.objects.get(indent_number=data["indentNo"])
-        ltegc = LteGeneralConditions.objects.get(bid = bid)
         bod =BODC.objects.get(bid=bid)
         tec = TECC.objects.get(bid=bid)
         bod.candmMem = Employee.objects.get(id = data["candmBodMem"]["id"])
@@ -309,8 +308,6 @@ def editltecommittee(request):
         tec.fandaMem = Employee.objects.get(id = data["fandaTecMem"]["id"])
         bod.save()
         tec.save()
-        ltegc.boddt = getDate(data["bodDate"])
-        ltegc.save()
         return JsonResponse({'edited':True})
     except Exception as e:
         x = 1
@@ -320,24 +317,59 @@ def issuelteNIT(request):
     try:
         data = json.loads(request.body.decode('utf-8'))
         bid  = Bid.objects.get(indent_number = data['indentNo'])
-        impdates = ImpDates(
-            bid = bid,
-            issueddate = getDate(data["issueDate"]),
-            boddate = getDate(data["bodDate"]),
-            bidsubdate = getDate(data["bodDate"])
-        )
-        impdates.save()
-        firstimpdates = FirstImpDates(
-            bid = bid,
-            issueddate = getDate(data["issueDate"]),
-            boddate = getDate(data["bodDate"]),
-            bidsubdate = getDate(data["bodDate"])
-        )
-        firstimpdates.save()
-        ltegc = LteGeneralConditions.objects.get(bid = bid)
-        ltegc.boddt = getDate(data["bodDate"])
-        ltegc.save()
-        changeStatus(bid,"NIT Issued")
+        if bid.bid_type == 'LTE':
+            impdates = ImpDates(
+                bid = bid,
+                issueddate = getDate(data["issueDate"]),
+                boddate = getDate(data["bodDate"]),
+                bidsubdate = getDate(data["bodDate"])
+            )
+            impdates.save()
+            firstimpdates = FirstImpDates(
+                bid = bid,
+                issueddate = getDate(data["issueDate"]),
+                boddate = getDate(data["bodDate"]),
+                bidsubdate = getDate(data["bodDate"])
+            )
+            firstimpdates.save()
+            ltegc = LteGeneralConditions.objects.get(bid = bid)
+            ltegc.boddt = getDate(data["bodDate"])
+            ltegc.save()
+            changeStatus(bid,"NIT Issued")
+        elif bid.bid_type == 'LTE-eproc':
+            impdates = ImpDates(
+                bid = bid,
+                issueddate = getDate(data["issueDate"]),
+                boddate = getDate(data["bodDate"]),
+                bidsubdate = getDate(data["bidsubDate"])
+            )
+            impdates.save()
+            firstimpdates = FirstImpDates(
+                bid = bid,
+                issueddate = getDate(data["issueDate"]),
+                boddate = getDate(data["bodDate"]),
+                bidsubdate = getDate(data["bidsubDate"])
+            )
+            firstimpdates.save()
+            changeStatus(bid,"NIT Issued")
+        elif bid.bid_type == 'OpenTender':
+            impdates = ImpDates(
+                bid = bid,
+                issueddate = getDate(data["issueDate"]),
+                boddate = getDate(data["bodDate"]),
+                bidsubdate = getDate(data["bidsubDate"]),
+                prebiddate = getDate(data['prebidDate'])
+            )
+            impdates.save()
+            firstimpdates = FirstImpDates(
+                bid = bid,
+                issueddate = getDate(data["issueDate"]),
+                boddate = getDate(data["bodDate"]),
+                bidsubdate = getDate(data["bidsubDate"]),
+                prebiddate = getDate(data['prebidDate'])
+            )
+            firstimpdates.save()
+            changeStatus(bid,"NIT Issued")
         return JsonResponse({'issued':True})
     except Exception as e:
         x = 1
@@ -578,16 +610,17 @@ def prepare_loa_po(bid):
     loapovendor = {
         'name' : awardvendor.name,
         'street1' : awardvendor.street1,
-        'city' : awardvendoe.city,
+        'city' : awardvendor.city,
         'state' : awardvendor.state,
         'pincode' : awardvendor.pincode,
     }
+    conditions = get_lte_conditions(loapogcc)
     if awardvendor.street2:
         loapovendor['street2'] = awardvendor.street2
-    if len(awardvendor.mobilenos):
-        loapovendor['mobileno'] : awardvendor.mobilenos[0]
-    if len(awardvendor.emailids):
-        loapovendor['emailid'] : awardvendor.emailids[0]
+    if len(awardvendor.mobilenos)>0:
+        loapovendor['mobileno'] = awardvendor.mobilenos[0]
+    if len(awardvendor.emailids)>0:
+        loapovendor['emailid'] = awardvendor.emailids[0]
     RomanLetters = ['I','II','III','IV','V','VI','VII','VIII']
     romani = 2
     annexures = {
@@ -606,8 +639,7 @@ def prepare_loa_po(bid):
     if loapodetails.cpgclause:
         annexures['cpg'] = 'Annexure - ' + RomanLetters[romani]
         romani = romani + 1
-    conditions = ''
-    context : {
+    context = {
         'ref_no' : get_ref_no(bid),
         'subject' : bid.bid_subject,
         'tender_ref_no' : get_ref_no(bid),
@@ -615,9 +647,30 @@ def prepare_loa_po(bid):
         'loavendor_tender_ref_no' : '{{loavendor_tender_ref_no}}',
         'loavendor_tender_dt' : '{{loavendor_tender_dt}}',
         'loa_amount' : loapodetails.awardquoteamount,
-        'loa_amount_words' : amount2words(loapodetails.awardquoteamount)
+        'loa_amount_words' : amount2words(loapodetails.awardquoteamount),
+        'conditions' : conditions,
+        'loa_dt' : '{{loa_dt}}',
+        'loapo' : loapodetails.typeofaward,
+        'loa_no' : '{{loa_no}}',
+        'special_conditions' : loapodetails.specialconditions,
+        'ndaclause' : loapodetails.ndaclause,
+        'cpg_clause' : loapodetails.cpgclause,
+        'saclause' : loapodetails.saclause,
+        'loavendor' : loapovendor,
+        'annexures' : annexures
     }
-    return ''
+    if loapodetails.awardgstincl :
+        context['gstIncl'] = 'Inclusive of GST'
+    else:
+        context['gstIncl'] = 'Exclusive of GST'
+    foldername = "I-"+indent_no+"/"
+    if not os.path.exists(os.path.dirname(foldername)):
+        os.makedirs(os.path.dirname(foldername))
+    filename = foldername+"I-"+indent_no+"_"+loapodetails.typeofaward
+    doc = DocxTemplate("Template_LOA.docx")
+    doc.render(context,autoescape=True)
+    doc.save(filename+".docx")
+    return filename+".docx"
 
 
 
@@ -645,6 +698,7 @@ def loapovetting(request):
             cpgclause = data['cpgclause'],
             specialconditions = data['specialconditions'],
             typeofaward = data['typeofaward'],
+            tecdate = getDate(data['tecdate']),
             loaapproveddate = getDate(data['loaapproveddate']),
         )
         loapovet.save()
@@ -684,7 +738,10 @@ def loapovetting(request):
         )
         loagenerals.save()
         response = {'prepared' : True}
-        return JsonResponse(response)
+        res = prepare_loa_po(bid)
+        changeStatus(bid,"LOA/PO Prepared for Vetting")
+        response = send_file_docx(res)
+        return response
     except Exception as e:
         pass
         import pdb; pdb.set_trace()

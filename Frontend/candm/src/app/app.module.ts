@@ -32,7 +32,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateTenderComponent } from './create-tender/create-tender.component';
 import { CreateOtComponent } from './create-ot/create-ot.component';
-import { CreateLteEprocComponent } from './create-lte-eproc/create-lte-eproc.component';
 import { CreateAmmendmentComponent } from './create-ammendment/create-ammendment.component';
 import { CreateSqComponent } from './create-sq/create-sq.component';
 import { CreateStComponent } from './create-st/create-st.component';
@@ -56,7 +55,6 @@ import { InfiniteScrollModule } from '../../node_modules/ngx-infinite-scroll';
     OtformComponent,
     CreateTenderComponent,
     CreateOtComponent,
-    CreateLteEprocComponent,
     CreateAmmendmentComponent,
     CreateSqComponent,
     CreateStComponent,
@@ -92,7 +90,6 @@ import { InfiniteScrollModule } from '../../node_modules/ngx-infinite-scroll';
       { path: 'report', component: ReportComponent},
       { path: 'create-tender', component: CreateTenderComponent},
       { path: 'create-OpenTender', component: CreateOtComponent},
-      { path: 'create-LTE_Eprocurement', component: CreateLteEprocComponent},
       { path: 'create-Ammendment', component: CreateAmmendmentComponent},
       { path: 'create-SpotQuotation', component: CreateSqComponent},
       { path: 'create-SingleTender', component: CreateStComponent},

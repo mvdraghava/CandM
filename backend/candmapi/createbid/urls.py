@@ -17,9 +17,11 @@ urlpatterns = [
     path('getotNIT',views.getOtNIT),
     path('createlte',views.createlte),
     path('getltemNIT',views.prepare_lte_m_nit),
-    path('editltecommittee',views.editltecommittee),
+    path('editcommittee',views.editcommittee),
     path('issuelteNIT',views.issuelteNIT),
     path('datecorrigendum',views.datecorrigendum),
     path('prepareltetec',views.ltetecvetting),
-    path('loapovetting',views.loapovetting)
+    path('loapovetting',views.loapovetting),
+    path('createlteeproc',views.createlteEproc),
+    path('getlteeprocNIT', views.getlteeprocnit)
 ]
