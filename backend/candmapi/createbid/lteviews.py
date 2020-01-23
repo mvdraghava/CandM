@@ -426,6 +426,21 @@ def datecorrigendum(request):
             impdates.boddate =  getDate(data["bodDate"])
             impdates.save()
             preparedatecorrigendumfiles(corrigendum)
+        elif bid.bid_type == 'LTE-eproc':
+            corrigendum = Corrigenda(
+                bid = bid,
+                description = "Date Corrigendum",
+                reason = data["reason"],
+                issueddate = getDate(data["issueDate"]),
+                boddate = getDate(data["bodDate"]),
+                bidsubdate = getDate(data["bidsubDate"]),
+                issuedby = Employee.objects.get(id = data["issuedby"]["id"])
+            )
+            corrigendum.save()
+            impdates.boddate =  getDate(data["bodDate"])
+            impdates.bidsubdate = getDate(data["bidsubDate"])
+            impdates.save()
+            preparedatecorrigendumfiles(corrigendum)
         return JsonResponse({'issued':True})
     except Exception as e:
         x = 1
@@ -571,14 +586,8 @@ def ltetecvetting(request):
                     remarks = quotation['remarks']
                 )
                 if not ltedetails.emdwaivedoff:
-                    if quotation['emd'] == 'Paid EMD':
-                        pb.emddetail = 'paid'
-                    elif quotation['emd'] == 'Submitted MSME':
-                        pb.emddetail = 'msme'
-                    elif quotation['emd'] == 'Submitted NSIC':
-                        pb.emddetail = 'nsic'
-                    elif quotation['emd'] == 'Submitted MSME and NSIC':
-                        pb.emddetail = 'msmeandnsic'
+                    pb.emddetail = quotation['emd']
+
                 pb.save()
                 bq = biddersquotedetails(
                     bid = bid,
@@ -592,7 +601,6 @@ def ltetecvetting(request):
         return response
     except Exception as e:
         pass
-        import pdb; pdb.set_trace()
         return JsonResponse({'issued':False})
 
 

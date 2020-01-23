@@ -107,6 +107,9 @@ def getKPIdates(bid):
                 kpidates['loa_approved_date'] = loapodetails.loaapproveddate
             except Exception as e:
                 pass
+        if bid.bid_type == 'LTE-eproc':
+            lteEprocdetails = LteEprocDetails.get(bid = bid)
+            kpidates['initial_note_date'] = lteEprocdetails.notedate
     except Exception as e:
         kpidates = {}
         return kpidates

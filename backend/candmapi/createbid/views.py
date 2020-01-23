@@ -251,11 +251,15 @@ def getBidDetails(request):
     try:
         data = json.loads(request.body.decode('utf-8'))
         bid = Bid.objects.get(indent_number = int(data['indent_no']))
+        pbid = Proposal.objects.get(bid = bid)
+        indenter = Indenter.objects.get(bid = bid)
         response = {
             'Indentno': bid.indent_number,
             'TenderSubject': bid.bid_subject,
             'BidStatus': get_status(bid),
-            'IndentDepartment': get_indentdept(bid),
+            'IndentDepartment': pbid.indentDept,
+            'IndentDesignation': pbid.indentDesignation,
+            'IndenterName' : indenter.indenter.name,
             'BidType': bid.bid_type,
             'estCost': get_est_cost(bid),
             'completionperiod' : get_completion_period(bid)
@@ -359,7 +363,18 @@ def getBidDetails(request):
                 response['participatedvendors'] = [getVendor(obj['vendor_id']) for obj in participatedvendors]
             except Exception as e:
                 pass
-
+        elif(bid.bid_type == "LTE-eproc"):
+            try:
+                ltedetails = LteEprocDetails.objects.get(bid = bid)
+                response["emdwaivedoff"] = ltedetails.emdwaivedoff
+                nitsentvendors = VendorBid.objects.filter(bid = bid)
+                nitsentvendors = nitsentvendors.values()
+                response["nitsentvendors"] = [getVendor(obj['vendor_id']) for obj in nitsentvendors]
+                if (not ltedetails.emdwaivedoff):
+                    response["emd"] = getEmdPrice(ltedetails.estCost)
+                    response["emdwords"] = amount2words(getEmdPrice(ltedetails.estCost))
+            except Exception as e:
+                pass
         return JsonResponse(response)
     except Exception as ex:
         print(ex)
@@ -408,6 +423,9 @@ def get_est_cost(bid):
     elif(bid.bid_type == "LTE"):
         ltedetails = LteDetails.objects.get(bid = bid)
         return ltedetails.estCost
+    elif(bid.bid_type == "LTE-eproc"):
+        lteEprocdetails = LteEprocDetails.objects.get(bid = bid)
+        return lteEprocdetails.estCost
 
 def get_completion_period(bid):
     if(bid.bid_type == "OpenTender"):
@@ -416,6 +434,9 @@ def get_completion_period(bid):
     elif(bid.bid_type == "LTE"):
         ltedetails = LteDetails.objects.get(bid = bid)
         return ltedetails.completionperiod
+    elif(bid.bid_type == "LTE-eproc"):
+        lteEprocdetails = LteEprocDetails.objects.get(bid = bid)
+        return lteEprocdetails.completionperiod
 
 def prepareQR(request):
     data = json.loads(request.body.decode('utf-8'))

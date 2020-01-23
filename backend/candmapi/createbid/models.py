@@ -45,6 +45,7 @@ class Proposal(models.Model):
     proposalDate = models.DateField()
     proposalRecievedDate = models.DateField()
     indentDept = models.CharField(max_length=100)
+    indentDesignation = models.CharField(max_length = 100,default = None, null = True)
 
 class OtProposalNoteSheet(models.Model):
     bid = models.OneToOneField(Bid,on_delete=models.CASCADE)
@@ -137,10 +138,12 @@ class VendorBid(models.Model):
 class LteEprocDetails(models.Model):
     bid = models.OneToOneField(Bid,on_delete = models.CASCADE,primary_key=True)
     estCost = models.FloatField()
+    completionperiod = models.CharField(max_length = 150,default="30 Days")
     gstIncl = models.BooleanField()
     emdwaivedoff = models.BooleanField()
     noteby = models.ForeignKey(Employee,on_delete = models.CASCADE)
     notedate = models.DateField()
+
 #Model to store the general conditions and nit proposal approve date
 class LteGeneralConditions(models.Model):
     bid = models.OneToOneField(Bid,on_delete = models.CASCADE, primary_key=True)
@@ -208,8 +211,16 @@ class participatedBidders(models.Model):
     bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
     vendor = models.ForeignKey(Vendor,on_delete = models.CASCADE)
     remarks = models.CharField(max_length=10000)
+    submittedonline = models.CharField(max_length=100, default = 'Offline')
     emddetail = models.CharField(max_length=100,default='emdwaivedoff')
     docfee = models.CharField(max_length=100,default='free')
+
+#Model to store paymentdetails for EMD and Document Fee
+class PaymentDetails(models.Model):
+    bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
+    vendor = models.ForeignKey(Vendor,on_delete = models.CASCADE)
+    paymentfor = models.CharField(max_length=30)
+    paymentdetails = models.CharField(max_length = 1000)
 
 #Model to store the quotations of different participated bidders
 class biddersquotedetails(models.Model):
@@ -278,4 +289,8 @@ class LteEprocNitDetails(models.Model):
     product_category = models.CharField(max_length = 100)
     type_of_contract = models.CharField(max_length = 100)
     bid_valid_days = models.IntegerField()
+
+
+
+
 # Create your models here.

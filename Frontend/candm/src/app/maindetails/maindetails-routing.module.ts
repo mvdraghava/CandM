@@ -23,7 +23,9 @@ const routes: Routes = [{ path: ':indentno/:tendersubject', component: Maindetai
   { path: 'ltetecreport', loadChildren: () => import('./lte-tec-report/lte-tec-report.module').then(m => m.LteTecReportModule) },
   { path: 'prepareloapo', loadChildren: () => import('./prepareloapo/prepareloapo.module').then(m => m.PrepareloapoModule) },
   { path: 'preparelteeprocnit', loadChildren: () => import('./prepare-lte-eproc-nit/prepare-lte-eproc-nit.module').then(m => m.PrepareLteEprocNitModule) },
+  { path: 'lte-eproc-bid-open', loadChildren: () => import('./lte-eproc-bid-opening/lte-eproc-bid-opening.module').then(m => m.LteEprocBidOpeningModule) },
 ]},
+
 
 
 

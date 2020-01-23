@@ -38,7 +38,8 @@ def createlteEproc(request):
         proposalRefNo = data['proposalDetails']['proposalRefNo'],
         proposalDate = getDate(data['proposalDetails']['proposalDate']),
         proposalRecievedDate = getDate(data['proposalDetails']['proposalRecievedDate']),
-        indentDept = data['proposalDetails']['indentDept']
+        indentDept = data['proposalDetails']['indentDept'],
+        indentDesignation = (Employee.objects.get(id = data['proposalDetails']['indentedBy']["id"])).designation
     )
     proposal.save()
     indenter = Indenter(
@@ -49,6 +50,7 @@ def createlteEproc(request):
     lteEprocdetails = LteEprocDetails(
         bid = bid,
         estCost = data["amountDetails"]["estCost"],
+        completionperiod = str(data["completionperiod"]) + " " + data["durationmeasured"],
         gstIncl = data["amountDetails"]["gstIncl"],
         emdwaivedoff = data["amountDetails"]["emdwaivedoff"],
         noteby = Employee.objects.get(id = data["noteby"]["id"]),
@@ -184,3 +186,43 @@ def getlteeprocnit(request):
     response = send_file_docx(res)
     changeStatus(bid,"NIT prepared for Vetting")
     return response
+
+def lteeprocbidopening(request):
+    """
+    Recieve request
+    store the participatedbidders values
+    store payment details values
+    call preparebodreport function
+    if payments are there call prepare Bill function
+    return
+    """
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        bid  = Bid.objects.get(indent_number = data['indentNo'])
+        lteeprocdetails = LteEprocDetails.objects.get(bid = bid)
+        for quotation in data['bidsubmissionDetails']:
+            if quotation['participated']:
+                pb = participatedBidders(
+                    bid = bid,
+                    vendor = Vendor.objects.get(id = quotation['vendor']['id']),
+                    remarks = quotation['remarks'],
+                    submittedonline = quotation['submittedonline'],
+                )
+                if not lteeprocdetails.emdwaivedoff:
+                    pb.emddetail = quotation['emd']
+                    pb.save()
+                    if quotation['emd'] == 'Paid EMD':
+                        pd = PaymentDetails(
+                            bid = bid,
+                            vendor = Vendor.objects.get(id = quotation['vendor']['id']),
+                            paymentfor = 'EMD',
+                            paymentdetails = quotation['emddetails']
+                        )
+                        pd.save()
+        return JsonResponse({'issued':True})
+    except Exception as e:
+        pass
+        return JsonResponse({'issued':False})
+
+
+    return

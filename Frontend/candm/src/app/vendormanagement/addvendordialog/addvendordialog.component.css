@@ -28,3 +28,10 @@ h5 {
 #msmensic {
   padding: 20px;
 }
+
+::ng-deep .mat-dialog-title {
+  text-align: center;
+  background: #1976d2;
+  color: #fff;
+  padding: 5px;
+}

@@ -15,4 +15,6 @@ input[type=date] {
   -moz-appearance:textfield; /* Firefox */
 }
 
-
+mat-card {
+  background-color: #e5e5dc;
+}

@@ -1,1 +1,21 @@
-<p>candmmsg works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Details of {{this.ds.biddetails.TenderSubject}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+      <div class="">
+        <p>Estimated Cost: Rs.{{this.ds.biddetails.estCost}}</p>
+        <p>Type of Procurement: {{this.ds.biddetails.BidType}}</p>
+        <p>Proposed By : {{this.ds.biddetails.IndentDesignation}}, {{this.ds.biddetails.IndentDepartment}} ({{this.ds.biddetails.IndenterName}})</p>
+        <p>Status of Tender: {{this.ds.biddetails.BidStatus}}</p>
+        <p>
+          Engineer in Charge:
+          <span *ngIf="this.ds.biddetails.engineerincharge;else elseBLock"> {{this.ds.biddetails.engineerincharge}}</span>
+          <span #elseBlock>--</span>
+        </p>
+      </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>Ok</button>
+  </mat-card-actions>
+</mat-card>

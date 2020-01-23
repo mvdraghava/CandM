@@ -3,6 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder} from '@angular/forms';
 import { CreateTenderService } from '../../create-tender.service';
 import { Employee } from '../../employee';
+import { departments,
+         designations,
+         tendercategories,
+         productcategories,
+         bidvaliditydays,
+         contracttypes
+          } from '../../globalvariables'
 
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -32,20 +39,12 @@ export class PrepareLteEprocNitComponent implements OnInit {
   employees:Employee[] = [];
   indentNo = 0;
   typeofincharge = ['Enginner InCharge', 'Officer InCharge'];
-  designations = ['Assistant Manager',
-                  'Deputy Manager',
-                  'Manager',
-                  'Chief Manager',
-                  'Deputy General Manager',
-                  'Sr. Deputy General Manager',
-                  'General Manager',
-                  'Sr. General Manager',
-                  'Chief General Manager'];
-  departments = ['HR','SL-I','SL-II','SO-I','SO-II','Grid Management','Finance and Accounts','Contracts and Materials','MO'];
-  tendercategories = ['Services','Goods','Works'];
-  contracttypes = ['Work', 'Supply', 'Auction', 'Service', 'Buy', 'Empanelment', 'Sell'];
-  productcategories = ['Civil','Electrical Works','Computer System','Fleet Management','Miscellaneous works'];
-  bidvaliditydays = [180,120,90,60,30];
+  designations = designations;
+  departments = departments;
+  tendercategories = tendercategories;
+  contracttypes = contracttypes;
+  productcategories = productcategories;
+  bidvaliditydays = bidvaliditydays;
   ablesubmit = false; //to make submit button able and disable
 
   nitForm = this.fb.group({

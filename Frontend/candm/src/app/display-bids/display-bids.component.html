@@ -1,7 +1,7 @@
 <div fxFlex fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px" infiniteScroll (scrolled)="onScroll()">
   <div *ngFor="let bid of displaybids" fxFlex class="bidCardDiv">
     <a routerLink="/main-details/{{bid.Indentno}}/{{bid.TenderSubject}}">
-    <mat-card class="bidCard" fxFlex fxLayout="column">
+    <mat-card class="bidCard" fxFlex fxLayout="column" [ngClass] = "checkType(bid.BidType)">
       <mat-card-header fxFlex fxLayoutAlign="center center">
         <mat-card-title> <a routerLink="/main-details/{{bid.Indentno}}/{{bid.TenderSubject}}">I-{{bid.Indentno}}</a> </mat-card-title>
       </mat-card-header>

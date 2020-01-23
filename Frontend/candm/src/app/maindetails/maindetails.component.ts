@@ -83,6 +83,10 @@ export class MaindetailsComponent implements OnInit {
     {
       'stage': 'Other Corrigendum',
       'link': 'othercorrigendum'
+    },
+    {
+      'stage': 'Bid Opening',
+      'link': 'lte-eproc-bid-open'
     }]
   };
 

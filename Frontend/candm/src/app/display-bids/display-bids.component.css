@@ -37,3 +37,23 @@ mat-card-content {
   border-radius: 4px;
   padding: 4px;
 }
+
+.lte {
+  background-color: #1e3d59;
+  color: white;
+}
+
+.lte mat-card-header {
+  background-color: #f5f0e1;
+  color: black;
+}
+
+.lteeproc {
+  background-color: #1e847f;
+  color: white;
+}
+
+.lteeproc mat-card-header {
+  background-color: #ecc19c;
+  color: black;
+}

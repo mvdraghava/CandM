@@ -6,7 +6,7 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <form [formGroup]="datecorriForm" fxLayout="column">
+      <form [formGroup]="datecorriForm">
         <div fxLayout="row wrap" fxLayoutGap="25px">
           <mat-form-field appearance="outline">
             <mat-label>Corrigendum Date</mat-label>
@@ -21,33 +21,50 @@
             <mat-datepicker #picker2></mat-datepicker>
           </mat-form-field>
         </div>
-        <div *ngIf="this.ds.biddetails.BidType == 'OpenTender'">
+        <!-- <div *ngIf="this.ds.biddetails.BidType == 'OpenTender'">
           <mat-form-field appearance="outline">
             <mat-label>Bid Submission Date</mat-label>
-            <input matInput formControlName="bidsubDate" [matDatepicker]="picker3" (focus)="picker1.open()" placeholder="Choose Date">
+            <input matInput formControlName="bidsubDate" [matDatepicker]="picker3" (focus)="picker3.open()" placeholder="Choose Date">
             <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
             <mat-datepicker #picker3></mat-datepicker>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Pre Bid Meeting Date</mat-label>
-            <input matInput formControlName="prebidDate" [matDatepicker]="picker4" (focus)="picker2.open()" placeholder="Choose Date">
+            <input matInput formControlName="prebidDate" [matDatepicker]="picker4" (focus)="picker4.open()" placeholder="Choose Date">
             <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
             <mat-datepicker #picker4></mat-datepicker>
           </mat-form-field>
+        </div> -->
+        <div fxLayout="row wrap" fxLayoutGap="25px" *ngIf="this.ds.biddetails.BidType == 'LTE-eproc' || this.ds.biddetails.BidType == 'OpenTender'">
+          <mat-form-field appearance="outline">
+            <mat-label>Bid Submission Date</mat-label>
+            <input matInput formControlName="bidsubDate" [matDatepicker]="picker3" (focus)="picker3.open()" placeholder="Choose Date">
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="outline" *ngIf="this.ds.biddetails.BidType == 'OpenTender'">
+            <mat-label>Pre Bid Meeting  Date</mat-label>
+            <input matInput formControlName="prebidDate" [matDatepicker]="picker4" (focus)="picker4.open()" placeholder="Choose Date">
+            <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
         </div>
-        <mat-form-field appearance="outline">
-          <mat-label>Reason for Corrigendum</mat-label>
-          <textarea matTextareaAutosize matInput formControlName="reason"></textarea>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Issued By</mat-label>
-          <input type="text" Placeholder="name" matInput formControlName="issuedby" [matAutocomplete]="auto3">
-          <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFn">
-            <mat-option *ngFor="let emp of issuedbyFilteredEmployees | async" [value]="emp">
-              {{emp.name}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+        <div fxLayout="row wrap" fxLayoutGap="25px">
+          <mat-form-field appearance="outline" id="reason">
+            <mat-label>Reason for Corrigendum</mat-label>
+            <textarea matTextareaAutosize matInput formControlName="reason"></textarea>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Issued By</mat-label>
+            <input type="text" Placeholder="name" matInput formControlName="issuedby" [matAutocomplete]="auto3">
+            <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let emp of issuedbyFilteredEmployees | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
         <button mat-raised-button [disabled]="!this.datecorriForm.valid" (click)="issueCorrigendum()" color="primary">Issue</button>
       </form>
     </mat-card-content>

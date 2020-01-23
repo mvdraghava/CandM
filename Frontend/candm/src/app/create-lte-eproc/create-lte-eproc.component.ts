@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 
 import { Vendor } from '../vendor';
 import { Employee } from '../employee';
+import { departments } from '../globalvariables';
 import {map, startWith} from 'rxjs/operators';
 import { saveAs } from 'file-saver';
 import {CreatelteeprocService} from './createlteeproc.service';
@@ -20,13 +21,12 @@ export class CreateLteEprocComponent implements OnInit {
 
   employees:Employee[] = [];
   vendors: Vendor[] = [];
-
   times = ['Days','Months','Years'];
 
   indentFilteredEmployees: Observable<Employee[]>;
   notebyFilteredEmployees: Observable<Employee[]>;
   lteFilteredVendors: Observable<Vendor[]>[] = [];
-  departments = ['HR','SL-I','SL-II','SO-I','SO-II','Grid Management','Finance and Accounts','Contracts and Materials','MO'];
+  departments = departments;
 
   createLte = this.fb.group({
     indent_no : ['',Validators.required],
@@ -173,7 +173,7 @@ export class CreateLteEprocComponent implements OnInit {
       return "Delivery";
     }
     else
-      return "Contract"
+      return "Contract";
   }
 
 }

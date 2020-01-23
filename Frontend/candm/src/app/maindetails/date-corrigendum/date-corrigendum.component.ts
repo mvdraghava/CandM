@@ -41,6 +41,12 @@ export class DateCorrigendumComponent implements OnInit {
     );
     this.indentNo = this.ds.biddetails.Indentno;
     this.datecorriForm.controls.indentNo.setValue(this.indentNo);
+    if(this.ds.biddetails.BidType == 'LTE-eproc' || this.ds.biddetails.BidType == 'OpenTender'){
+      this.datecorriForm.addControl('bidsubDate',this.fb.control('',Validators.required));
+    }
+    if(this.ds.biddetails.BidType == 'OpenTender'){
+      this.datecorriForm.addControl('prebidDate',this.fb.control('',Validators.required));
+    }
 
   }
 

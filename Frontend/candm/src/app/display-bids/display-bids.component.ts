@@ -58,4 +58,25 @@ export class DisplayBidsComponent implements OnInit, OnChanges{
     }
   }
 
+  checkType(bidtype) {
+    if (bidtype == 'LTE'){
+      return 'lte';
+    }
+    else if (bidtype == 'LTE-eproc'){
+      return 'lteeproc';
+    }
+    else if (bidtype == 'OpenTender'){
+      return 'lteeproc';
+    }
+    else if (bidtype == 'Ammendment'){
+      return 'ammendment';
+    }
+    else if (bidtype == 'SpotQuotation'){
+      return 'spotquotation';
+    }
+    else if (bidtype == 'SingleTender'){
+      return 'singletender';
+    }
+  }
+
 }
