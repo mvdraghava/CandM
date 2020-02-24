@@ -16,10 +16,11 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { ShowfilesComponent } from './showfiles/showfiles.component';
 import { UploadfilesComponent } from './uploadfiles/uploadfiles.component';
 import { CandmmsgComponent } from './candmmsg/candmmsg.component';
+import { ParticipatedvendorsComponent } from './participatedvendors/participatedvendors.component';
 
 
 @NgModule({
-  declarations: [MaindetailsComponent, SidenavComponent, ShowfilesComponent, UploadfilesComponent, CandmmsgComponent],
+  declarations: [MaindetailsComponent, SidenavComponent, ShowfilesComponent, UploadfilesComponent, CandmmsgComponent, ParticipatedvendorsComponent],
   imports: [
     CommonModule,
     MaindetailsRoutingModule,

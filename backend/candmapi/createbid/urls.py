@@ -23,5 +23,6 @@ urlpatterns = [
     path('prepareltetec',views.ltetecvetting),
     path('loapovetting',views.loapovetting),
     path('createlteeproc',views.createlteEproc),
-    path('getlteeprocNIT', views.getlteeprocnit)
+    path('getlteeprocNIT', views.getlteeprocnit),
+    path('lteeprocbidopening', views.lteeprocbidopening)
 ]

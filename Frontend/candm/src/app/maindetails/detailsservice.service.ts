@@ -26,6 +26,7 @@ export class DetailsserviceService {
   private prepareltetecurl = environment.apiurl + 'prepareltetec';
   private loapovettingurl = environment.apiurl + 'loapovetting';
   private getlteeprocNITurl = environment.apiurl + 'getlteeprocNIT';
+  private lteEprocBidOpeningUrl = environment.apiurl + 'lteeprocbidopening';
 
   getfilenames(reqdata){
     return this.http.post(this.getfilenamesurl,reqdata);
@@ -73,6 +74,10 @@ export class DetailsserviceService {
 
   prepareloapovetting(reqdata) : Observable<any> {
     return this.http.post(this.loapovettingurl,reqdata);
+  }
+
+  lteeprocbidopening(reqdata) : Observable<any> {
+    return this.http.post(this.lteEprocBidOpeningUrl,reqdata);
   }
 
 }

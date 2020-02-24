@@ -252,18 +252,22 @@ def getBidDetails(request):
         data = json.loads(request.body.decode('utf-8'))
         bid = Bid.objects.get(indent_number = int(data['indent_no']))
         pbid = Proposal.objects.get(bid = bid)
-        indenter = Indenter.objects.get(bid = bid)
+
         response = {
             'Indentno': bid.indent_number,
             'TenderSubject': bid.bid_subject,
             'BidStatus': get_status(bid),
             'IndentDepartment': pbid.indentDept,
             'IndentDesignation': pbid.indentDesignation,
-            'IndenterName' : indenter.indenter.name,
             'BidType': bid.bid_type,
             'estCost': get_est_cost(bid),
             'completionperiod' : get_completion_period(bid)
         }
+        try:
+            indenter = Indenter.objects.get(bid = bid)
+            response['IndenterName'] = indenter.indenter.name
+        except Exception as e:
+            pass
         try:
             impdates = ImpDates.objects.get(bid = bid)
             response["impdates"] = {
@@ -373,6 +377,10 @@ def getBidDetails(request):
                 if (not ltedetails.emdwaivedoff):
                     response["emd"] = getEmdPrice(ltedetails.estCost)
                     response["emdwords"] = amount2words(getEmdPrice(ltedetails.estCost))
+            except Exception as e:
+                pass
+            try:
+                response['participatedvendors'] = get_participated_vendors(bid)
             except Exception as e:
                 pass
         return JsonResponse(response)
@@ -516,7 +524,7 @@ def prepareOtNIT(bid):
     'doc_price': str(getDocPrice(otpns.estCost)),
     'emd_price': str(getEmdPrice(otpns.estCost)),
     'doc_price_words': amount2words(getDocPrice(otpns.estCost)),
-    'emd_price_words': amount2words(getDocPrice(otpns.estCost)),
+    'emd_price_words': amount2words(getEmdPrice(otpns.estCost)),
     'bid_sub_dt': "{{bid_sub_dt}}",
     'pre_bid_dt': "{{pre_bid_dt}}",
     'bod_dt': "{{bod_dt}}",

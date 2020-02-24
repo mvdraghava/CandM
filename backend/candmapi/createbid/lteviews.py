@@ -427,9 +427,11 @@ def datecorrigendum(request):
             impdates.save()
             preparedatecorrigendumfiles(corrigendum)
         elif bid.bid_type == 'LTE-eproc':
+            desc = "Date Corrigendum" + "- Bid Submission Date was Extended to " + datetime.strftime(getDate(data["bidsubDate"]),"%d.%m.%Y")
+            desc = desc + ", Bid Opening Date was Extended to " + datetime.strftime(getDate(data["bodDate"]),"%d.%m.%Y")
             corrigendum = Corrigenda(
                 bid = bid,
-                description = "Date Corrigendum",
+                description = desc,
                 reason = data["reason"],
                 issueddate = getDate(data["issueDate"]),
                 boddate = getDate(data["bodDate"]),

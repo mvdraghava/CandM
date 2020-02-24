@@ -212,6 +212,7 @@ class participatedBidders(models.Model):
     vendor = models.ForeignKey(Vendor,on_delete = models.CASCADE)
     remarks = models.CharField(max_length=10000)
     submittedonline = models.CharField(max_length=100, default = 'Offline')
+    qualified = models.BooleanField(default=True)
     emddetail = models.CharField(max_length=100,default='emdwaivedoff')
     docfee = models.CharField(max_length=100,default='free')
 
@@ -290,7 +291,16 @@ class LteEprocNitDetails(models.Model):
     type_of_contract = models.CharField(max_length = 100)
     bid_valid_days = models.IntegerField()
 
-
+#Model for Eprocurement datedetails
+class EprocDates(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE)
+    tecdate = models.DateField(blank=True,default =None,null=True)
+    finbidopenapprovaldate = models.DateField(blank=True,default =None,null=True)
+    finopendate = models.DateField(blank=True,default =None,null=True)
+    tecafterclarrificationdate = models.DateField(blank=True,default =None,null=True)
+    clarrificationsentdate = models.DateField(blank=True,default =None,null=True)
+    clarrificationlastdate = models.DateField(blank=True,default =None,null=True)
+    loapoapproveddate = models.DateField(blank=True,default =None,null=True)
 
 
 # Create your models here.

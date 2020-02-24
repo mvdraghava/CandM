@@ -6,6 +6,7 @@ import { Employee } from '../../employee';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-lte-eproc-bid-opening',
@@ -17,7 +18,8 @@ export class LteEprocBidOpeningComponent implements OnInit {
   constructor(private cts: CreateTenderService,
               private fb: FormBuilder,
               private ds: DetailsserviceService,
-              private router: Router) { }
+              private router: Router,
+              private route: ActivatedRoute) { }
   employees:Employee[] = [];
   candmBodFilteredEmployees: Observable<Employee[]>;
   indentBodFilteredEmployees: Observable<Employee[]>;
@@ -34,6 +36,7 @@ export class LteEprocBidOpeningComponent implements OnInit {
   ];
   ablesubmit = false;
   errormessage = '';
+  indentNo = 0;
 
   bodform = this.fb.group({
     indentNo: [this.indentNo],
@@ -77,10 +80,10 @@ export class LteEprocBidOpeningComponent implements OnInit {
 
   emdChange(event) {
     if(event.value == 'Paid EMD') {
-      this.bidsubmissionDetails['controls'][event.source.ngControl._parent.name].controls.emddetails.enable();
+      this.bodform.controls.bidsubmissionDetails['controls'][event.source.ngControl._parent.name].controls.emddetails.enable();
     }
-    if(event.value != 'Paid EMD' && this.bidsubmissionDetails['controls'][event.source.ngControl._parent.name].controls.emddetails) {
-      this.bidsubmissionDetails['controls'][event.source.ngControl._parent.name].controls.emddetails.disable();
+    if(event.value != 'Paid EMD' && this.bodform.controls.bidsubmissionDetails['controls'][event.source.ngControl._parent.name].controls.emddetails) {
+      this.bodform.controls.bidsubmissionDetails['controls'][event.source.ngControl._parent.name].controls.emddetails.disable();
     }
   }
 
@@ -183,10 +186,25 @@ export class LteEprocBidOpeningComponent implements OnInit {
         }
       }
     );
-    console.log(participatedvendors);
     if(!participatedvendors){
       this.errormessage = 'Select atleast One Vendor';
-      console.log(  this.errormessage);
+      console.log(this.errormessage);
+    }
+    else{
+      this.ds.lteeprocbidopening(this.bodform.value).subscribe(
+        data => {
+          if(data && data['issued']){
+            window.alert('Bid Opening Report and other files are prepared');
+            this.router.navigate(['showfiles'], {relativeTo: this.route.parent.parent});
+          }
+          else {
+            window.alert('Some Error has Occured! Please Try again');
+          }
+        },
+        error => {
+          window.alert('Some Error has Occured! Please Try again');
+        }
+      )
     }
   }
 

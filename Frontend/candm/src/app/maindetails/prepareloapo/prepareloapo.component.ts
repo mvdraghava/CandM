@@ -44,8 +44,6 @@ export class PrepareloapoComponent implements OnInit {
       delivaryperiodText: [''],
       pricebasis: [true,Validators.required],
       pricebasisText: [''],
-      validity: [true, Validators.required],
-      validityText: [''],
       taxesandduties : [true,Validators.required],
       taxesanddutiestext: [''],
       warranty : [true,Validators.required],
@@ -81,8 +79,6 @@ export class PrepareloapoComponent implements OnInit {
     this.loapoform.get('gcc')['controls'].delivaryperiodText.setValue(this.ds.biddetails.nitgcc.delivaryperiodText);
     this.loapoform.get('gcc')['controls'].pricebasis.setValue(this.ds.biddetails.nitgcc.pricebasis);
     this.loapoform.get('gcc')['controls'].pricebasisText.setValue(this.ds.biddetails.nitgcc.pricebasisText);
-    this.loapoform.get('gcc')['controls'].validity.setValue(this.ds.biddetails.nitgcc.validity);
-    this.loapoform.get('gcc')['controls'].validityText.setValue(this.ds.biddetails.nitgcc.validityText);
     this.loapoform.get('gcc')['controls'].taxesandduties.setValue(this.ds.biddetails.nitgcc.taxesandduties);
     this.loapoform.get('gcc')['controls'].taxesanddutiestext.setValue(this.ds.biddetails.nitgcc.taxesanddutiestext);
     this.loapoform.get('gcc')['controls'].warranty.setValue(this.ds.biddetails.nitgcc.warranty);
@@ -137,12 +133,6 @@ export class PrepareloapoComponent implements OnInit {
     }
     else{
       this.loapoform.controls.gcc.get('pricebasisText').disable();
-    }
-    if(this.loapoform.get('gcc')['controls'].validity.value) {
-      this.loapoform.controls.gcc.get('validityText').enable();
-    }
-    else{
-      this.loapoform.controls.gcc.get('validityText').disable();
     }
     if(this.loapoform.get('gcc')['controls'].taxesandduties.value) {
       this.loapoform.controls.gcc.get('taxesanddutiestext').enable();

@@ -87,6 +87,30 @@ export class MaindetailsComponent implements OnInit {
     {
       'stage': 'Bid Opening',
       'link': 'lte-eproc-bid-open'
+    }],
+    'Bid Opening Done' : [{
+      'stage': 'TEC Template',
+      'link': 'prepare-eproc-tec'
+    }],
+    'Prepared TEC for Vetting' : [{
+      'stage': 'TEC Date',
+      'link': 'record-eproc-tec-date'
+    }],
+    'Prepared TEC' : [{
+      'stage': 'TEC Template',
+      'link': 'prepare-eproc-tec'
+    },
+    {
+      'stage': 'Qualify Vendors',
+      'link': 'qualify-eproc-vendors'
+    },
+    {
+      'stage': 'Prepare Clarrifications',
+      'link': 'prepare-clarrification-letters'
+    },
+    {
+      'stage' : 'Finance Bid Evaluation Committe Report',
+      'link': 'prepare-eproc-fbecr'
     }]
   };
 
@@ -126,6 +150,7 @@ export class MaindetailsComponent implements OnInit {
       data => {
         this.ds.biddetails = data;
         this.bid = data;
+        console.log(this.bid);
         this.nextstageMenu = this.menustages[this.bid.BidType][this.bid.BidStatus];
       }
     );
