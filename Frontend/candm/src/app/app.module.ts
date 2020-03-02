@@ -33,7 +33,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { CreateTenderComponent } from './create-tender/create-tender.component';
 import { CreateOtComponent } from './create-ot/create-ot.component';
 import { CreateAmmendmentComponent } from './create-ammendment/create-ammendment.component';
-import { CreateSqComponent } from './create-sq/create-sq.component';
 import { CreateStComponent } from './create-st/create-st.component';
 import { FilterBidsComponent } from './filter-bids/filter-bids.component';
 import { DisplayBidsComponent } from './display-bids/display-bids.component';
@@ -56,7 +55,6 @@ import { InfiniteScrollModule } from '../../node_modules/ngx-infinite-scroll';
     CreateTenderComponent,
     CreateOtComponent,
     CreateAmmendmentComponent,
-    CreateSqComponent,
     CreateStComponent,
     FilterBidsComponent,
     DisplayBidsComponent
@@ -91,7 +89,6 @@ import { InfiniteScrollModule } from '../../node_modules/ngx-infinite-scroll';
       { path: 'create-tender', component: CreateTenderComponent},
       { path: 'create-OpenTender', component: CreateOtComponent},
       { path: 'create-Ammendment', component: CreateAmmendmentComponent},
-      { path: 'create-SpotQuotation', component: CreateSqComponent},
       { path: 'create-SingleTender', component: CreateStComponent},
     ])
   ],

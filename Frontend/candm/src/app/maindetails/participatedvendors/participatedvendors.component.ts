@@ -15,5 +15,4 @@ export class ParticipatedvendorsComponent implements OnInit {
       this.pbvendors.push(pbvendor);
     });
   }
-
 }
