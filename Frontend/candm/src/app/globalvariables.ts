@@ -23,7 +23,8 @@ export const designations = [
                                 'Sr. Deputy General Manager',
                                 'General Manager',
                                 'Sr. General Manager',
-                                'Chief General Manager'
+                                'Chief General Manager',
+                                'Executive Director'
                               ];
 export const tendercategories = ['Services','Goods','Works'];
 export const contracttypes = ['Work', 'Supply', 'Auction', 'Service', 'Buy', 'Empanelment', 'Sell'];

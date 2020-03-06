@@ -25,7 +25,11 @@ const routes: Routes = [{ path: ':indentno/:tendersubject', component: Maindetai
   { path: 'preparelteeprocnit', loadChildren: () => import('./prepare-lte-eproc-nit/prepare-lte-eproc-nit.module').then(m => m.PrepareLteEprocNitModule) },
   { path: 'lte-eproc-bid-open', loadChildren: () => import('./lte-eproc-bid-opening/lte-eproc-bid-opening.module').then(m => m.LteEprocBidOpeningModule) },
   { path: 'prepare-eproc-tec', loadChildren: () => import('./eproc-tec/eproc-tec.module').then(m => m.EprocTecModule) },
+  { path: 'create-sqenquiry', loadChildren: () => import('./create-sq-enquiry/create-sq-enquiry.module').then(m => m.CreateSqEnquiryModule) },
+  { path: 'create-sq-tecreport', loadChildren: () => import('./create-sq-tec/create-sq-tec.module').then(m => m.CreateSqTecModule) },
 ]},
+
+
 
 
 

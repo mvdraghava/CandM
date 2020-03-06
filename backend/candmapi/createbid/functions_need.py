@@ -57,6 +57,9 @@ def get_ref_no(bid):
         et = EprocTender.objects.get(bid = bid)
         ref_no = "SRLDC/C&M/ET-"+str(et.etNo)+"/I-"+str(bid.indent_number)+"/2019-20"
         return ref_no
+    else:
+        ref_no = "SRLDC/C&M/I-"+str(bid.indent_number)+"/2019-20"
+        return ref_no
 def getDocPrice(est_cost):
     doc_price = 0
     if est_cost<=2500000:

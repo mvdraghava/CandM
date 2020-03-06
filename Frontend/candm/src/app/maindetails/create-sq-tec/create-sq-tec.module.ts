@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MaterialModule } from './../material.module';
-import { CreatesqRoutingModule } from './createsq-routing.module';
-import { CreatesqComponent } from './createsq.component';
+import { CreateSqTecRoutingModule } from './create-sq-tec-routing.module';
+import { CreateSqTecComponent } from './create-sq-tec.component';
+import { MaterialModule } from './../../material.module';
+
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 
+
 @NgModule({
-  declarations: [CreatesqComponent],
+  declarations: [CreateSqTecComponent],
   imports: [
     CommonModule,
-    CreatesqRoutingModule,
+    CreateSqTecRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
@@ -20,4 +22,4 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ]
 })
-export class CreatesqModule { }
+export class CreateSqTecModule { }

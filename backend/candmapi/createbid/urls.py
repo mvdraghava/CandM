@@ -24,5 +24,7 @@ urlpatterns = [
     path('loapovetting',views.loapovetting),
     path('createlteeproc',views.createlteEproc),
     path('getlteeprocNIT', views.getlteeprocnit),
-    path('lteeprocbidopening', views.lteeprocbidopening)
+    path('lteeprocbidopening', views.lteeprocbidopening),
+    path('createsq',views.createsq),
+    path('createsqenquiry', views.createsqenquiry)
 ]

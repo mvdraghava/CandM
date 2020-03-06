@@ -114,6 +114,28 @@ export class MaindetailsComponent implements OnInit {
     }]
   };
 
+  sqmenustages = {
+    'Recieved SpotQuotation Proposal':[
+      {
+        'stage': 'Edit Details',
+        'link': 'edit-sq-details'
+      },
+      {
+        'stage': 'Create Spot Enquiry',
+        'link': 'create-sqenquiry'
+      }
+    ],
+    'Spot Enquiry Prepared for Vetting': [
+      {
+        'stage': 'Edit Details',
+        'link': 'edit-sq-details'
+      },
+      {
+        'stage': 'TEC Report',
+        'link': 'create-sq-tecreport'
+      }],
+  };
+
   menustages = {
     'OpenTender' :{
       'Created Proposal Notesheet' : [{
@@ -135,6 +157,7 @@ export class MaindetailsComponent implements OnInit {
     },
     'LTE' : this.ltemenustages,
     'LTE-eproc' : this.lteeprocmenustages,
+    'SpotQuotation' : this.sqmenustages
   };
 
   nextstageMenu = [];

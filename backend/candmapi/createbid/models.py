@@ -30,6 +30,9 @@ class Bid(models.Model):
     indent_number = models.IntegerField(primary_key = True,default=increment_indent_number)
     bid_subject = models.TextField()
     bid_type = models.CharField(choices=BID_TYPES,max_length=15,default="LTE")
+    tender_category = models.CharField(default = 'Other',max_length = 50)
+    contract_type = models.CharField(default = 'Other',max_length = 50)
+    product_category = models.CharField(default = 'Other',max_length = 50)
 
 class EprocTender(models.Model):
     bid = models.OneToOneField(Bid,on_delete=models.CASCADE)
@@ -44,6 +47,7 @@ class Proposal(models.Model):
     proposalRefNo = models.CharField(max_length=100)
     proposalDate = models.DateField()
     proposalRecievedDate = models.DateField()
+    proposalApprovedDate = models.DateField(default = None, null = True)
     indentDept = models.CharField(max_length=100)
     indentDesignation = models.CharField(max_length = 100,default = None, null = True)
 
@@ -301,6 +305,24 @@ class EprocDates(models.Model):
     clarrificationsentdate = models.DateField(blank=True,default =None,null=True)
     clarrificationlastdate = models.DateField(blank=True,default =None,null=True)
     loapoapproveddate = models.DateField(blank=True,default =None,null=True)
+
+#Model for SpotQuotation details
+class SpotQuotationDetails(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE,primary_key=True)
+    estCost = models.FloatField()
+    completionperiod = models.CharField(max_length = 150,default="30 Days")
+    gstIncl = models.BooleanField()
+    emdwaivedoff = models.BooleanField()
+
+#Model for SpotQuotation Enquiry Details
+class SpotEnquiryDetails(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE,primary_key=True)
+    engineerInchargeDesignation = models.CharField(max_length = 150)
+    engineerInchargeDepartment = models.CharField(max_length = 150)
+    includeSpecialConditions = models.BooleanField()
+    enquirydate = models.DateField(blank=True,default =None,null=True)
+    bidopeningdate = models.DateField(blank=True,default =None,null=True)
+
 
 
 # Create your models here.

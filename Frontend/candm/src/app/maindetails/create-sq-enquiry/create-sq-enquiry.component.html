@@ -1,0 +1,32 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Prepare Spot Enquiry</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="createsqform">
+      <div fxLayoutGap="25px" fxLayoutAlign="start center">
+        <mat-checkbox formControlName="specialConditions">Include Special Conditions</mat-checkbox>
+        <h4>Enginner Incharge Details</h4>
+        <mat-form-field appearance="outline">
+            <mat-label>Designation</mat-label>
+            <mat-select  formControlName='engineerInchargeDesg'>
+              <mat-option *ngFor="let desg of designations" [value]="desg">
+                {{desg}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Department</mat-label>
+            <mat-select  formControlName='engineerInchargeDept'>
+              <mat-option *ngFor="let dept of departments" [value]="dept">
+                {{dept}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="end center" fxLayoutGap="10px">
+          <button mat-raised-button [disabled] = "(!this.createsqform.valid) || this.ablesubmit" color='primary' (click)='createSqEnquiry()'>Submit</button>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -17,6 +17,7 @@ from .functions_need import *
 from django.forms.models import model_to_dict
 from .lteEprocViews import *
 from .lteviews import *
+from .sqviews import *
 
 def create_ot_notesheet(data):
     context = {
@@ -128,14 +129,17 @@ def create_ot(request):
 def get_open_bids(request):
     bids_data = []
     for get_bid in Bid.objects.all().order_by('indent_number'):
-        bid = {
-            'Indentno': get_bid.indent_number,
-            'TenderSubject': get_bid.bid_subject,
-            'BidStatus': get_status(get_bid),
-            'IndentDepartment': get_indentdept(get_bid),
-            'BidType': get_bid.bid_type
-        }
-        bids_data.append(bid)
+        try:
+            bid = {
+                'Indentno': get_bid.indent_number,
+                'TenderSubject': get_bid.bid_subject,
+                'BidStatus': get_status(get_bid),
+                'IndentDepartment': get_indentdept(get_bid),
+                'BidType': get_bid.bid_type
+            }
+            bids_data.append(bid)
+        except Exception as e:
+            continue
     return JsonResponse(bids_data,safe=False)
 
 def get_status(bid):
@@ -434,6 +438,9 @@ def get_est_cost(bid):
     elif(bid.bid_type == "LTE-eproc"):
         lteEprocdetails = LteEprocDetails.objects.get(bid = bid)
         return lteEprocdetails.estCost
+    elif(bid.bid_type == "SpotQuotation"):
+        sqdetails = SpotQuotationDetails.objects.get(bid = bid)
+        return sqdetails.estCost
 
 def get_completion_period(bid):
     if(bid.bid_type == "OpenTender"):
@@ -445,6 +452,9 @@ def get_completion_period(bid):
     elif(bid.bid_type == "LTE-eproc"):
         lteEprocdetails = LteEprocDetails.objects.get(bid = bid)
         return lteEprocdetails.completionperiod
+    elif(bid.bid_type == "SpotQuotation"):
+        sqdetails = SpotQuotationDetails.objects.get(bid = bid)
+        return sqdetails.completionperiod
 
 def prepareQR(request):
     data = json.loads(request.body.decode('utf-8'))
