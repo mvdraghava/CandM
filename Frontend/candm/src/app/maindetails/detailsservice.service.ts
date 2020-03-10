@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
+import { Vendor } from './vendor';
 
 import { Observable, of } from 'rxjs';
 @Injectable({
@@ -15,6 +16,7 @@ export class DetailsserviceService {
   constructor(private http: HttpClient) { }
 
   private getfilenamesurl = "http://127.0.0.1:8000/createbid/getfilenames";
+  private getvendorsurl = environment.apiurl + 'getvendors';
   private getbiddetailsurl = environment.apiurl + 'getbiddetails';
   private prepareQRurl = environment.apiurl + 'prepareqr';
   private editQRurl = environment.apiurl + 'editqr';
@@ -83,6 +85,10 @@ export class DetailsserviceService {
 
   createsqenquiry(data) : Observable<Blob> {
     return this.http.post(this.createsqenquiryUrl,data,{responseType: 'blob'});
+  }
+
+  getvendors(): Observable<Vendor[]> {
+    return this.http.get<Vendor[]>(this.getvendorsurl);
   }
 
 }

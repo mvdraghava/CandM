@@ -42,5 +42,6 @@ import { EditvendordialogComponent } from './editvendordialog/editvendordialog.c
     AddvendordialogComponent,
     EditvendordialogComponent
   ],
+  exports: [AddvendordialogComponent]
 })
 export class VendormanagementModule { }

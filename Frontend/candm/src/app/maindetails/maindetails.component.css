@@ -42,8 +42,8 @@ mat-sidenav-content {
 }
 
 a {
-  min-width: 100px;
-  max-width: 100px;
+  min-width: 125px;
+  max-width: 125px;
   white-space: pre-wrap;
   line-height: 26px;
 }

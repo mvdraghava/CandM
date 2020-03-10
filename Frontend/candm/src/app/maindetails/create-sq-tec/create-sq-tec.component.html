@@ -1,1 +1,75 @@
-<p>create-sq-tec works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Prepare Tender Evaluation Committee Report </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form id="createsqTECform" [formGroup]="sqtecForm">
+
+      <h4>Spot Enquiry Details</h4>
+      <div fxLayoutGap="10px" fxLayout="row wrap">
+        <mat-form-field appearance="outline" >
+            <mat-label>Spot Enquiry Date</mat-label>
+            <input matInput [matDatepicker]="picker2" placeholder="Spot Enquiry Date"   formControlName="sqenquirydate" (focus)="picker2.open()">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" >
+            <mat-label>Bid Opening Date</mat-label>
+            <input matInput [matDatepicker]="picker3" placeholder="Bid Opening Date"   formControlName="sqboddate" (focus)="picker3.open()">
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <h4>Committee Members</h4>
+      <div formArrayName="committeemembers" fxLayoutGap="10px" fxLayout="row wrap">
+        <div *ngFor="let committe_member of committeemembers.controls; let i =index;">
+          <mat-form-field appearance="outline">
+            <mat-label>Committe Member {{i+1}}</mat-label>
+            <input  autocompete="false" matInput [formControlName]="i" placeholder="" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnemp">
+              <mat-option *ngFor="let emp of committeefilteredEmployees[i] | async" [value]="emp">
+                {{emp.name}}
+              </mat-option>
+            </mat-autocomplete>
+            <button mat-icon-button *ngIf="committeemembers.controls.length != 1" (click)="removeCommitteeMember(i)" type="button" class="icon" matSuffix><mat-icon>delete</mat-icon></button>
+            <button mat-icon-button type="button" *ngIf = "i == committeemembers.controls.length-1 && i==0" class="icon" (click)="addCommitteeMember()" matSuffix><mat-icon>add</mat-icon></button>
+          </mat-form-field>
+          <button mat-icon-button type="button" *ngIf = "i == committeemembers.controls.length-1 && i!=0" class="icon" (click)="addCommitteeMember()"><mat-icon>add</mat-icon></button>
+        </div>
+      </div>
+
+      <h4>Participated Vendors</h4>
+      <div formArrayName="participated_bidders">
+        <button mat-raised-button type="button" (click)="addBidder()" *ngIf="participated_bidders.controls.length===0">Add Bidders </button>
+        <div *ngFor="let bidder of participated_bidders.controls;let i = index;">
+          <div [formGroupName]="i" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+              <mat-form-field appearance="outline">
+                <mat-label>Vendor Name</mat-label>
+                <input  autocompete="false" matInput formControlName="vendor" placeholder="" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnvendor">
+                  <mat-option *ngFor="let vendor of participatedfilteredVendors[i] | async" [value]="vendor">
+                    {{vendor.name}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Quoted Amount</mat-label>
+                <input matInput formControlName="quoted_amount" placeholder="Quoted Amount" type="number">
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Remarks</mat-label>
+                <input matInput formControlName="remarks" placeholder="Remarks">
+              </mat-form-field>
+              <button mat-icon-button  type="button" (click)="removeBidder(i)" *ngIf="i > 2" class="icon"><mat-icon>delete</mat-icon></button>
+              <button mat-icon-button type="button" *ngIf = "i == participated_bidders.controls.length-1" (click)="addBidder()" class="icon" ><mat-icon>add</mat-icon></button>
+              <button mat-raised-button type="button" color="primary" id="addbutton" (click)="AddDialog()" *ngIf="i == 0">Add Vendor</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="end center" fxLayoutGap="10px">
+          <button mat-raised-button [disabled] = "(!this.sqtecForm.valid) || this.ablesubmit" color='primary' (click)='preparetec()'>Submit</button>
+    </div>
+  </mat-card-content>
+</mat-card>
