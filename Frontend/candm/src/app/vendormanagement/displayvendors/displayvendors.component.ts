@@ -19,6 +19,7 @@ export class DisplayvendorsComponent implements OnInit, OnChanges{
   @Input() allVendors: Array<Vendor>;
   displayvendors: Array<Vendor> = [];
   vendorsDisplayed = 0;
+  hoverIndex = -1;
 
   constructor(private dialog: MatDialog) { }
 
@@ -58,6 +59,10 @@ export class DisplayvendorsComponent implements OnInit, OnChanges{
 
       }
     );
+  }
+
+  hoverVendor(i: number){
+    this.hoverIndex = i;
   }
 
 }

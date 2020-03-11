@@ -205,7 +205,18 @@ export class CreateSqTecComponent implements OnInit {
   }
 
   preparetec() {
-
+    this.ablesubmit = true;
+    this.ds.prepareSqTec(this.sqtecForm.value).subscribe(
+      data => {
+        saveAs(data, 'I_'+this.indentNo.toString()+'_CommitteReport.docx' );
+        this.ablesubmit = false;
+        this.router.navigate(['open-bids']);
+      },
+      error => {
+        window.alert('Some Error has occured');
+        this.ablesubmit = false;
+      }
+    );
   }
 
 }

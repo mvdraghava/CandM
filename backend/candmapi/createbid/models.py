@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.postgres.fields import *
 from datetime import date
 
+
 def increment_indent_number():
    last_indent = Bid.objects.all().order_by('indent_number').last()
    if not last_indent:
@@ -323,6 +324,9 @@ class SpotEnquiryDetails(models.Model):
     enquirydate = models.DateField(blank=True,default =None,null=True)
     bidopeningdate = models.DateField(blank=True,default =None,null=True)
 
-
+#Model for SpotQuotation Committee Members (As they can be more than three)
+class SpotQuotationCommittee(models.Model):
+    bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
+    committeeMember = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='committeeMember')
 
 # Create your models here.
