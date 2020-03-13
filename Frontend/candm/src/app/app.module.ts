@@ -38,6 +38,7 @@ import { FilterBidsComponent } from './filter-bids/filter-bids.component';
 import { DisplayBidsComponent } from './display-bids/display-bids.component';
 
 import { InfiniteScrollModule } from '../../node_modules/ngx-infinite-scroll';
+import { StepprogressbarModule } from './stepprogressbar/stepprogressbar.module';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { InfiniteScrollModule } from '../../node_modules/ngx-infinite-scroll';
       { path: 'create-OpenTender', component: CreateOtComponent},
       { path: 'create-Ammendment', component: CreateAmmendmentComponent},
       { path: 'create-SingleTender', component: CreateStComponent},
-    ])
+    ]),
+    StepprogressbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

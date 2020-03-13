@@ -3,6 +3,7 @@
     <mat-card-title>Details of {{this.ds.biddetails.TenderSubject}}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
+      <app-spb-compnt *ngIf="this.ds.biddetails.stages" [stages]="stages" [presentStage]="presentStage" [mainStages] = "mainStages"></app-spb-compnt>
       <div class="">
         <p>Estimated Cost: Rs.{{this.ds.biddetails.estCost}}</p>
         <p>Type of Procurement: {{this.ds.biddetails.BidType}}</p>
@@ -14,6 +15,8 @@
           <span #elseBlock>--</span>
         </p>
       </div>
+
+
       <div *ngIf="this.ds.biddetails.nitsentvendors">
           <h4>LTE sent to the following Vendors:-</h4>
           <ul>

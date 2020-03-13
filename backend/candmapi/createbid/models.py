@@ -15,6 +15,30 @@ def increment_et_number():
         return 34
     return last_et.etNo+1
 
+def enter_stages():
+    TenderStages.objects.all().delete()
+    for bid in BID_STAGES:
+        for i,stage in enumerate(BID_STAGES[bid]):
+            ts = TenderStages(
+                bid_type = bid,
+                stage_number = i,
+                stage = stage
+            )
+            ts.save()
+
+BID_STAGES = {
+    'LTE' : ['Approved NoteSheet'],
+    'SpotQuotation' : [
+        'Approved NoteSheet',
+        'Spot Enquiry',
+        'TEC Committee Report',
+        'Clarrifications',
+        'Award Contract',
+        'Close Contract'
+    ]
+}
+
+
 BID_STATUS = {
     0 : 'Created Proposal Notesheet',
 }
@@ -34,6 +58,18 @@ class Bid(models.Model):
     tender_category = models.CharField(default = 'Other',max_length = 50)
     contract_type = models.CharField(default = 'Other',max_length = 50)
     product_category = models.CharField(default = 'Other',max_length = 50)
+    bid_stage = models.IntegerField(default = 0)
+
+#Model to store the stages of contract
+class TenderStages(models.Model):
+    bid_type = models.CharField(max_length=15)
+    stage_number = models.IntegerField()
+    stage = models.CharField(max_length=20)
+
+#Model to store presentstage of Bid
+
+
+
 
 class EprocTender(models.Model):
     bid = models.OneToOneField(Bid,on_delete=models.CASCADE)
@@ -328,5 +364,7 @@ class SpotEnquiryDetails(models.Model):
 class SpotQuotationCommittee(models.Model):
     bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
     committeeMember = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='committeeMember')
+
+
 
 # Create your models here.

@@ -256,7 +256,6 @@ def getBidDetails(request):
         data = json.loads(request.body.decode('utf-8'))
         bid = Bid.objects.get(indent_number = int(data['indent_no']))
         pbid = Proposal.objects.get(bid = bid)
-
         response = {
             'Indentno': bid.indent_number,
             'TenderSubject': bid.bid_subject,
@@ -265,8 +264,14 @@ def getBidDetails(request):
             'IndentDesignation': pbid.indentDesignation,
             'BidType': bid.bid_type,
             'estCost': get_est_cost(bid),
-            'completionperiod' : get_completion_period(bid)
+            'completionperiod' : get_completion_period(bid),
+            'presentStage' : bid.bid_stage
         }
+        try:
+            stage_types = TenderStages.objects.filter(bid_type = bid.bid_type).order_by('stage_number')
+            response['stages'] = [iter_stage.stage for iter_stage in stage_types]
+        except Exception as e:
+            pass
         try:
             indenter = Indenter.objects.get(bid = bid)
             response['IndenterName'] = indenter.indenter.name
