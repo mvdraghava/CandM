@@ -1,0 +1,80 @@
+.comdetailscard {
+  min-width: 250px;
+  max-width: 250px;
+  max-height: 100px;
+  min-height: 100px;
+  overflow: hidden;
+  padding: 5px;
+}
+
+.estCostp {
+      font-size: 30px !important;
+      font-weight: 500;
+}
+
+.comdetailsp {
+    text-align: center;
+    padding: 15px;
+}
+
+mat-sidenav-container {
+  min-height: 80vh;
+}
+
+mat-card-header {
+  background: #1976d2;
+  color: #fff;
+  padding:5px;
+}
+
+mat-card {
+  padding: 0px!important;
+}
+
+/* mat-card-content {
+  padding-top: 15px;
+} */
+
+#sidediv {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+
+mat-card-title {
+  width: 100%;
+  text-align: center;
+}
+
+mat-sidenav-content {
+  /*margin-left: 125px!important;*/
+}
+
+::ng-deep .comdetailsheader .mat-card-header-text {
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.mat-card-header .mat-card-title {
+   margin-bottom: 0px;
+}
+
+.comdetailsheader .mat-card-title{
+  font-size: 15px;
+}
+
+.comdetailscontent {
+  display: flex;
+  height: 62px;
+  align-items: center;
+}
+
+.comdetailsp{
+  margin: 0 auto;
+}
+
+.maincontent {
+  font-size: 18px;
+  font-weight: 500;
+}

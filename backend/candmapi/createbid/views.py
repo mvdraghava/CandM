@@ -264,6 +264,7 @@ def getBidDetails(request):
             'IndentDesignation': pbid.indentDesignation,
             'BidType': bid.bid_type,
             'estCost': get_est_cost(bid),
+            'gstIncl':get_estcost_gst(bid),
             'completionperiod' : get_completion_period(bid),
             'presentStage' : bid.bid_stage
         }
@@ -447,6 +448,20 @@ def get_est_cost(bid):
     elif(bid.bid_type == "SpotQuotation"):
         sqdetails = SpotQuotationDetails.objects.get(bid = bid)
         return sqdetails.estCost
+
+def get_estcost_gst(bid):
+    if(bid.bid_type == "OpenTender"):
+        otpns = OtProposalNoteSheet.objects.get(bid = bid)
+        return otpns.gstIncl
+    elif(bid.bid_type == "LTE"):
+        ltedetails = LteDetails.objects.get(bid = bid)
+        return ltedetails.gstIncl
+    elif(bid.bid_type == "LTE-eproc"):
+        lteEprocdetails = LteEprocDetails.objects.get(bid = bid)
+        return lteEprocdetails.gstIncl
+    elif(bid.bid_type == "SpotQuotation"):
+        sqdetails = SpotQuotationDetails.objects.get(bid = bid)
+        return sqdetails.gstIncl
 
 def get_completion_period(bid):
     if(bid.bid_type == "OpenTender"):

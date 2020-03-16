@@ -1,0 +1,51 @@
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center" fxFlexFill fxLayoutGap="10px">
+  <mat-card class="comdetailscard">
+    <mat-card-header class="comdetailsheader">
+      <mat-card-title>Estimated Cost</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="comdetailscontent">
+        <p class="comdetailsp">
+          <span>Rs.</span>
+          <span class="maincontent estCostp">{{this.ds.biddetails.estCost}} </span>
+          <span *ngIf="this.ds.biddetails.gstIncl">Incl. of Taxes</span>
+          <span *ngIf="!this.ds.biddetails.gstIncl">Excl. of Taxes</span>
+        </p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="comdetailscard">
+    <mat-card-header class="comdetailsheader">
+      <mat-card-title>Type of Procurement</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="comdetailscontent">
+        <p class="comdetailsp">
+          <span class="maincontent">{{this.ds.biddetails.BidType}} </span>
+        </p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="comdetailscard">
+    <mat-card-header class="comdetailsheader">
+      <mat-card-title>Proposed By</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="comdetailscontent">
+        <p class="comdetailsp">
+          <span class="maincontent">{{this.ds.biddetails.IndentDesignation}}, {{this.ds.biddetails.IndentDepartment}} ({{this.ds.biddetails.IndenterName}}) </span>
+        </p>
+    </mat-card-content>
+  </mat-card>
+
+
+  <mat-card class="comdetailscard">
+    <mat-card-header class="comdetailsheader">
+      <mat-card-title>Engineer Incharge</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="comdetailscontent">
+        <p class="comdetailsp">
+          <span *ngIf="this.ds.biddetails.engineerincharge;else elseBLock" class="maincontent"> {{this.ds.biddetails.engineerincharge}}</span>
+          <span class="maincontent" #elseBlock>--</span>
+        </p>
+    </mat-card-content>
+  </mat-card>
+
+</div>

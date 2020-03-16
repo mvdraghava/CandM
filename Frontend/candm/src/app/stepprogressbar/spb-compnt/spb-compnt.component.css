@@ -98,3 +98,7 @@
   overflow: hidden;
   text-align: center;
 }
+
+.incompletestagep{
+  color: var(--incomplete-color);
+}

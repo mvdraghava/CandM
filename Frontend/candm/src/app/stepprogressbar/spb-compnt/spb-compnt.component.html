@@ -29,7 +29,8 @@
       </div>
     </div>
     <div fxLayoutAlign="center" fxFlex="60px">
-      <p class="stagep">{{mainStages.includes(i) ? item : ' '}}</p>
+      <p  [ngClass]="{'stagep': true,
+                      'incompletestagep' : i>presentStage}">{{mainStages.includes(i) ? item : ' '}}</p>
     </div>
   </div>
 </div>

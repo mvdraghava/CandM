@@ -19,10 +19,11 @@ import { CandmmsgComponent } from './candmmsg/candmmsg.component';
 import { ParticipatedvendorsComponent } from './participatedvendors/participatedvendors.component';
 
 import { StepprogressbarModule } from './../stepprogressbar/stepprogressbar.module';
+import { CommondetailsComponent } from './commondetails/commondetails.component';
 
 
 @NgModule({
-  declarations: [MaindetailsComponent, SidenavComponent, ShowfilesComponent, UploadfilesComponent, CandmmsgComponent, ParticipatedvendorsComponent],
+  declarations: [MaindetailsComponent, SidenavComponent, ShowfilesComponent, UploadfilesComponent, CandmmsgComponent, ParticipatedvendorsComponent, CommondetailsComponent],
   imports: [
     CommonModule,
     MaindetailsRoutingModule,
