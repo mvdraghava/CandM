@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ShowfilesComponent implements OnInit {
 
-  @ViewChild('iframe',{static: false}) iframe: ElementRef;
+  @ViewChild('iframe') iframe: ElementRef;
 
   reqdata = {
     'indentno':''
