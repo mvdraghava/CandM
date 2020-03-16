@@ -270,6 +270,7 @@ def getBidDetails(request):
         try:
             stage_types = TenderStages.objects.filter(bid_type = bid.bid_type).order_by('stage_number')
             response['stages'] = [iter_stage.stage for iter_stage in stage_types]
+            response['mainStages'] = [iter_stage.stage_number for iter_stage in stage_types if iter_stage.main_Stage]
         except Exception as e:
             pass
         try:

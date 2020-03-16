@@ -13,6 +13,7 @@ export class MaindetailsComponent implements OnInit {
 
   indentNo: string;
   tendersubject = "";
+  loaded = false;
 
   bid;
 
@@ -165,6 +166,7 @@ export class MaindetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private ds: DetailsserviceService) { }
 
   ngOnInit() {
+    this.loaded = false;
     this.route.paramMap.subscribe(params => {
       this.indentNo = params.get('indentno');
       this.tendersubject =params.get('tendersubject');
@@ -175,6 +177,7 @@ export class MaindetailsComponent implements OnInit {
         this.bid = data;
         console.log(this.bid);
         this.nextstageMenu = this.menustages[this.bid.BidType][this.bid.BidStatus];
+        this.loaded = true;
       }
     );
   }

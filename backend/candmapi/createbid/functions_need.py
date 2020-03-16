@@ -117,3 +117,6 @@ def getKPIdates(bid):
         kpidates = {}
         return kpidates
     return kpidates
+
+def ChangeSQBidStage(bid, stageNumber):
+    return

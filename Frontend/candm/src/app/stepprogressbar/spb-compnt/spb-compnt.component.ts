@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-spb-compnt',
@@ -12,6 +12,9 @@ export class SpbCompntComponent implements OnInit {
   staticMainStages;
   constructor() { }
   appicon = "home";
+
+  @ViewChild('stepcontainer',{'static':true}) stepcontainer: ElementRef;
+
   ngOnInit() {
     if(!this.mainStages.includes(0)){
       this.mainStages.push(0);
@@ -20,6 +23,7 @@ export class SpbCompntComponent implements OnInit {
       this.mainStages.push(this.stages.length - 1);
     }
     this.staticMainStages = Array.from(this.mainStages);
+    console.log(this.stepcontainer);
   }
 
   getarray(num: number){
@@ -37,7 +41,7 @@ export class SpbCompntComponent implements OnInit {
 
   getSize(num: number){
     if(this.mainStages.includes(num)){
-      return "100px";
+      return "110px";
     }
     else{
       return "22px";

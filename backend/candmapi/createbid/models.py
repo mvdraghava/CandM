@@ -22,19 +22,52 @@ def enter_stages():
             ts = TenderStages(
                 bid_type = bid,
                 stage_number = i,
-                stage = stage
+                stage = stage['stage'],
+                main_Stage = stage['main_stage']
             )
             ts.save()
 
+def update_employee_table():
+    import pandas as pd 
+    df = pd.read_excel("employees.xlsx")
+    for index, row in df.iterrows():
+        try:
+            emp = Employee.objects.get(emp_no = row['emp_no'])
+            emp.emp_no = row['emp_no']
+            emp.name = row['name']
+            emp.designation = row['designation']
+            emp.department = row['department']
+            emp.save()
+        except Employee.DoesNotExist as ex:
+            emp = Employee(
+                emp_no = row['emp_no'],
+                name = row['name'],
+                designation = row['designation'],
+                department = row['department']
+            )
+            emp.save()
+    return
+
+
+#Write function for incrementing stages
+#Now no status function, Instead we will use incrementing stages
 BID_STAGES = {
-    'LTE' : ['Approved NoteSheet'],
+    'LTE' : [
+        {'stage': 'Approved NoteSheet', 'main_stage': True},
+    ],
     'SpotQuotation' : [
-        'Approved NoteSheet',
-        'Spot Enquiry',
-        'TEC Committee Report',
-        'Clarrifications',
-        'Award Contract',
-        'Close Contract'
+        {'stage': 'Approved NoteSheet', 'main_stage': True},
+        {'stage': 'Spot Enquiry Vetting', 'main_stage': False},
+        {'stage': 'Spot Enquiry', 'main_stage': True},
+        {'stage': 'Bid Opening', 'main_stage': False},
+        {'stage': 'TEC Report Vetting', 'main_stage': False},
+        {'stage': 'TEC Report', 'main_stage': True},
+        {'stage': 'Clarrifications', 'main_stage': False},
+        {'stage': 'LOA/PO Approval', 'main_stage': True},
+        {'stage': 'LOA/PO Vetting', 'main_stage': False},
+        {'stage': 'Award of Contract', 'main_stage': True},
+        {'stage': 'Initiate Closing', 'main_stage': False},
+        {'stage': 'Contract Closing', 'main_stage': True},
     ]
 }
 
@@ -65,6 +98,7 @@ class TenderStages(models.Model):
     bid_type = models.CharField(max_length=15)
     stage_number = models.IntegerField()
     stage = models.CharField(max_length=20)
+    main_Stage = models.BooleanField(default = True)
 
 #Model to store presentstage of Bid
 
@@ -132,6 +166,7 @@ class Employee(models.Model):
     emp_no = models.CharField( max_length=15 )
     name = models.CharField( max_length=50)
     designation = models.CharField(max_length=50)
+    department = models.CharField( max_length=50,default='NA')
 
 class Indenter(models.Model):
     bid = models.OneToOneField(Bid,on_delete = models.CASCADE,primary_key=True)

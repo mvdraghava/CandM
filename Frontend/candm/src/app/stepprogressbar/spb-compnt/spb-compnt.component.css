@@ -61,11 +61,11 @@
 }
 
 .liline{
-  border: 1px solid;
+  border: 2px solid;
 }
 
 .smallliline{
-  border: 1px solid;
+  border: 2px solid;
 }
 
 .completeicon{
@@ -90,4 +90,11 @@
 
 .incompleteliline{
   border-color: var(--incomplete-color);
+}
+
+.stagep{
+  margin-top: 8%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: center;
 }

@@ -1,4 +1,5 @@
-<mat-card>
+<p *ngIf="!loaded"> Loading ....... </p>
+<mat-card *ngIf="loaded">
   <mat-card-header >
         <mat-card-title>
              {{tendersubject}}

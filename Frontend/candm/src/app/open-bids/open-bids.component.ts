@@ -13,13 +13,16 @@ export class OpenBidsComponent implements OnInit {
 
   constructor(private openbidservice: GetopenbidsService) { }
 
+  loaded = false;
   allbids: Array<Bid>;
   displaybids: Bid[] = [];
   ngOnInit() {
+    this.loaded = false;
     this.openbidservice.getopenbids().subscribe(
       response => {
         this.allbids = response;
         this.displaybids = this.allbids;
+        this.loaded = true;
       },
       error => {
         console.log(error);

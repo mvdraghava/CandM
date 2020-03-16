@@ -9,19 +9,7 @@ import { DetailsserviceService } from '../detailsservice.service';
 })
 export class CandmmsgComponent implements OnInit {
 
-  stages = ['Approved Note', 'Spot Enquiry' , 'TEC Committee Reports', 'Clarrifications', 'LOA/PO',
-              'fsdfajsdlfkjak 1 ',
-              'fsdfajsdlfkjak 1 ',
-              'fsdfajsdlfkjak 1 ',
-              'fsdfajsdlfkjak 1 ',
-              'fsdfajsdlfkjak 1 ',
-              'fsdfajsdlfkjak 1 ',
-              'fsdfajsdlfkjak 1 ',
-              'fsdfajsdlfkjak 1 ',
-              'fsdfajsdlfkjak 1 ',
-              'fsdfajsdlfkjak 1 ',];
-  mainStages = [0,5,7,9,10];
-  presentStage = 10;
+
   constructor(private ds: DetailsserviceService) { }
   subject = "";
   ngOnInit() {
