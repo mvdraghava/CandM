@@ -70,3 +70,8 @@ mat-sidenav-content {
   font-size: 18px;
   font-weight: 500;
 }
+
+.commdetailsdiv{
+  margin-top: 10px;
+  max-width: 795px;
+}

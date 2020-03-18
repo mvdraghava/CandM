@@ -1,9 +1,13 @@
 .participatedVendorstablediv{
   overflow-y: auto;
   overflow-x: hidden;
+  margin-left: 25px;
+  margin-bottom: 25px;
+  max-height: 290px;
+  min-height: 290px;
 }
 table{
-
+  width: 100%;
 }
 
 tbody{
@@ -24,4 +28,34 @@ tbody{
 
 th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type{
   border-left: 1px solid #e0e0e0;
+}
+
+.headerrowpv {
+  height: 34px;
+  background-color: #3576d2;
+}
+
+.pbheadercell {
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

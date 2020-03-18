@@ -1,26 +1,23 @@
-<mat-card>
-  <!-- <mat-card-header>
-    <mat-card-title>Details of {{this.ds.biddetails.TenderSubject}}</mat-card-title>
-  </mat-card-header> -->
-  <mat-card-content>
-      <div fxLayoutAlign="center">
-        <app-spb-compnt *ngIf="this.ds.biddetails.stages"
-                         [stages]="this.ds.biddetails.stages"
-                         [presentStage]="3"
-                         [mainStages] = "this.ds.biddetails.mainStages"></app-spb-compnt>
-      </div>
-
+<div class="detailsdiv" fxFlexFill>
+  <div fxLayoutAlign="center" >
+    <app-spb-compnt *ngIf="this.ds.biddetails.stages"
+                     [stages]="this.ds.biddetails.stages"
+                     [presentStage]="3"
+                     [mainStages] = "this.ds.biddetails.mainStages"></app-spb-compnt>
+  </div>
+  <div fxLayoutAlign="center">
       <app-commondetails></app-commondetails>
+  </div>
 
-      <app-participatedvendordetails></app-participatedvendordetails>
-      <app-committee-members></app-committee-members>
 
-      <div *ngIf="this.ds.biddetails.nitsentvendors">
-          <h4>LTE sent to the following Vendors:-</h4>
-          <ul>
-            <li *ngFor="let vendor of this.ds.biddetails.nitsentvendors">M/s {{vendor.name}}</li>
-          </ul>
-      </div>
-      <app-participatedvendors *ngIf="this.ds.biddetails.participatedvendors"></app-participatedvendors>
-  </mat-card-content>
-</mat-card>
+  <app-participatedvendordetails></app-participatedvendordetails>
+  <app-committee-members></app-committee-members>
+
+  <div *ngIf="this.ds.biddetails.nitsentvendors">
+      <h4>LTE sent to the following Vendors:-</h4>
+      <ul>
+        <li *ngFor="let vendor of this.ds.biddetails.nitsentvendors">M/s {{vendor.name}}</li>
+      </ul>
+  </div>
+  <app-participatedvendors *ngIf="this.ds.biddetails.participatedvendors"></app-participatedvendors>
+</div>

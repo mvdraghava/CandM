@@ -1,4 +1,4 @@
-<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start center" fxFlexFill fxLayoutGap="15px">
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="15px" class="commdetailsdiv">
   <mat-card class="comdetailscard mat-elevation-z3">
     <mat-card-header class="comdetailsheader">
       <mat-card-title>Estimated Cost</mat-card-title>
@@ -13,7 +13,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="comdetailscard mat-elevation-z8">
+  <mat-card class="comdetailscard mat-elevation-z3">
     <mat-card-header class="comdetailsheader">
       <mat-card-title>Type of Procurement</mat-card-title>
     </mat-card-header>
@@ -24,7 +24,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="comdetailscard mat-elevation-z8">
+  <mat-card class="comdetailscard mat-elevation-z3">
     <mat-card-header class="comdetailsheader">
       <mat-card-title>Indenter</mat-card-title>
     </mat-card-header>
@@ -35,20 +35,7 @@
     </mat-card-content>
   </mat-card>
 
-
-  <mat-card class="comdetailscard mat-elevation-z8">
-    <mat-card-header class="comdetailsheader">
-      <mat-card-title>Engineer Incharge</mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="comdetailscontent">
-        <p class="comdetailsp">
-          <span *ngIf="this.ds.biddetails.engineerincharge;else elseBlock" class="maincontent"> {{this.ds.biddetails.engineerincharge}}</span>
-          <ng-template class="maincontent" #elseBlock>--</ng-template>
-        </p>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="comdetailscard mat-elevation-z8">
+  <mat-card class="comdetailscard mat-elevation-z3">
     <mat-card-header class="comdetailsheader">
       <mat-card-title>Awarded Value</mat-card-title>
     </mat-card-header>
@@ -60,7 +47,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="comdetailscard mat-elevation-z8">
+  <mat-card class="comdetailscard mat-elevation-z3">
     <mat-card-header class="comdetailsheader">
       <mat-card-title>Contract Period</mat-card-title>
     </mat-card-header>
@@ -71,5 +58,20 @@
         </p>
     </mat-card-content>
   </mat-card>
+
+  <mat-card class="comdetailscard mat-elevation-z3">
+    <mat-card-header class="comdetailsheader">
+      <mat-card-title>Engineer Incharge</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="comdetailscontent">
+        <p class="comdetailsp">
+          <span *ngIf="this.ds.biddetails.engineerincharge;else elseBlock" class="maincontent"> {{this.ds.biddetails.engineerincharge}}</span>
+          <ng-template class="maincontent" #elseBlock>--</ng-template>
+        </p>
+    </mat-card-content>
+  </mat-card>
+
+
+
 
 </div>

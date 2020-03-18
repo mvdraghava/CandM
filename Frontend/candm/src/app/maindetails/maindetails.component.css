@@ -2,6 +2,10 @@ mat-sidenav-container {
   min-height: 80vh;
 }
 
+mat-sidenav-content{
+  min-height: 80vh;
+}
+
 mat-card-header {
   background: #1976d2;
   color: #fff;
@@ -42,8 +46,8 @@ mat-sidenav-content {
 }
 
 a {
-  min-width: 125px;
-  max-width: 125px;
+  min-width: 250px;
+  max-width: 250px;
   white-space: pre-wrap;
   line-height: 26px;
 }
@@ -55,4 +59,9 @@ a {
 .menua a {
   border-bottom: 1px solid darkgray;
   border-radius: 0px;
+}
+
+.subjectp {
+  font-size: 18px;
+  font-weight: 500;
 }

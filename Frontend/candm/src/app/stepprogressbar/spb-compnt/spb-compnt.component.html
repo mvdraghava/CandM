@@ -1,4 +1,4 @@
-<div fxLayout="row wrap" #stepcontainer  fxLayoutAlign="start" class="">
+<div fxLayout="row wrap" #stepcontainer  fxLayoutAlign="start" class="stepprogressbardiv">
   <div *ngFor="let item of stages;let i = index;" class="stageli" [fxFlex] = "getSize(i)" fxLayout="column" (click)="toggleSmall(i)">
     <div  fxLayout="row wrap" fxFlex="24px" fxLayoutAlign="center center">
       <div [ngClass]="i==0?'hideli':''"  fxFlex>

@@ -95,10 +95,16 @@
 .stagep{
   margin-top: 8%;
   text-overflow: ellipsis;
+  font-size: 14px;
   overflow: hidden;
   text-align: center;
 }
 
 .incompletestagep{
   color: var(--incomplete-color);
+}
+
+.stepprogressbardiv {
+  padding-top: 15px;
+  padding-bottom: 5px;
 }

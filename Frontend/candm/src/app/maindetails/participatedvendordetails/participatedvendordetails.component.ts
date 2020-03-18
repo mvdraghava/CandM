@@ -13,13 +13,13 @@ export class ParticipatedvendordetailsComponent implements OnInit {
   {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
   {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
   {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
-  // {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
-  // {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
-  // {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
-  // {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
-  // {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
-  // {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
-  // {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
+  {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
+  {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
+  {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
+  {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
+  {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
+  {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
+  {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
 ];
   constructor() { }
 

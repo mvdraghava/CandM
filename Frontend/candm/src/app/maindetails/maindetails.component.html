@@ -1,19 +1,24 @@
 <p *ngIf="!loaded"> Loading ....... </p>
-<mat-card *ngIf="loaded">
-  <mat-card-header >
-        <mat-card-title>
-             {{tendersubject}}
-        </mat-card-title>
-    </mat-card-header>
-  <mat-card-content>
+<div *ngIf="loaded" fxLayout="column"  fxLayoutAlign="start start">
+  <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill>
+    <div fxFlex="70px">
+      <button  mat-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <div  fxFlex fxLayoutAlign="center center">
+      <p class="subjectp">{{tendersubject}}</p>
+    </div>
+  </div>
+  <div fxFlexFill>
     <mat-sidenav-container class="example-container" >
-      <mat-sidenav mode="side" opened>
+      <mat-sidenav #sidenav mode="over">
         <div class="menua" fxFlex fxLayout="column" fxLayoutGap="15px" id="sidediv">
-          <a mat-button  routerLink="candmmsg">Status</a>
-          <a mat-button  routerLink='showfiles'>Files</a>
-          <a mat-button  [routerLink]="['uploadfiles']">Upload Files</a>
+          <a mat-button routerLink="candmmsg" (click)="sidenav.toggle()">Status</a>
+          <a mat-button  routerLink='showfiles' (click)="sidenav.toggle()">Files</a>
+          <a mat-button  [routerLink]="['uploadfiles']" (click)="sidenav.toggle()">Upload Files</a>
           <div  fxFlex fxLayout="column" fxLayoutGap="15px">
-            <a mat-button  *ngFor="let menu of nextstageMenu" [routerLink]="menu.link">{{menu.stage}}</a>
+            <a mat-button  *ngFor="let menu of nextstageMenu" [routerLink]="menu.link" (click)="sidenav.toggle()">{{menu.stage}}</a>
           </div>
         </div>
       </mat-sidenav>
@@ -21,5 +26,5 @@
         <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>
-  </mat-card-content>
-</mat-card>
+  </div>
+</div>
