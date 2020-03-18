@@ -8,7 +8,7 @@ import {DetailsserviceService} from '../detailsservice.service';
 })
 export class EprocTecComponent implements OnInit {
   pbvendors = [];
-  constructor(private cts: CreateTenderService,private ds: DetailsserviceService) { }
+  constructor(private cts: CreateTenderService,public ds: DetailsserviceService) { }
 
   ngOnInit() {
   }

@@ -1,0 +1,27 @@
+.participatedVendorstablediv{
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+table{
+
+}
+
+tbody{
+  max-height: 500px;
+  overflow: scroll;
+}
+
+
+
+.mat-header-cell, .mat-cell, .mat-footer-cell{
+  border-right: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.mat-header-cell{
+  border-top: 1px solid #e0e0e0;
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type{
+  border-left: 1px solid #e0e0e0;
+}

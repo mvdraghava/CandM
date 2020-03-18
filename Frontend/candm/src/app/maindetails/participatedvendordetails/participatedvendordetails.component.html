@@ -1,0 +1,34 @@
+<div class="participatedVendorstablediv">
+  <table mat-table [dataSource]="dataSource"  class="" >
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="vendorname">
+      <th mat-header-cell *matHeaderCellDef class="headercell"> Vendor Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.vendorname}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="quotedvalue">
+      <th mat-header-cell *matHeaderCellDef class="headercell"> Quoted Value </th>
+      <td mat-cell *matCellDef="let element"> {{element.quotedvalue}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef class="headercell"> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="remarks">
+      <th mat-header-cell *matHeaderCellDef class="headercell"> Remarks </th>
+      <td mat-cell *matCellDef="let element"> {{element.remarks}} </td>
+    </ng-container>
+
+    <tr mat-header-row matHeaderRowDefSticky="true" *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

@@ -163,7 +163,7 @@ export class MaindetailsComponent implements OnInit {
 
   nextstageMenu = [];
 
-  constructor(private route: ActivatedRoute, private ds: DetailsserviceService) { }
+  constructor(private route: ActivatedRoute, public ds: DetailsserviceService) { }
 
   ngOnInit() {
     this.loaded = false;

@@ -25,7 +25,7 @@ export class DateCorrigendumComponent implements OnInit {
     issuedby: ['',[Validators.required, this.validateEmployee]]
   });
 
-  constructor(private cts: CreateTenderService,private fb: FormBuilder,private ds: DetailsserviceService) { }
+  constructor(private cts: CreateTenderService,private fb: FormBuilder,public ds: DetailsserviceService) { }
 
   ngOnInit() {
     this.cts.getemployees().subscribe(

@@ -17,7 +17,7 @@ export class LteEprocBidOpeningComponent implements OnInit {
 
   constructor(private cts: CreateTenderService,
               private fb: FormBuilder,
-              private ds: DetailsserviceService,
+              public ds: DetailsserviceService,
               private router: Router,
               private route: ActivatedRoute) { }
   employees:Employee[] = [];

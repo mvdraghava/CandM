@@ -36,8 +36,6 @@ import { CreateAmmendmentComponent } from './create-ammendment/create-ammendment
 import { CreateStComponent } from './create-st/create-st.component';
 import { FilterBidsComponent } from './filter-bids/filter-bids.component';
 import { DisplayBidsComponent } from './display-bids/display-bids.component';
-
-import { InfiniteScrollModule } from '../../node_modules/ngx-infinite-scroll';
 import { StepprogressbarModule } from './stepprogressbar/stepprogressbar.module';
 
 @NgModule({
@@ -79,7 +77,6 @@ import { StepprogressbarModule } from './stepprogressbar/stepprogressbar.module'
     HttpClientModule,
     MatSidenavModule,
     FlexLayoutModule,
-    InfiniteScrollModule,
     RouterModule.forRoot([
       { path: '', component: DashboardComponent },
       { path: 'dashboard', component: DashboardComponent},

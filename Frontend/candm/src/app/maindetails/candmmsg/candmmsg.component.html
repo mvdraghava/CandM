@@ -1,16 +1,19 @@
 <mat-card>
-  <mat-card-header>
+  <!-- <mat-card-header>
     <mat-card-title>Details of {{this.ds.biddetails.TenderSubject}}</mat-card-title>
-  </mat-card-header>
+  </mat-card-header> -->
   <mat-card-content>
       <div fxLayoutAlign="center">
         <app-spb-compnt *ngIf="this.ds.biddetails.stages"
                          [stages]="this.ds.biddetails.stages"
-                         [presentStage]="this.ds.biddetails.presentStage"
+                         [presentStage]="3"
                          [mainStages] = "this.ds.biddetails.mainStages"></app-spb-compnt>
       </div>
 
       <app-commondetails></app-commondetails>
+
+      <app-participatedvendordetails></app-participatedvendordetails>
+      <app-committee-members></app-committee-members>
 
       <div *ngIf="this.ds.biddetails.nitsentvendors">
           <h4>LTE sent to the following Vendors:-</h4>

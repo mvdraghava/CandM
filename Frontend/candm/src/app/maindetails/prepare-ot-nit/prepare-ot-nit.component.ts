@@ -17,7 +17,7 @@ export class PrepareOtNITComponent implements OnInit {
     qrapproveddate: ['',Validators.required],
   });
 
-  constructor(private fb: FormBuilder,private ds: DetailsserviceService) { }
+  constructor(private fb: FormBuilder,public ds: DetailsserviceService) { }
 
   ngOnInit() {
     this.indentNo = this.ds.biddetails.Indentno;

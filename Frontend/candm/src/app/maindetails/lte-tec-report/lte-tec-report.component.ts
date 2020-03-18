@@ -13,7 +13,7 @@ import {Observable} from 'rxjs';
 })
 export class LteTecReportComponent implements OnInit {
 
-  constructor(private cts: CreateTenderService, private fb: FormBuilder,private ds: DetailsserviceService) { }
+  constructor(private cts: CreateTenderService, private fb: FormBuilder,public ds: DetailsserviceService) { }
   indentNo = 0;
   employees:Employee[] = [];
   candmBodFilteredEmployees: Observable<Employee[]>;

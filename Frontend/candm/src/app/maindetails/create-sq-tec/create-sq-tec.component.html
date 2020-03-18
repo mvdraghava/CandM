@@ -26,8 +26,8 @@
         <div *ngFor="let committe_member of committeemembers.controls; let i =index;">
           <mat-form-field appearance="outline">
             <mat-label>Committe Member {{i+1}}</mat-label>
-            <input  autocompete="false" matInput [formControlName]="i" placeholder="" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnemp">
+            <input  autocompete="false" matInput [formControlName]="i" placeholder="" [matAutocomplete]="auto1">
+            <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFnemp">
               <mat-option *ngFor="let emp of committeefilteredEmployees[i] | async" [value]="emp">
                 {{emp.name}}
               </mat-option>

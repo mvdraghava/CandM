@@ -13,7 +13,7 @@ import { departments,designations } from './../../globalvariables';
 export class CreateSqEnquiryComponent implements OnInit {
 
   constructor(private fb:FormBuilder,
-  						private ds: DetailsserviceService,
+  						public ds: DetailsserviceService,
               private router: Router) {}
 
   ngOnInit() {

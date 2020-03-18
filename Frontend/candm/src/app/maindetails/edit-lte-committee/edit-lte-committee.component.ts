@@ -34,7 +34,7 @@ export class EditLteCommitteeComponent implements OnInit {
     fandaTecMem: ['',[Validators.required, this.validateEmployee]],
   });
 
-  constructor(private cts: CreateTenderService, private fb: FormBuilder,private ds: DetailsserviceService) { }
+  constructor(private cts: CreateTenderService, private fb: FormBuilder,public ds: DetailsserviceService) { }
 
   filter_for_employees() {
     this.candmBodFilteredEmployees = this.editcommiteForm.controls.candmBodMem.valueChanges

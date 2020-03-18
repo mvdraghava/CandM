@@ -1,12 +1,12 @@
-<div fxFlex fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px" infiniteScroll (scrolled)="onScroll()">
-  <div *ngFor="let vendor of displayvendors;let i = index" fxFlex class="vendorCardDiv" (mouseenter) = "hoverVendor(i)" (mouseleave) = "hoverVendor(-1)" >
+<div fxFlex fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px" class="vendorcardholdercontainer" (scroll)="onScroll()">
+  <div *ngFor="let vendor of displayvendors;let i = index" fxFlex class="vendorCardDiv"  >
     <a (click)="openEdit(vendor)">
     <mat-card class="vendorCard" fxFlex fxLayout="column">
       <mat-card-header fxFlex fxLayoutAlign="start start">
         <mat-card-title> <a>M/s {{vendor.name}}</a> </mat-card-title>
       </mat-card-header>
       <mat-card-content fxFlex fxLayout="column" fxLayoutAlign="start start">
-        <div fxFlex fxLayout="column" fxLayoutAlign="space-between space-between" *ngIf="i != hoverIndex">
+        <div fxFlex fxLayout="column" fxLayoutAlign="space-between space-between">
             <div>
               <p *ngIf = "vendor.products[0] != ''"> Supply : {{vendor.products}} </p>
               <p *ngIf = "vendor.services[0] != ''"> Serivces : {{vendor.services}}</p>
@@ -16,9 +16,6 @@
               <p>{{vendor.street1}},{{vendor.street2}},{{vendor.city}},{{vendor.state}}--{{vendor.pincode}}</p>
               <p> {{vendor.mobilenos}} | {{vendor.emailids}}</p>
             </div>
-        </div>
-        <div *ngIf="i == hoverIndex">
-            <p>Hovered On the Element</p>
         </div>
       </mat-card-content>
     </mat-card>

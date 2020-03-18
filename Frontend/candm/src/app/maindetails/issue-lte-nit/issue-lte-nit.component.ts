@@ -22,7 +22,7 @@ export class IssueLteNitComponent implements OnInit {
   });
 
 
-  constructor(private fb: FormBuilder,private ds: DetailsserviceService,private router: Router) { }
+  constructor(private fb: FormBuilder,public ds: DetailsserviceService,private router: Router) { }
 
   ngOnInit() {
     this.indentNo = this.ds.biddetails.Indentno;

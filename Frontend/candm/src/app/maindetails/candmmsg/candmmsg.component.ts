@@ -10,7 +10,7 @@ import { DetailsserviceService } from '../detailsservice.service';
 export class CandmmsgComponent implements OnInit {
 
 
-  constructor(private ds: DetailsserviceService) { }
+  constructor(public ds: DetailsserviceService) { }
   subject = "";
   ngOnInit() {
     this.subject = this.ds.biddetails.TenderSubject;

@@ -184,7 +184,7 @@ export class PrepareloapoComponent implements OnInit {
     }
   }
 
-  constructor(private fb: FormBuilder, private ds: DetailsserviceService) { }
+  constructor(private fb: FormBuilder, public ds: DetailsserviceService) { }
 
   ngOnInit() {
     this.vendors = this.ds.biddetails.participatedvendors;

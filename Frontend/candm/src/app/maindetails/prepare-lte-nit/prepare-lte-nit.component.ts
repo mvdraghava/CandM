@@ -66,7 +66,7 @@ export class PrepareLteNitComponent implements OnInit {
     officerinchargeText : [''],
   });
 
-  constructor(private cts: CreateTenderService, private fb: FormBuilder,private ds: DetailsserviceService) { }
+  constructor(private cts: CreateTenderService, private fb: FormBuilder,public ds: DetailsserviceService) { }
 
 
   paymentChanged(){

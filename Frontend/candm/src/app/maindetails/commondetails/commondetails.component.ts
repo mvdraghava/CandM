@@ -8,7 +8,7 @@ import { DetailsserviceService } from '../detailsservice.service';
 })
 export class CommondetailsComponent implements OnInit {
 
-  constructor(private ds: DetailsserviceService) { }
+  constructor(public ds: DetailsserviceService) { }
 
   ngOnInit() {
   }

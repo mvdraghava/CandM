@@ -21,7 +21,7 @@ export class CreateSqTecComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private router: Router,
-              private ds: DetailsserviceService,
+              public ds: DetailsserviceService,
               private cts: CreateTenderService,
               public dialog : MatDialog) {}
 

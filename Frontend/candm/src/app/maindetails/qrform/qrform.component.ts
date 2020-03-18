@@ -44,7 +44,7 @@ export class QrformComponent implements OnInit {
     twoordervalue : ['',Validators.required],
     threeordervalue : ['',Validators.required]
   });
-  constructor(private cts: CreateTenderService, private fb: FormBuilder,private ds: DetailsserviceService) { }
+  constructor(private cts: CreateTenderService, private fb: FormBuilder,public ds: DetailsserviceService) { }
 
 
   filter_for_employees() {

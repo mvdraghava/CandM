@@ -18,8 +18,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddvendordialogComponent } from './addvendordialog/addvendordialog.component';
 import { FiltervendorsComponent } from './filtervendors/filtervendors.component';
 import { DisplayvendorsComponent } from './displayvendors/displayvendors.component';
-
-import { InfiniteScrollModule } from '../../../node_modules/ngx-infinite-scroll';
 import { EditvendordialogComponent } from './editvendordialog/editvendordialog.component';
 
 
@@ -35,7 +33,6 @@ import { EditvendordialogComponent } from './editvendordialog/editvendordialog.c
     MatIconModule,
     MatCardModule,
     ReactiveFormsModule,
-    InfiniteScrollModule,
     FlexLayoutModule
   ],
   entryComponents: [

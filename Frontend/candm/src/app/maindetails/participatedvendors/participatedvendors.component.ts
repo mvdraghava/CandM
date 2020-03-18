@@ -8,7 +8,7 @@ import { DetailsserviceService } from '../detailsservice.service';
 })
 export class ParticipatedvendorsComponent implements OnInit {
 
-  constructor(private ds: DetailsserviceService) { }
+  constructor(public ds: DetailsserviceService) { }
   pbvendors = [];
   ngOnInit() {
     this.ds.biddetails.participatedvendors.forEach(pbvendor => {

@@ -70,20 +70,22 @@ def prepare_lte_notesheet(bid):
     ltevendors = VendorBid.objects.filter(bid = bid)
     vendors = []
     for vendor in ltevendors:
-        vendor = vendor.vendor
+        vendor_V = vendor.vendor
         vn = {
-            'name': vendor.name,
-            'street1': vendor.street1,
-            'city' : vendor.city,
-            'state' : vendor.state,
-            'pincode' :  str(vendor.pincode)
+            'name': vendor_V.name,
+            'street1': vendor_V.street1,
+            'city' : vendor_V.city,
+            'state' : vendor_V.state,
+            'pincode' :  str(vendor_V.pincode)
         }
-        if(vendor.street2):
-            vn['street2'] = vendor.street2
-        if(len(vendor.mobilenos)):
-            vn['mobileno'] : "Mobile No:"+vendor.mobilenos[0]
-        if(len(vendor.emailids)):
-            vn['emailid'] : "EmailId:"+vendor.emailids[0]
+        if(vendor_V.street2):
+            vn['street2'] = vendor_V.street2
+        if(len(vendor_V.mobilenos)):
+            s = ', '
+            vn['mobileno'] = "Mobile No:"+s.join(vendor_V.mobilenos)
+        if(len(vendor_V.emailids) and vendor_V.emailids[0]):
+            s = ', '
+            vn['emailid'] = "EmailId:"+s.join(vendor_V.emailids)
         vendors.append(vn)
     context = {
         'ref_no' : get_ref_no(bid),
@@ -373,7 +375,6 @@ def issuelteNIT(request):
         return JsonResponse({'issued':True})
     except Exception as e:
         x = 1
-        import pdb; pdb.set_trace()
         return JsonResponse({'issued':False})
 
 def preparedatecorrigendumfiles(corrigendum):

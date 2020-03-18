@@ -27,7 +27,7 @@ import {Router} from '@angular/router';
 })
 export class PrepareLteEprocNitComponent implements OnInit {
 
-  constructor(private cts: CreateTenderService, private fb: FormBuilder,private ds: DetailsserviceService,
+  constructor(private cts: CreateTenderService, private fb: FormBuilder,public ds: DetailsserviceService,
               private router: Router) { }
 
   candmBodFilteredEmployees: Observable<Employee[]>;
