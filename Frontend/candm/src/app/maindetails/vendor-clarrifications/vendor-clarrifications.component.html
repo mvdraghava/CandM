@@ -1,0 +1,40 @@
+<div fxFlex fxFlexAlign="center center">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Prepare Clarrifications</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="clarrificationsform" >
+          <div fxLayout="row" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <div fxLayoutGap="25px" fxLayoutAlign="start center">
+              <h4>Clarrification Letter Date</h4>
+              <mat-form-field appearance="outline">
+                <mat-label>Letter Date</mat-label>
+                <input matInput formControlName="clarrificationDate" [matDatepicker]="picker2" (focus)="picker2.open()" placeholder="Choose Date">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div fxLayoutGap="25px" fxLayoutAlign="start center">
+              <h4>Clarrification End By</h4>
+              <mat-form-field appearance="outline">
+                <mat-label>Deadline</mat-label>
+                <input matInput formControlName="clarrificationEndDate" [matDatepicker]="picker3" (focus)="picker3.open()" placeholder="Choose Date">
+                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <div formArrayName="clarrificationsRequired">
+            <h4>Select Vendors for Clarrifications to be sent</h4>
+            <div *ngFor="let clarrreq of this.clarrificationsform.controls.clarrificationsRequired.controls;let i = index;" [formGroupName]="i" fxLayoutGap="25px" fxLayoutAlign="start center">
+              <mat-checkbox fxFlex="30%" formControlName="clarrrequired">{{clarrreq.controls.vendor.value.name}}</mat-checkbox>
+            </div>
+          </div>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button [disabled]="!this.clarrificationsform.valid" (click)="prepareClarrifications()"  color="primary">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -125,8 +125,17 @@ export class CreateSqTecComponent implements OnInit {
 
   private _filterVendors(value: string): Vendor[] {
     const filterValue = value.toLowerCase();
-    console.log(this.vendors.filter(vendor => vendor.name.toLowerCase().includes(filterValue)));
-    return this.vendors.filter(vendor => vendor.name.toLowerCase().includes(filterValue));
+    return this.vendors.filter(vendor => {
+      let check_above_vendors = this.participated_bidders.controls.filter(pb => {
+        return pb.controls.vendor.value.id == vendor.id
+      });
+      if(check_above_vendors.length){
+        return false;
+      }
+      else{
+        return vendor.name.toLowerCase().includes(filterValue);
+      }
+    });
   }
 
   validateVendor(c: FormControl) {

@@ -77,7 +77,7 @@ def getDocPrice(est_cost):
     return doc_price
 
 def getEmdPrice(est_cost):
-    return round(math.ceil((est_cost*0.02)/1000.0)*1000.0)
+    return round((est_cost*0.02)/1000.0) * 1000
 
 def getVendor(vend_id):
     vend = Vendor.objects.filter(id = vend_id)

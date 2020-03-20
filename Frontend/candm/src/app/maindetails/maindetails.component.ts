@@ -49,6 +49,10 @@ export class MaindetailsComponent implements OnInit {
     'TEC Prepared for Vetting' : [{
       'stage' : 'Prepare LOA/PO',
       'link' : 'prepareloapo'
+    },
+    {
+      'stage' : 'Clarrifications',
+      'link' : 'vendorClarrifications'
     }],
     'LOA Prepared for Vetting' : [{
       'stage' : 'Issue LOA' ,
