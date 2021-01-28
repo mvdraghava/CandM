@@ -1,0 +1,9 @@
+<mat-card>
+    <mat-card-content>
+      <app-tender-details></app-tender-details>
+      <app-proposaldetails [proposaldetails] = "proposalDetails" (addedemployee)="addform()"></app-proposaldetails>
+      <app-amount-details></app-amount-details>
+      <app-combine-committe-members></app-combine-committe-members>
+    </mat-card-content>
+</mat-card>
+<button mat-button (click)="onSubmit()">Action</button>

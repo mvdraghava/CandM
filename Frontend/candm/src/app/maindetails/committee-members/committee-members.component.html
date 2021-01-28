@@ -1,5 +1,9 @@
 <div class="committemembertablediv">
-  <table mat-table [dataSource]="dataSource"  class="" >
+  <table *ngIf="false" mat-table [dataSource]="dataSource"  class="" >
+
+    <ng-container matColumnDef="heading">
+      <th mat-header-cell *matHeaderCellDef colspan="3" class="comHeadercell"> {{this.typeCommittee}} </th>
+    </ng-container>
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
@@ -22,8 +26,22 @@
       <td mat-cell *matCellDef="let element"> {{element.department}} </td>
     </ng-container>
 
-
+    <tr mat-header-row matHeaderRowDefSticky="true" class="headerrowcom" *matHeaderRowDef="['heading']"></tr>
     <tr mat-header-row matHeaderRowDefSticky="true" *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+
+  <mat-card class="committeCard mat-elevation-z3">
+      <mat-card-header class="committeTitle">
+          <mat-card-title>{{this.typeCommittee}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <mat-list dense>
+              <mat-list-item *ngFor="let commem of this.CommitteeMembers">
+                  <p class="comMem">{{commem.name}},{{commem.designation}},{{commem.department}}</p>
+              </mat-list-item>
+          </mat-list>
+      </mat-card-content>
+  </mat-card>
+
 </div>

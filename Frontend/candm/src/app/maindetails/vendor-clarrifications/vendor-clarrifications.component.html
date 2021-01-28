@@ -27,7 +27,7 @@
           </div>
           <div formArrayName="clarrificationsRequired">
             <h4>Select Vendors for Clarrifications to be sent</h4>
-            <div *ngFor="let clarrreq of this.clarrificationsform.controls.clarrificationsRequired.controls;let i = index;" [formGroupName]="i" fxLayoutGap="25px" fxLayoutAlign="start center">
+            <div *ngFor="let clarrreq of this.clarrificationsRequired.controls;let i = index;" [formGroupName]="i" fxLayoutGap="25px" fxLayoutAlign="start center">
               <mat-checkbox fxFlex="30%" formControlName="clarrrequired">{{clarrreq.controls.vendor.value.name}}</mat-checkbox>
             </div>
           </div>

@@ -9,6 +9,7 @@ import {map, startWith} from 'rxjs/operators';
 import { saveAs } from 'file-saver';
 
 import {DetailsserviceService} from '../detailsservice.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-prepare-lte-nit',
   templateUrl: './prepare-lte-nit.component.html',
@@ -66,7 +67,10 @@ export class PrepareLteNitComponent implements OnInit {
     officerinchargeText : [''],
   });
 
-  constructor(private cts: CreateTenderService, private fb: FormBuilder,public ds: DetailsserviceService) { }
+  constructor(private cts: CreateTenderService,
+              private fb: FormBuilder,
+              public ds: DetailsserviceService,
+              private router: Router) { }
 
 
   paymentChanged(){
@@ -265,6 +269,8 @@ export class PrepareLteNitComponent implements OnInit {
       this.ds.getltemNIT(this.nitForm.value).subscribe(
         data => {
           saveAs(data, 'I_'+this.indentNo.toString()+'_NIT.docx' );
+          this.router.navigate(['open-bids']);
+          console.log('ririir');
         },
         error => {
             window.alert('Some Error has occured');

@@ -123,7 +123,7 @@ export class MaindetailsComponent implements OnInit {
     'Recieved SpotQuotation Proposal':[
       {
         'stage': 'Edit Details',
-        'link': 'edit-sq-details'
+        'link': 'edit-details'
       },
       {
         'stage': 'Create Spot Enquiry',
@@ -133,13 +133,54 @@ export class MaindetailsComponent implements OnInit {
     'Spot Enquiry Prepared for Vetting': [
       {
         'stage': 'Edit Details',
-        'link': 'edit-sq-details'
+        'link': 'edit-details'
       },
+      // {
+      //   'stage': 'Issue Spot Enquiry',
+      //   'link': 'create-sq-tecreport'
+      // },
       {
-        'stage': 'TEC Report',
+        'stage': 'Create TEC Report',
         'link': 'create-sq-tecreport'
       }],
+      'Committee Report Prepared for Vetting':[
+        {
+          'stage': 'Edit Details',
+          'link': 'edit-details'
+        },
+        {
+          'stage': 'TEC Date',
+          'link': 'sq-tec-date'
+        }
+      ]
   };
+
+  stmenustages = {
+    'Recieved Single Tender Proposal':[
+      {
+        'stage': 'Edit Details',
+        'link': 'edit-details'
+      },
+      // {
+      //   'stage': 'Create Spot Enquiry',
+      //   'link': 'create-sqenquiry'
+      // }
+    ],
+    'Approved to Award LOA/PO':[
+      {
+        'stage': 'Edit Details',
+        'link': 'edit-details'
+      },
+      {
+        'stage': 'Prepare LOA/PO',
+        'link': 'genericloapo'
+      },
+      // {
+      //   'stage': 'Create Spot Enquiry',
+      //   'link': 'create-sqenquiry'
+      // }
+    ]
+  }
 
   menustages = {
     'OpenTender' :{
@@ -162,7 +203,8 @@ export class MaindetailsComponent implements OnInit {
     },
     'LTE' : this.ltemenustages,
     'LTE-eproc' : this.lteeprocmenustages,
-    'SpotQuotation' : this.sqmenustages
+    'SpotQuotation' : this.sqmenustages,
+    'SingleTender' : this.stmenustages
   };
 
   nextstageMenu = [];

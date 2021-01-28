@@ -31,6 +31,7 @@ export class DetailsserviceService {
   private lteEprocBidOpeningUrl = environment.apiurl + 'lteeprocbidopening';
   private createsqenquiryUrl = environment.apiurl + 'createsqenquiry';
   private preparesqtecUrl = environment.apiurl + 'preparesqtec';
+  private updatesqtecDateUrl = environment.apiurl + 'updatesqtecdate';
 
   getfilenames(reqdata){
     return this.http.post(this.getfilenamesurl,reqdata);
@@ -92,8 +93,12 @@ export class DetailsserviceService {
     return this.http.get<Vendor[]>(this.getvendorsurl);
   }
 
-  prepareSqTec(data) : Observable<Blob> {
+  prepareSqTec(data): Observable<Blob> {
     return this.http.post(this.preparesqtecUrl,data,{responseType: 'blob'});
+  }
+
+  updateSqTecDate(data): Observable<any> {
+    return this.http.post(this.updatesqtecDateUrl, data);
   }
 
 }

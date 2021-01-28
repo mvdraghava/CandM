@@ -5,6 +5,8 @@ import {DetailsserviceService} from '../detailsservice.service';
 import { Employee } from '../../employee';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import { saveAs } from 'file-saver';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lte-tec-report',
@@ -13,7 +15,10 @@ import {Observable} from 'rxjs';
 })
 export class LteTecReportComponent implements OnInit {
 
-  constructor(private cts: CreateTenderService, private fb: FormBuilder,public ds: DetailsserviceService) { }
+  constructor(private cts: CreateTenderService,
+              private fb: FormBuilder,
+              private router: Router,
+              public ds: DetailsserviceService) { }
   indentNo = 0;
   employees:Employee[] = [];
   candmBodFilteredEmployees: Observable<Employee[]>;
@@ -85,17 +90,8 @@ export class LteTecReportComponent implements OnInit {
   prepareltetec(){
     this.ds.prepareltetec(this.tecform.value).subscribe(
       data => {
-        if(data && data['issued']){
-          window.alert('Prepared Corrigendum Files');
-          this.ds.getbiddetails({'indent_no':this.indentNo}).subscribe(
-            data => {
-              this.ds.biddetails = data;
-            }
-          );
-        }
-        else{
-          window.alert('Some Error has occured');
-        }
+        saveAs(data, 'I_'+this.indentNo.toString()+'_TEC_Report.docx' );
+        this.router.navigate(['open-bids']);
       }
     );
   }

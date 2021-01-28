@@ -1,1 +1,12 @@
-<p>filtervendors works!</p>
+
+<mat-card-content fxFlex fxLayoutGap="10px" fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-form-field appearance="outline">
+    <mat-label>Vendor Name</mat-label>
+    <input matInput placeholder="" name="VendorName" [(ngModel)]="vendorname" (ngModelChange)="sendDisplayVendors()">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Supply, Serives, Works</mat-label>
+    <input matInput placeholder="" name="works" [(ngModel)]="works" (ngModelChange)="sendDisplayVendors()">
+  </mat-form-field>
+</mat-card-content>
+

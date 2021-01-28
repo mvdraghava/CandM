@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, FormBuilder} from '@angular/forms';
-import {FormsModule,ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Observable} from 'rxjs';
 import { Vendor } from './../vendor';
 import { Employee } from './../../employee';
@@ -23,7 +23,27 @@ export class CreateSqTecComponent implements OnInit {
               private router: Router,
               public ds: DetailsserviceService,
               private cts: CreateTenderService,
-              public dialog : MatDialog) {}
+              public dialog: MatDialog) {}
+
+  employees: Employee[] = [];
+  vendors: Vendor[] = [];
+  committeefilteredEmployees: Observable<Employee[]>[] = [];
+  participatedfilteredVendors: Observable<Vendor[]>[] = [];
+  indentNo = 0;
+  ablesubmit = false;
+
+  sqtecForm = this.fb.group({
+    indentNo : ['', Validators.required],
+    sqenquirydate: ['', Validators.required],
+    sqboddate: ['', Validators.required],
+    committeemembers: this.fb.array([
+                      ['', [Validators.required, this.validateEmployee]],
+                      ['', [Validators.required, this.validateEmployee]],
+                      ['', [Validators.required, this.validateEmployee]]]),
+    participated_bidders: this.fb.array([
+      this.get_participated_bidder_form(), this.get_participated_bidder_form(), this.get_participated_bidder_form()
+    ])
+  });
 
   ngOnInit() {
     this.cts.getemployees().subscribe(
@@ -40,11 +60,18 @@ export class CreateSqTecComponent implements OnInit {
     );
     this.indentNo = this.ds.biddetails.Indentno;
     this.sqtecForm.controls.indentNo.setValue(this.indentNo);
+    if (this.ds.biddetails.committeeMembers) {
+      this.sqtecForm.controls.committeemembers.setValue(this.ds.biddetails.committeeMembers);
+      this.committeemembers.controls.forEach(control => {
+        control.disable();
+        console.log(control);
+      });
+    }
   }
 
-  filter_for_employees(){
+  filter_for_employees() {
     this.committeefilteredEmployees = [];
-    for(let i=0;i<this.committeemembers.controls.length;i++){
+    for (let i = 0; i < this.committeemembers.controls.length; i++) {
       this.committeefilteredEmployees.push(this.committeemembers.controls[i].valueChanges
       .pipe(
         startWith(''),
@@ -54,10 +81,10 @@ export class CreateSqTecComponent implements OnInit {
     }
   }
 
-  filter_for_vendors(){
+  filter_for_vendors() {
     this.participatedfilteredVendors = [];
-    for(let i=0;i<this.participated_bidders.controls.length;i++){
-      this.participatedfilteredVendors.push(this.participated_bidders['controls'][i].get('vendor').valueChanges
+    for (let i = 0; i < this.participated_bidders.controls.length; i++) {
+      this.participatedfilteredVendors.push(this.participated_bidders.controls[i].get('vendor').valueChanges
       .pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value.name),
@@ -65,25 +92,6 @@ export class CreateSqTecComponent implements OnInit {
       ));
     }
   }
-
-
-
-  employees:Employee[] = [];
-  vendors:Vendor[] = [];
-  committeefilteredEmployees: Observable<Employee[]>[] = [];
-  participatedfilteredVendors: Observable<Vendor[]>[] = [];
-  indentNo = 0;
-  ablesubmit = false;
-
-  sqtecForm = this.fb.group({
-    indentNo : ['', Validators.required],
-    sqenquirydate: ['', Validators.required],
-    sqboddate: ['', Validators.required],
-    committeemembers: this.fb.array([['',[Validators.required, this.validateEmployee]],['',[Validators.required, this.validateEmployee]],['',[Validators.required, this.validateEmployee]]]),
-    participated_bidders: this.fb.array([
-      this.get_participated_bidder_form(),this.get_participated_bidder_form(),this.get_participated_bidder_form()
-    ])
-  });
 
   get committeemembers() {
     return this.sqtecForm.get('committeemembers') as FormArray;
@@ -93,9 +101,9 @@ export class CreateSqTecComponent implements OnInit {
     return this.sqtecForm.get('participated_bidders') as FormArray;
   }
 
-  private get_participated_bidder_form(){
+  private get_participated_bidder_form() {
     return this.fb.group({
-      vendor: ['',[Validators.required, this.validateVendor]],
+      vendor: ['', [Validators.required, this.validateVendor]],
       quoted_amount: ['', Validators.required],
       remarks: ''
     });
@@ -127,12 +135,11 @@ export class CreateSqTecComponent implements OnInit {
     const filterValue = value.toLowerCase();
     return this.vendors.filter(vendor => {
       let check_above_vendors = this.participated_bidders.controls.filter(pb => {
-        return pb.controls.vendor.value.id == vendor.id
+        return pb.get('vendor').value.id == vendor.id;
       });
-      if(check_above_vendors.length){
+      if (check_above_vendors.length) {
         return false;
-      }
-      else{
+      } else {
         return vendor.name.toLowerCase().includes(filterValue);
       }
     });
@@ -159,7 +166,7 @@ export class CreateSqTecComponent implements OnInit {
   removeCommitteeMember(i) {
     this.committeemembers.removeAt(i);
     this.committeefilteredEmployees = [];
-    for(let i=0;i<this.committeemembers.controls.length;i++){
+    for (let i = 0; i < this.committeemembers.controls.length; i++) {
       this.committeefilteredEmployees.push(this.committeemembers.controls[i].valueChanges
       .pipe(
         startWith(''),
@@ -173,7 +180,7 @@ export class CreateSqTecComponent implements OnInit {
     this.participated_bidders.push(
       this.get_participated_bidder_form()
     );
-    this.participatedfilteredVendors.push(this.participated_bidders['controls'][this.participated_bidders.controls.length - 1].get('vendor').valueChanges
+    this.participatedfilteredVendors.push(this.participated_bidders.controls[this.participated_bidders.controls.length - 1].get('vendor').valueChanges
       .pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value.name),
@@ -184,8 +191,8 @@ export class CreateSqTecComponent implements OnInit {
   removeBidder(remove_index: number) {
     this.participated_bidders.removeAt(remove_index);
     this.participatedfilteredVendors = [];
-    for(let i=0;i<this.participated_bidders.controls.length;i++){
-      this.participatedfilteredVendors.push(this.participated_bidders['controls'][i].get('vendor').valueChanges
+    for (let i = 0; i < this.participated_bidders.controls.length; i++) {
+      this.participatedfilteredVendors.push(this.participated_bidders.controls[i].get('vendor').valueChanges
       .pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value.name),
@@ -201,7 +208,7 @@ export class CreateSqTecComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(
       result => {
-        if(result){
+        if (result) {
           this.ds.getvendors().subscribe(
             data => {
               this.vendors = data;
@@ -217,7 +224,7 @@ export class CreateSqTecComponent implements OnInit {
     this.ablesubmit = true;
     this.ds.prepareSqTec(this.sqtecForm.value).subscribe(
       data => {
-        saveAs(data, 'I_'+this.indentNo.toString()+'_CommitteReport.docx' );
+        saveAs(data, 'I_' + this.indentNo.toString() + '_CommitteReport.docx' );
         this.ablesubmit = false;
         this.router.navigate(['open-bids']);
       },

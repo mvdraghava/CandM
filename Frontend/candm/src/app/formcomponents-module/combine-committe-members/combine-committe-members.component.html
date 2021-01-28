@@ -1,0 +1,24 @@
+<mat-card-title>Committee Members</mat-card-title>
+<div fxLayout = "row wrap"
+     fxLayoutGap = "10px"
+     fxLayoutAlign="start center"
+     class="maxwidth1200">
+  <div  fxLayoutGap = "2px"
+        fxLayoutAlign="start center"
+        fxLayout="row wrap"
+        fxFlex = "32%"
+        *ngFor = "let a of Arr;let i = index">
+    <app-employee-field [empLabel]="'Committe Member'"
+                        #empmems
+                        fxFlex>
+    </app-employee-field>
+    <button mat-button *ngIf="this.committeeMembers.length != 1" (click)="delComMem(i)" fxFlex = "10%"
+                                              fxLayoutAlign="center center"
+                                              fxLayout = "row">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-button (click)="addComMem()" fxFlex ="10%">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</div>

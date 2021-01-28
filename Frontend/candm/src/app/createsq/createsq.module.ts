@@ -7,6 +7,7 @@ import { CreatesqComponent } from './createsq.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
+import { FormcomponentsModuleModule } from './../formcomponents-module/formcomponents-module.module';
 
 @NgModule({
   declarations: [CreatesqComponent],
@@ -17,7 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     FormsModule,
     FlexLayoutModule,
-    HttpClientModule
+    HttpClientModule,
+    FormcomponentsModuleModule
   ]
 })
 export class CreatesqModule { }

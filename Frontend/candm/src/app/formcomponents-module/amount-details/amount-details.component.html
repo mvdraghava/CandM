@@ -1,0 +1,33 @@
+<form id="amountDetails"
+      [formGroup]="amountDetails"
+      fxLayout="column"
+      fxFlex
+      fxLayoutAlign="start stretch"
+      autocomplete="off"
+      fxLayoutGap = "10px"
+      class="maxwidth1200">
+      <mat-card-title>Amount Details</mat-card-title>
+      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Estimated Cost</mat-label>
+            <input matInput placeholder="0" type="number" formControlName="estCost">
+        </mat-form-field>
+        <mat-form-field fxFlex fxFlex.xs appearance="outline" >
+          <mat-label>GST Details</mat-label>
+          <mat-select  formControlName='gstIncl'>
+            <mat-option *ngFor="let opt of gstOptions" [value]="opt.value">
+              {{opt.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex fxFlex.xs appearance="outline" *ngIf="emdtender">
+          <mat-label>EMD Details</mat-label>
+          <mat-select  formControlName='emdwaivedoff'>
+            <mat-option *ngFor="let opt of emdOptions" [value]="opt.value">
+              {{opt.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+</form>

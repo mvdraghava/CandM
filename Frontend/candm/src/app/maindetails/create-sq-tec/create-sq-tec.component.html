@@ -32,7 +32,7 @@
                 {{emp.name}}
               </mat-option>
             </mat-autocomplete>
-            <button mat-icon-button *ngIf="committeemembers.controls.length != 1" (click)="removeCommitteeMember(i)" type="button" class="icon" matSuffix><mat-icon>delete</mat-icon></button>
+            <button mat-icon-button *ngIf="committeemembers.controls.length != 1 && committeemembers.controls[i].status != 'DISABLED'" (click)="removeCommitteeMember(i)" type="button" class="icon" matSuffix><mat-icon>delete</mat-icon></button>
             <button mat-icon-button type="button" *ngIf = "i == committeemembers.controls.length-1 && i==0" class="icon" (click)="addCommitteeMember()" matSuffix><mat-icon>add</mat-icon></button>
           </mat-form-field>
           <button mat-icon-button type="button" *ngIf = "i == committeemembers.controls.length-1 && i!=0" class="icon" (click)="addCommitteeMember()"><mat-icon>add</mat-icon></button>

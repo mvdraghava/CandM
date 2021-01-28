@@ -294,6 +294,8 @@ def prepare_lte_m_nit(request):
     res = prepare_lte_m_nit_doc(bid)
     response = send_file_docx(res)
     changeStatus(bid,"NIT prepared for Vetting")
+    bid.bid_stage = 3
+    bid.save()
     return response
 
 def editcommittee(request):
@@ -338,6 +340,8 @@ def issuelteNIT(request):
             ltegc.boddt = getDate(data["bodDate"])
             ltegc.save()
             changeStatus(bid,"NIT Issued")
+            bid.bid_stage = 4
+            bid.save()
         elif bid.bid_type == 'LTE-eproc':
             impdates = ImpDates(
                 bid = bid,
@@ -600,10 +604,13 @@ def ltetecvetting(request):
                 bq.save()
         res = prepare_lte_tec(bid)
         changeStatus(bid,"TEC Prepared for Vetting")
+        bid.bid_stage = 6
+        bid.save()
         response = send_file_docx(res)
         return response
     except Exception as e:
         pass
+        import pdb; pdb.set_trace()
         return JsonResponse({'issued':False})
 
 
@@ -728,8 +735,8 @@ def loapovetting(request):
             delivaryperiodText = reqloagcc["delivaryperiodText"] if reqloagcc["deliveryperiod"] else ' ',
             pricebasis = reqloagcc["pricebasis"],
             pricebasisText = reqloagcc["pricebasisText"] if reqloagcc["pricebasis"] else ' ',
-            validity = reqloagcc["validity"],
-            validityText = reqloagcc["validityText"] if reqloagcc["validity"] else '',
+            validity = False,
+            validityText = '',
             taxesandduties = reqloagcc["taxesandduties"],
             taxesanddutiestext = reqloagcc["taxesanddutiestext"] if reqloagcc["taxesandduties"] else '',
             warranty = reqloagcc["warranty"],

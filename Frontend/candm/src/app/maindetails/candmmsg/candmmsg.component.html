@@ -2,16 +2,23 @@
   <div fxLayoutAlign="center" >
     <app-spb-compnt *ngIf="this.ds.biddetails.stages"
                      [stages]="this.ds.biddetails.stages"
-                     [presentStage]="3"
+                     [presentStage]="this.ds.biddetails.bidStage"
                      [mainStages] = "this.ds.biddetails.mainStages"></app-spb-compnt>
   </div>
   <div fxLayoutAlign="center">
       <app-commondetails></app-commondetails>
   </div>
+  <div fxLayoutAlign="center" *ngIf="this.ds.biddetails.BidType == 'SpotQuotation'">
+    <app-committee-members typeCommittee = "Spot Quotaion Committee"
+                        [CommitteeMembers] = "this.ds.biddetails.committeeMembers"></app-committee-members>
+  </div>
+  <div  *ngIf="this.ds.biddetails.pvDetails">
+    <app-participatedvendordetails
+                      [ParticipatedVendors] = "this.ds.biddetails.pvDetails">
+                    </app-participatedvendordetails>
+  </div>
 
 
-  <app-participatedvendordetails></app-participatedvendordetails>
-  <app-committee-members></app-committee-members>
 
   <div *ngIf="this.ds.biddetails.nitsentvendors">
       <h4>LTE sent to the following Vendors:-</h4>

@@ -22,12 +22,12 @@ def createsq(request):
     try:
         data = json.loads(request.body.decode('utf-8'))
         bid = Bid(
-            indent_number = data['indent_no'],
-            bid_subject = data['subject'],
+            indent_number = data['tenderDetails']['indent_no'],
+            bid_subject = data['tenderDetails']['subject'],
             bid_type = 'SpotQuotation',
-            tender_category =  data['tendertype'],
-            contract_type = data['contracttype'],
-            product_category = data['productcategory'],
+            tender_category =  data['tenderDetails']['tendertype'],
+            contract_type = data['tenderDetails']['contracttype'],
+            product_category = data['tenderDetails']['productcategory'],
         )
         bid.save()
         proposal = Proposal(
@@ -48,16 +48,23 @@ def createsq(request):
         sqdetails = SpotQuotationDetails(
             bid = bid,
             estCost = data["amountDetails"]["estCost"],
-            completionperiod = str(data["completionperiod"]) + " " + data["durationmeasured"],
+            completionperiod = str(data['tenderDetails']["completionperiod"]) + " " + data['tenderDetails']["durationmeasured"],
             gstIncl = data["amountDetails"]["gstIncl"],
             emdwaivedoff = data["amountDetails"]["emdwaivedoff"]
         )
         sqdetails.save()
+        for comMember in data["commiteeMembers"]:
+            sqComMem = SpotQuotationCommittee(
+                bid = bid,
+                committeeMember = Employee.objects.get(id = comMember["id"])
+            )
+            sqComMem.save()
         changeStatus(bid,"Recieved SpotQuotation Proposal")
         return JsonResponse({'success':True})
     except Exception as e:
         pass
-        import pdb; pdb.set_trace()
+        import pdb; 
+        pdb.set_trace()
         return JsonResponse({'success':False})
 
 def prepare_sq_enquiry_doc(bid):
@@ -104,6 +111,8 @@ def createsqenquiry(request):
     res = prepare_sq_enquiry_doc(bid)
     response = send_file_docx(res)
     changeStatus(bid,"Spot Enquiry Prepared for Vetting")
+    bid.bid_stage = 1
+    bid.save()
     return response
 
 def prepare_sq_tec_doc(bid):
@@ -183,6 +192,28 @@ def prepare_sq_tec_doc(bid):
     return filename+".docx"
 
 
+def issueSpotEnquiry(request):
+    """
+    1.Store the date of market visit i.e, issue date and bid opening date
+    """
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        bid  = Bid.objects.get(indent_number = data['indentNo'])
+        sqenquirydetails = SpotEnquiryDetails.objects.get(bid = bid)
+        sqenquirydetails.enquirydate = getDate(data["sqenquirydate"])
+        sqenquirydetails.bidopeningdate = getDate(data["sqboddate"])
+        sqenquirydetails.save()
+        bid.bid_stage = 2
+        bid.save()
+        response = {
+            'success' : True
+        }
+    except Exception as ex:
+        response = {
+            'success' : False
+        }
+    
+    return JsonResponse(response)
 
 def preparesqtec(request):
     """
@@ -195,12 +226,12 @@ def preparesqtec(request):
     data = json.loads(request.body.decode('utf-8'))
     bid  = Bid.objects.get(indent_number = data['indentNo'])
     sqenquirydetails = SpotEnquiryDetails.objects.get(bid = bid)
-    for comMember in data['committeemembers']:
-        sqComMem = SpotQuotationCommittee(
-            bid = bid,
-            committeeMember = Employee.objects.get(id = comMember["id"])
-        )
-        sqComMem.save()
+    # for comMember in data['committeemembers']:
+    #     sqComMem = SpotQuotationCommittee(
+    #         bid = bid,
+    #         committeeMember = Employee.objects.get(id = comMember["id"])
+    #     )
+    #     sqComMem.save()
     sqenquirydetails.enquirydate = getDate(data["sqenquirydate"])
     sqenquirydetails.bidopeningdate = getDate(data["sqboddate"])
     sqenquirydetails.save()
@@ -218,6 +249,11 @@ def preparesqtec(request):
         )
         pbq.save()
     changeStatus(bid,"Committee Report Prepared for Vetting")
+    bid.bid_stage = 4
+    bid.save()
     res = prepare_sq_tec_doc(bid)
     response = send_file_docx(res)
     return response
+
+def updateSqTecDate(request):
+    return JsonResponse({'success': True})

@@ -28,17 +28,10 @@ const routes: Routes = [{ path: ':indentno/:tendersubject', component: Maindetai
   { path: 'create-sqenquiry', loadChildren: () => import('./create-sq-enquiry/create-sq-enquiry.module').then(m => m.CreateSqEnquiryModule) },
   { path: 'create-sq-tecreport', loadChildren: () => import('./create-sq-tec/create-sq-tec.module').then(m => m.CreateSqTecModule) },
   { path: 'vendorClarrifications', loadChildren: () => import('./vendor-clarrifications/vendor-clarrifications.module').then(m => m.VendorClarrificationsModule) },
+  { path: 'edit-details', loadChildren: () => import('./edit-details/edit-details.module').then(m => m.EditDetailsModule) },
+  { path: 'sq-tec-date', loadChildren: () => import('./sq-tec-date/sq-tec-date.module').then(m => m.SqTecDateModule) },
+  { path: 'genericloapo', loadChildren: () => import('./genericloapo/genericloapo.module').then(m => m.GenericloapoModule) },
 ]},
-
-
-
-
-
-
-
-
-
-
 
   ];
 

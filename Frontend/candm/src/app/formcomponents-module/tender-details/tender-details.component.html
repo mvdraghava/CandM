@@ -1,0 +1,60 @@
+<form id="tenderDetails"
+      [formGroup]="tenderDetails"
+      autocomplete="off"
+      fxLayout="column"
+      fxLayoutAlign="start stretch"
+      fxLayoutGap="0px">
+  <mat-card-title class="tenderdetailsheader">Tender Details</mat-card-title>
+  <div fxLayoutGap="10px" fxLayoutGap.xs="0px"  fxLayout.xs="column" fxFlex.xs fxFlex class="maxwidth1200">
+    <mat-form-field appearance="outline">
+      <mat-label>Indent Number</mat-label>
+      <input  matInput formControlName="indent_no" placeholder="IndentNumber" type="number">
+    </mat-form-field>
+    <mat-form-field appearance="outline" *ngIf=eproc>
+      <mat-label>Etender Number</mat-label>
+      <input  matInput formControlName="eproc_no" placeholder="E Procurment Number" type="number">
+    </mat-form-field>
+    <mat-form-field appearance="outline" fxFlex>
+      <mat-label>Tender Subject</mat-label>
+      <textarea  matInput matTextareaAutosize matAutosizeMaxRows=1 formControlName="subject" placeholder="Tender-Subject"></textarea>
+    </mat-form-field>
+  </div>
+  <div fxLayoutGap="10px" fxLayoutGap.xs="0px"  fxLayout.xs="column" fxFlex.xs fxFlex class="maxwidth1200">
+    <mat-form-field appearance="outline" fxFlex="20%" fxFlex.xs>
+      <mat-label>Tender Category</mat-label>
+      <mat-select formControlName="tendertype">
+        <mat-option *ngFor="let type of tendercategories" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline" fxFlex="20%" fxFlex.xs>
+      <mat-label>Contract Type</mat-label>
+      <mat-select formControlName="contracttype">
+        <mat-option *ngFor="let type of contracttypes" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline" fxFlex="20%" fxFlex.xs>
+      <mat-label>Product Category</mat-label>
+      <mat-select formControlName="productcategory">
+        <mat-option *ngFor="let type of productcategories" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline" fxFlex="20%" fxFlex.xs>
+    <mat-label>{{contractdelivery()}} Period</mat-label>
+    <input matInput type="number" placeholder="0" formControlName="completionperiod">
+  </mat-form-field>
+  <mat-form-field appearance="outline" fxFlex="20%" fxFlex.xs>
+      <mat-label>Period In</mat-label>
+      <mat-select formControlName="durationmeasured">
+        <mat-option *ngFor="let time of times" [value]="time">
+          {{time}}
+        </mat-option>
+      </mat-select>
+  </mat-form-field>
+  </div>
+</form>

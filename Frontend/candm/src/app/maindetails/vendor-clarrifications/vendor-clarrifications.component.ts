@@ -24,10 +24,14 @@ export class VendorClarrificationsComponent implements OnInit {
     clarrificationsRequired: this.fb.array([])
   });
 
+  get clarrificationsRequired() {
+   return this.clarrificationsform.get('clarrificationsRequired') as FormArray;
+  }
+
   prepareclarrreqArray() {
     if(this.ds.biddetails.participatedvendors){
       this.ds.biddetails.participatedvendors.forEach(vendor => {
-        this.clarrificationsform.controls.clarrificationsRequired.push(this.createclarrReqformControl(vendor));
+        this.clarrificationsRequired.push(this.createclarrReqformControl(vendor));
       });
     }
   }

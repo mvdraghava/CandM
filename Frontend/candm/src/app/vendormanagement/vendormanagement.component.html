@@ -9,7 +9,7 @@
       <button mat-raised-button color="primary" id="addbutton" (click)="AddDialog()">Add Vendor</button>
       <div style="clear:both"></div>
     </div>
-    <!--<app-filtervendors></app-filtervendors>-->
-    <app-displayvendors [allVendors]="allvendors" (edited)="get_vendors()"></app-displayvendors>
+    <app-filtervendors [allVendors]="allvendors" (emitDisplayVendors)="changeDisplayVendors($event)"></app-filtervendors>
+    <app-displayvendors [allVendors]="displayvendors" (edited)="get_vendors()"></app-displayvendors>
   </mat-card-content>
 </mat-card>

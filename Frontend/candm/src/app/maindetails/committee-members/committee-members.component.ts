@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-committee-members',
@@ -6,24 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./committee-members.component.css']
 })
 export class CommitteeMembersComponent implements OnInit {
-
-  CommitteeMembers = [
-  {name: 'AADDFFF', designation: 'Sr.Gm', department:'C&M'},
-  {name: 'AADDFFF', designation: 'AM', department:'MO'},
-  {name: 'AADDFFF', designation: 'CM', department:'SO'},
-  {name: 'AADDFFF', designation: 'DM', department:'SL'},
-  // {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
-  // {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
-  // {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
-  // {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
-  // {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
-  // {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
-  // {vendorname: 'AADDFFF', quotedvalue: 1256325, status:'L1', remarks: 'fghdfjgh fgfdghjdfs fghsdhf g'},
-];
+  @Input() CommitteeMembers;
+  @Input() typeCommittee;
   constructor() { }
   displayedColumns: string[] = ['name', 'designation', 'department'];
-  dataSource = this.CommitteeMembers;
+  dataSource;
   ngOnInit(): void {
+    console.log(this.CommitteeMembers);
+    this.dataSource = this.CommitteeMembers;
   }
 
 }

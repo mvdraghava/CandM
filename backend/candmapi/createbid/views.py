@@ -18,6 +18,8 @@ from django.forms.models import model_to_dict
 from .lteEprocViews import *
 from .lteviews import *
 from .sqviews import *
+from .stviews import *
+from .defaultloapoconditions import *
 
 def create_ot_notesheet(data):
     context = {
@@ -272,6 +274,7 @@ def getBidDetails(request):
             stage_types = TenderStages.objects.filter(bid_type = bid.bid_type).order_by('stage_number')
             response['stages'] = [iter_stage.stage for iter_stage in stage_types]
             response['mainStages'] = [iter_stage.stage_number for iter_stage in stage_types if iter_stage.main_Stage]
+            response['bidStage'] = bid.bid_stage
         except Exception as e:
             pass
         try:
@@ -394,6 +397,28 @@ def getBidDetails(request):
                 response['participatedvendors'] = get_participated_vendors(bid)
             except Exception as e:
                 pass
+        elif(bid.bid_type == "SpotQuotation"):
+            try:
+                sqmems = SpotQuotationCommittee.objects.filter(bid=bid)
+                response['committeeMembers'] = []
+                for sqmem in sqmems:
+                    response['committeeMembers'].append(getEmployee(sqmem.committeeMember.id))
+                response['pvDetails'] = get_pvdetails(bid)
+            except Exception as exx:
+                import pdb
+                pdb.set_trace()
+            ### Engineer Incharge ###
+            try:
+                sqdetails = SpotEnquiryDetails.objects.get(bid = bid)
+                officerincharge = sqdetails.engineerInchargeDesignation + ','
+                officerincharge = officerincharge + sqdetails.engineerInchargeDepartment
+                response['engineerincharge'] = officerincharge
+            except Exception as exx:
+                pass
+                import pdb
+                pdb.set_trace()
+        elif(bid.bid_type == "SingleTender"):
+            response['loapoconditions'] = getDefaultLoaPoConditions(bid)
         return JsonResponse(response)
     except Exception as ex:
         print(ex)
@@ -401,6 +426,24 @@ def getBidDetails(request):
             'status':False
         }
         return JsonResponse(response)
+
+def get_pvdetails(bid):
+    pbs = participatedBidders.objects.filter(bid = bid)
+    pbqs = biddersquotedetails.objects.filter(bid = bid)
+    pvdetails = []
+    bqs2 = list(pbqs)
+    bqs1 = sorted(bqs2,key = lambda obj1: obj1.quoteamount)
+    for pb in pbs:
+        ven = getVendor(pb.vendor.id)
+        pbq = pbqs.get(vendor = pb.vendor)
+        temp = {}
+        temp['vendorname'] = ven['name']
+        temp['quotedvalue'] = pbq.quoteamount
+        temp['status'] = 'L'+str(bqs1.index(pbq)+1)
+        temp['remarks'] = pb.remarks
+        pvdetails.append(temp)
+    return pvdetails
+
 
 def create_qr(bid):
     qr = QR.objects.get(bid = bid)
@@ -448,6 +491,9 @@ def get_est_cost(bid):
     elif(bid.bid_type == "SpotQuotation"):
         sqdetails = SpotQuotationDetails.objects.get(bid = bid)
         return sqdetails.estCost
+    elif(bid.bid_type == "SingleTender"):
+        stdetails = SingleTenderDetails.objects.get(bid = bid)
+        return stdetails.estCost
 
 def get_estcost_gst(bid):
     if(bid.bid_type == "OpenTender"):
@@ -462,6 +508,9 @@ def get_estcost_gst(bid):
     elif(bid.bid_type == "SpotQuotation"):
         sqdetails = SpotQuotationDetails.objects.get(bid = bid)
         return sqdetails.gstIncl
+    elif(bid.bid_type == "SingleTender"):
+        stdetails = SingleTenderDetails.objects.get(bid = bid)
+        return stdetails.gstIncl
 
 def get_completion_period(bid):
     if(bid.bid_type == "OpenTender"):
@@ -476,6 +525,9 @@ def get_completion_period(bid):
     elif(bid.bid_type == "SpotQuotation"):
         sqdetails = SpotQuotationDetails.objects.get(bid = bid)
         return sqdetails.completionperiod
+    elif(bid.bid_type == "SingleTender"):
+        stdetails = SingleTenderDetails.objects.get(bid = bid)
+        return stdetails.completionperiod
 
 def prepareQR(request):
     data = json.loads(request.body.decode('utf-8'))

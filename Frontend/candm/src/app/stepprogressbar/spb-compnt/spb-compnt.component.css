@@ -62,6 +62,7 @@
 
 .liline{
   border: 2px solid;
+
 }
 
 .smallliline{
@@ -82,14 +83,17 @@
 
 .completeliline{
   border-color: var(--complete-color);
+  background-color: var(--complete-color);
 }
 
 .presentliline{
   border-color: var(--present-color);
+  background-color: var(--present-color);
 }
 
 .incompleteliline{
   border-color: var(--incomplete-color);
+  background-color: var(--incomplete-color);
 }
 
 .stagep{

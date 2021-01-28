@@ -34,8 +34,6 @@ export class PrepareloapoComponent implements OnInit {
     gcc : this.fb.group({
       scopeofwork: [true,Validators.required],
       scopeofworkText: [{value:'',disabled:false},Validators.required],
-      emd : [false,Validators.required],
-      emdText  : [''],
       paymentterms: [true,Validators.required],
       paymenttermsText: [''],
       contractperiod: [false,Validators.required],
@@ -69,8 +67,6 @@ export class PrepareloapoComponent implements OnInit {
     }
     this.loapoform.get('gcc')['controls'].scopeofwork.setValue(this.ds.biddetails.nitgcc.scopeofwork);
     this.loapoform.get('gcc')['controls'].scopeofworkText.setValue(this.ds.biddetails.nitgcc.scopeofworkText);
-    this.loapoform.get('gcc')['controls'].emd.setValue(this.ds.biddetails.nitgcc.emd);
-    this.loapoform.get('gcc')['controls'].emdText.setValue(this.ds.biddetails.nitgcc.emdText);
     this.loapoform.get('gcc')['controls'].paymentterms.setValue(this.ds.biddetails.nitgcc.paymentterms);
     this.loapoform.get('gcc')['controls'].paymenttermsText.setValue(this.ds.biddetails.nitgcc.paymenttermsText);
     this.loapoform.get('gcc')['controls'].contractperiod.setValue(this.ds.biddetails.nitgcc.contractperiod);
@@ -103,12 +99,6 @@ export class PrepareloapoComponent implements OnInit {
     }
     else{
       this.loapoform.controls.gcc.get('scopeofworkText').disable();
-    }
-    if(this.loapoform.get('gcc')['controls'].emd.value) {
-      this.loapoform.controls.gcc.get('emdText').enable();
-    }
-    else{
-      this.loapoform.controls.gcc.get('emdText').disable();
     }
     if(this.loapoform.get('gcc')['controls'].paymentterms.value) {
       this.loapoform.controls.gcc.get('paymenttermsText').enable();

@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 import { MaterialModule } from './../material.module';
 import { SafePipeModule } from 'safe-pipe';
-
+import {MatListModule} from '@angular/material/list';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ShowfilesComponent } from './showfiles/showfiles.component';
 import { UploadfilesComponent } from './uploadfiles/uploadfiles.component';
@@ -32,6 +32,7 @@ import { CommitteeMembersComponent } from './committee-members/committee-members
     StepprogressbarModule,
     MatSidenavModule,
     MatCardModule,
+    MatListModule,
     FlexLayoutModule,
     SafePipeModule,
     MatButtonModule,

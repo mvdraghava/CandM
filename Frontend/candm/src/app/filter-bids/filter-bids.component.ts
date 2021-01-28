@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
 import { Bid } from '../bid-data-type';
+import { SinglevendorComponent } from './../formcomponents-module/singlevendor/singlevendor.component';
 
 @Component({
   selector: 'app-filter-bids',

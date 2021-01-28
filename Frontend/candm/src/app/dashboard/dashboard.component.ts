@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
+  items = [
+    "Running Contracts",
+    "Bid Openings",
+    "KPI Endings",
+    "CPG Followups",
+    "LOA Ackowledgment followups"
+  ]
   constructor() { }
 
   ngOnInit() {

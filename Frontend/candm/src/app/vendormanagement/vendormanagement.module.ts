@@ -12,9 +12,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
-
+import { FormcomponentsModuleModule } from './../formcomponents-module/formcomponents-module.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { FormsModule } from '@angular/forms';
 import { AddvendordialogComponent } from './addvendordialog/addvendordialog.component';
 import { FiltervendorsComponent } from './filtervendors/filtervendors.component';
 import { DisplayvendorsComponent } from './displayvendors/displayvendors.component';
@@ -33,7 +33,9 @@ import { EditvendordialogComponent } from './editvendordialog/editvendordialog.c
     MatIconModule,
     MatCardModule,
     ReactiveFormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule,
+    FormcomponentsModuleModule
   ],
   entryComponents: [
     AddvendordialogComponent,

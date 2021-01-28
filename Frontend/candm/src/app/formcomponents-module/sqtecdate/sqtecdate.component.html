@@ -1,0 +1,6 @@
+<mat-form-field fxFlex="25%" fxFlex.xs appearance="outline" >
+  <mat-label>TEC Note Date</mat-label>
+  <input matInput [matDatepicker]="picker2" placeholder="TEC Date"   [formControl]="tecDate" (focus)="picker2.open()">
+  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+  <mat-datepicker #picker2></mat-datepicker>
+</mat-form-field>

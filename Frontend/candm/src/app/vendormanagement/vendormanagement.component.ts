@@ -21,8 +21,13 @@ export class VendormanagementComponent implements OnInit {
     this.vs.getvendors().subscribe(
       data => {
         this.allvendors = data;
+        this.displayvendors = data;
       }
     );
+  }
+
+  changeDisplayVendors(filteredVendors:Vendor[]){
+    this.displayvendors = filteredVendors;
   }
 
   constructor(private vs: VendorserviceService, public dialog : MatDialog) { }

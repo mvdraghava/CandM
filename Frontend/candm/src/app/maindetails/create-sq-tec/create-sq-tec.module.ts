@@ -10,6 +10,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
+import { FormcomponentsModuleModule } from './../../formcomponents-module/formcomponents-module.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     ReactiveFormsModule,
     FormsModule,
     FlexLayoutModule,
-    HttpClientModule
+    HttpClientModule,
+    FormcomponentsModuleModule
   ],
   entryComponents: [
     AddvendordialogComponent

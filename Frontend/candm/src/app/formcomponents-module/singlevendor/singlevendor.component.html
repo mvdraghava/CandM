@@ -1,0 +1,13 @@
+<div fxLayoutGap="10px" fxFlex>
+  <mat-form-field appearance="outline">
+    <mat-label>{{vendorLabel}}</mat-label>
+    <input  autocompete="false" matInput [formControl]="vendor" placeholder="" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnvendor">
+      <mat-option *ngFor="let vendor of FilteredVendors | async" [value]="vendor">
+        {{vendor.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <button mat-raised-button type="button" color="primary" id="addbutton" (click)="AddDialog()" >Add Vendor</button>
+</div>
+

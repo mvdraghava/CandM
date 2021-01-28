@@ -1,0 +1,9 @@
+<mat-form-field appearance="outline" fxFlex="100%">
+    <mat-label>{{empLabel}}</mat-label>
+    <input  type="text" Placeholder="name" matInput [formControl] = "inputEmployee" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnemp">
+      <mat-option *ngFor="let emp of FilteredEmployees | async" [value]="emp">
+        {{emp.name}}
+      </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

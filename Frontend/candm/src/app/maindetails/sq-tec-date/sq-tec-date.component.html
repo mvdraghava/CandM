@@ -1,0 +1,5 @@
+<h4>TEC Note Date</h4>
+<app-sqtecdate #sqTecDate></app-sqtecdate>
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="end center" fxLayoutGap="10px">
+  <button mat-raised-button [disabled] = "(!this.tecdateForm.valid) || this.ablesubmit" color='primary' (click)='updateTecDate()'>Submit</button>
+</div>

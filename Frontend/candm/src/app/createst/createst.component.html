@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-header >
+      <mat-card-title layout="row" layout-align="center center">
+           Create Single Tender
+      </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+      <form id="createstform" [formGroup] = "createSt"  fxFlex fxLayout="column" fxLayout.xs="column" autocomplete="off">
+        <app-tender-details [eproc]=false></app-tender-details>
+        <app-proposaldetails></app-proposaldetails>
+        <app-amount-details [emdtender]=false></app-amount-details>
+        <div class="maxwidth1200" fxLayoutGap="10px">
+          <mat-checkbox formControlName="negotiationCommitte" (change)="negotiationChange()">
+            <h3>Negotiation Committee Formation</h3>
+          </mat-checkbox>
+          <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Reason for Single Tender</mat-label>
+            <textarea  matInput matTextareaAutosize matAutosizeMaxRows=1 formControlName="reason" placeholder="Reason for Single Tender"></textarea>
+          </mat-form-field>
+          <app-singlevendor [vendorLabel] = "'Vendor Details'"></app-singlevendor>
+        </div>
+
+        <app-combine-committe-members *ngIf="this.createSt.controls.negotiationCommitte.value"></app-combine-committe-members>
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="end center" fxLayoutGap="10px">
+          <button [disabled]="!this.createSt.valid || this.ablesubmit" (click)="createsttender()" mat-raised-button color="primary">Submit</button>
+        </div>
+      </form>
+  </mat-card-content>
+</mat-card>

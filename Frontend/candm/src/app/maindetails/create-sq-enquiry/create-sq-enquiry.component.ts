@@ -12,8 +12,8 @@ import { departments,designations } from './../../globalvariables';
 })
 export class CreateSqEnquiryComponent implements OnInit {
 
-  constructor(private fb:FormBuilder,
-  						public ds: DetailsserviceService,
+  constructor(private fb: FormBuilder,
+              public ds: DetailsserviceService,
               private router: Router) {}
 
   ngOnInit() {

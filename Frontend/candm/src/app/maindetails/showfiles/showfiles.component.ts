@@ -22,7 +22,7 @@ export class ShowfilesComponent implements OnInit {
 
   ngOnInit() {
     this.route.parent.paramMap.subscribe(params => {
-      this.requrl = "http://192.168.57.52/media/I-";
+      this.requrl = "http://dom1.com/media/I-";
       let indentNo = params.get('indentno');
       this.requrl = this.requrl + indentNo;
     })

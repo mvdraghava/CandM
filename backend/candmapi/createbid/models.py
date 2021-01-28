@@ -16,6 +16,7 @@ def increment_et_number():
     return last_et.etNo+1
 
 def enter_stages():
+    ##### Delete this line after to delete stages#######
     TenderStages.objects.all().delete()
     for bid in BID_STAGES:
         for i,stage in enumerate(BID_STAGES[bid]):
@@ -54,6 +55,18 @@ def update_employee_table():
 BID_STAGES = {
     'LTE' : [
         {'stage': 'Approved NoteSheet', 'main_stage': True},
+        {'stage': 'Initial Notesheet', 'main_stage': False},
+        {'stage': 'Committee Formation', 'main_stage': True},
+        {'stage': 'NIT Vetting', 'main_stage': False},
+        {'stage': 'Issue NIT', 'main_stage': True},
+        {'stage': 'Bid Opening', 'main_stage': True},
+        {'stage': 'TEC Report Vetting', 'main_stage': False},
+        {'stage': 'TEC Report', 'main_stage': True},
+        {'stage': 'LOA/PO Approval', 'main_stage': True},
+        {'stage': 'LOA/PO Vetting', 'main_stage': False},
+        {'stage': 'Award of Contract', 'main_stage': True},
+        {'stage': 'Initiate Closing', 'main_stage': False},
+        {'stage': 'Contract Closing', 'main_stage': True},
     ],
     'SpotQuotation' : [
         {'stage': 'Approved NoteSheet', 'main_stage': True},
@@ -62,12 +75,23 @@ BID_STAGES = {
         {'stage': 'Bid Opening', 'main_stage': False},
         {'stage': 'TEC Report Vetting', 'main_stage': False},
         {'stage': 'TEC Report', 'main_stage': True},
-        {'stage': 'Clarrifications', 'main_stage': False},
         {'stage': 'LOA/PO Approval', 'main_stage': True},
         {'stage': 'LOA/PO Vetting', 'main_stage': False},
         {'stage': 'Award of Contract', 'main_stage': True},
         {'stage': 'Initiate Closing', 'main_stage': False},
         {'stage': 'Contract Closing', 'main_stage': True},
+    ],
+    'SingleTender': [
+        {'stage': 'Approved NoteSheet', 'main_stage': True},
+        {'stage': 'Negotiation Committee Meeting', 'main_stage': True},
+        {'stage': 'Revised Quotation', 'main_stage': False},
+        {'stage': 'Committee Report Vetting', 'main_stage': False},
+        {'stage': 'Committee Report', 'main_stage': True},
+        {'stage': 'LOA/PO Approval', 'main_stage': True},
+        {'stage': 'LOA/PO Vetting', 'main_stage': False},
+        {'stage': 'Award of Contract', 'main_stage': True},
+        {'stage': 'Initiate Closing', 'main_stage': False},
+        {'stage': 'Contract Closing', 'main_stage': True}
     ]
 }
 
@@ -97,7 +121,7 @@ class Bid(models.Model):
 class TenderStages(models.Model):
     bid_type = models.CharField(max_length=15)
     stage_number = models.IntegerField()
-    stage = models.CharField(max_length=20)
+    stage = models.CharField(max_length=50)
     main_Stage = models.BooleanField(default = True)
 
 #Model to store presentstage of Bid
@@ -400,6 +424,19 @@ class SpotQuotationCommittee(models.Model):
     bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
     committeeMember = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='committeeMember')
 
+#Model for SingleTender Committee Members (As they can be more than three)
+class SingleTenderCommittee(models.Model):
+    bid = models.ForeignKey(Bid,on_delete = models.CASCADE)
+    committeeMember = models.ForeignKey(Employee,on_delete = models.CASCADE,related_name='negotiationCommitteeMember')
 
+#Model for SingleTender details
+class SingleTenderDetails(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE,primary_key=True)
+    estCost = models.FloatField()
+    completionperiod = models.CharField(max_length = 150,default="30 Days")
+    gstIncl = models.BooleanField()
+    negotiationCommittee = models.BooleanField()
+    reason = models.CharField(max_length = 150,default="reasssoonn")
+    vendor = models.ForeignKey(Vendor,on_delete = models.CASCADE,default = None)
 
 # Create your models here.

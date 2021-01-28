@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
-import { Employee } from '../employee'
+import { Employee } from '../employee';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class CreatesqserviceService {
     return this.http.get<Employee[]>(this.getemployeesurl);
   }
 
-  createsq(data){
-    return this.http.post(this.createsqurl,data)
+  createsq(data) {
+    return this.http.post(this.createsqurl, data);
   }
 }
