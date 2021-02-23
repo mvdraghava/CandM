@@ -27,6 +27,28 @@ export const designations = [
                                 'Executive Director'
                               ];
 export const tendercategories = ['Services','Goods','Works'];
-export const contracttypes = ['Work', 'Supply', 'Auction', 'Service', 'Buy', 'Empanelment', 'Sell'];
-export const productcategories = ['Civil','Electrical Works','Computer System','Fleet Management','Miscellaneous works'];
+export const contracttypes = ['Work', 'Supply', 'Auction', 'Service', 'Buy', 'Empanelment', 'Sell','Others'];
+export const productcategories = ['Civil','Electrical Works','Computer System','Fleet Management','Miscellaneous works','Others'];
 export const bidvaliditydays = [180,120,90,60,30];
+export const modeofprocurments = [
+                                  'LTE Manual',
+                                  'LTE E-procurment',
+                                  'Open Tender',
+                                  'Single Tender',
+                                  'Spot Quotation',
+                                  'GeM(Direct Purchase)',
+                                  'GeM(Bidding)',
+                                  'GeM(Custom Bidding)',
+                                ];
+export const awardtypes = ['LOA','PO','GeM'];
+export const cpgtypes = ['Bank Guarantee', 'Security Deposit', 'No CPG/SD'];
+export const optionsformodeofProcurments = [
+  { label : 'LTE Manual' ,value: 'LTE'},
+  { label : 'LTE E-procurment' ,value: 'LTE-eproc'},
+  { label : 'Open Tender' ,value: 'OpenTender'},
+  { label : 'Single Tender' ,value: 'SingleTender'},
+  { label : 'Spot Quotation' ,value: 'SpotQuotation'},
+  { label : 'GeM(Direct Purchase)' ,value: 'GeM(Direct Purchase)'},
+  { label : 'GeM(Bidding)' ,value: 'GeM(Bidding)'},
+  { label : 'GeM(Custom Bidding)' ,value: 'GeM(Custom Bidding)'},
+]

@@ -1,0 +1,25 @@
+<mat-card>
+    <mat-card-header >
+        <mat-card-title layout="row" layout-align="center center">
+             Awarded Contracts
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form id="awardedContracts" [formGroup]="awardedcontracts" fxFlex fxLayout="column" fxLayout.xs="column" autocomplete="off">
+          <app-tender-details [eproc]="eproc" [modeOfProc]=true></app-tender-details>
+          <app-proposaldetails></app-proposaldetails>
+          <app-loa-details></app-loa-details>
+          <app-generic-amount heading='Estimated Amount' amountPlaceholder='Estimated Cost' #estAmount></app-generic-amount>
+          <app-generic-amount heading='Awarded Amount' amountPlaceholder='Awarded Cost' #awardedAmount></app-generic-amount>
+          <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="end center" fxLayoutGap="10px">
+            <button [disabled]="!this.awardedcontracts.valid || this.ablesubmit" (click)="saveTender()" mat-raised-button color="primary">Submit</button>
+          </div>
+          <!-- <app-proposaldetails></app-proposaldetails>
+          <app-amount-details></app-amount-details>
+          <app-combine-committe-members></app-combine-committe-members>
+          <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="end center" fxLayoutGap="10px">
+            <button [disabled]="!this.createSq.valid" (click)="createsqtender()" mat-raised-button color="primary">Submit</button>
+          </div> -->
+        </form>
+    </mat-card-content>
+  </mat-card>

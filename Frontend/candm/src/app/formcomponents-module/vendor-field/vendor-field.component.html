@@ -1,0 +1,9 @@
+<mat-form-field appearance="outline" fxFlex>
+    <mat-label>{{vnLabel}}</mat-label>
+    <input  type="text" Placeholder="name" matInput [formControl] = "inputVendor" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnvendor">
+      <mat-option *ngFor="let vn of FilteredVendors | async" [value]="vn">
+        {{vn.name}}
+      </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

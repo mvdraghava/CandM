@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-showfiles',
   templateUrl: './showfiles.component.html',
@@ -22,7 +22,7 @@ export class ShowfilesComponent implements OnInit {
 
   ngOnInit() {
     this.route.parent.paramMap.subscribe(params => {
-      this.requrl = "http://dom1.com/media/I-";
+      this.requrl = environment.filesurl + "I-";
       let indentNo = params.get('indentno');
       this.requrl = this.requrl + indentNo;
     })
@@ -66,6 +66,9 @@ export class ShowfilesComponent implements OnInit {
     div_tag.className = 'container';
     bod_tag.append(div_tag);
     for(var i = 0; i < pre_links.length; i++) {
+      if(pre_links[i].href.slice(-6,-1)=='files'){
+        continue;
+      }
       var divtag = document.createElement('div');
       var atag = document.createElement('a');
       atag.href = pre_links[i].href;

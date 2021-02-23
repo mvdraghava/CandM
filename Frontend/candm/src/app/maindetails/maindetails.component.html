@@ -17,7 +17,7 @@
         <div class="menua" fxFlex fxLayout="column" fxLayoutGap="15px" id="sidediv">
           <a mat-button routerLink="candmmsg" (click)="sidenav.toggle()">Status</a>
           <a mat-button  routerLink='showfiles' (click)="sidenav.toggle()">Files</a>
-          <a mat-button  [routerLink]="['uploadfiles']" (click)="sidenav.toggle()">Upload Files</a>
+          <!-- <a mat-button  [routerLink]="['uploadfiles']" (click)="sidenav.toggle()">Upload Files</a> -->
           <div  fxFlex fxLayout="column" fxLayoutGap="15px">
             <a mat-button  *ngFor="let menu of nextstageMenu" [routerLink]="menu.link" (click)="sidenav.toggle()">{{menu.stage}}</a>
           </div>

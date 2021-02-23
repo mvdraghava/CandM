@@ -1,4 +1,4 @@
-<div class="detailsdiv" fxFlexFill>
+<div class="detailsdiv" fxFlexFill fxLayoutAlign="center center">
   <div fxLayoutAlign="center" >
     <app-spb-compnt *ngIf="this.ds.biddetails.stages"
                      [stages]="this.ds.biddetails.stages"
@@ -8,11 +8,11 @@
   <div fxLayoutAlign="center">
       <app-commondetails></app-commondetails>
   </div>
-  <div fxLayoutAlign="center" *ngIf="this.ds.biddetails.BidType == 'SpotQuotation'">
+  <div fxLayoutAlign="center" *ngIf="this.ds.biddetails.BidType == 'SpotQuotation' && false">
     <app-committee-members typeCommittee = "Spot Quotaion Committee"
                         [CommitteeMembers] = "this.ds.biddetails.committeeMembers"></app-committee-members>
   </div>
-  <div  *ngIf="this.ds.biddetails.pvDetails">
+  <div  *ngIf="this.ds.biddetails.pvDetails && false">
     <app-participatedvendordetails
                       [ParticipatedVendors] = "this.ds.biddetails.pvDetails">
                     </app-participatedvendordetails>
@@ -20,11 +20,11 @@
 
 
 
-  <div *ngIf="this.ds.biddetails.nitsentvendors">
+  <div *ngIf="this.ds.biddetails.nitsentvendors && false">
       <h4>LTE sent to the following Vendors:-</h4>
       <ul>
         <li *ngFor="let vendor of this.ds.biddetails.nitsentvendors">M/s {{vendor.name}}</li>
       </ul>
   </div>
-  <app-participatedvendors *ngIf="this.ds.biddetails.participatedvendors"></app-participatedvendors>
+  <app-participatedvendors *ngIf="this.ds.biddetails.participatedvendors && false"></app-participatedvendors>
 </div>

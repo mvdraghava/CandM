@@ -7,7 +7,8 @@ const routes: Routes = [{ path: 'main-details', loadChildren: () => import('./ma
 { path: 'create-LTE', loadChildren: () => import('./create-lte/create-lte.module').then(m => m.CreateLTEModule) },
 { path: 'create-LTE_Eprocurement', loadChildren: () => import('./create-lte-eproc/create-lte-eproc.module').then(m => m.CreateLteEprocModule) },
 { path: 'create-SpotQuotation', loadChildren: () => import('./createsq/createsq.module').then(m => m.CreatesqModule) },
-{ path: 'create-SingleTender', loadChildren: () => import('./createst/createst.module').then(m => m.CreatestModule) }];
+{ path: 'create-SingleTender', loadChildren: () => import('./createst/createst.module').then(m => m.CreatestModule) },
+{ path: 'oldcontract-create', loadChildren: () => import('./oldcontractcreate/oldcontractcreate.module').then(m => m.OldcontractcreateModule) }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -30,7 +30,7 @@ def enter_stages():
 
 def update_employee_table():
     import pandas as pd 
-    df = pd.read_excel("employees.xlsx")
+    df = pd.read_excel("employees.xlsx",engine='openpyxl')
     for index, row in df.iterrows():
         try:
             emp = Employee.objects.get(emp_no = row['emp_no'])
@@ -115,6 +115,7 @@ class Bid(models.Model):
     tender_category = models.CharField(default = 'Other',max_length = 50)
     contract_type = models.CharField(default = 'Other',max_length = 50)
     product_category = models.CharField(default = 'Other',max_length = 50)
+    completionperiod = models.CharField(max_length = 150,default="30 Days")
     bid_stage = models.IntegerField(default = 0)
 
 #Model to store the stages of contract
@@ -438,5 +439,21 @@ class SingleTenderDetails(models.Model):
     negotiationCommittee = models.BooleanField()
     reason = models.CharField(max_length = 150,default="reasssoonn")
     vendor = models.ForeignKey(Vendor,on_delete = models.CASCADE,default = None)
+
+class contractAward(models.Model):
+    bid = models.OneToOneField(Bid,on_delete = models.CASCADE,primary_key=True)
+    typeofaward = models.CharField(max_length = 150,default="LOA")
+    referenceNo = models.CharField(max_length = 150,default="LOA")
+    awardedDate = models.DateField(blank=True,default =None,null=True)
+    awardedVendor = models.ForeignKey(Vendor,on_delete = models.CASCADE)
+    contractStartDate = models.DateField(blank=True,default =None,null=True)
+    contractEndDate = models.DateField(blank=True,default =None,null=True)
+    estCost = models.FloatField()
+    estGstIncl = models.BooleanField()
+    awardedAmount = models.FloatField()
+    awardedGstIncl = models.BooleanField()
+    cpg = models.CharField(max_length = 150,default="No CPG/SD")
+
+
 
 # Create your models here.

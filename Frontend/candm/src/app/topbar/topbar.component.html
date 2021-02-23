@@ -1,11 +1,12 @@
 <mat-toolbar color="primary">
   <span>Contracts & Materials</span> <span class="menu-spacer"></span>
   <div fxFlex fxShow="true" fxHide.lt-md="true" class="topbarcontent">
-    <a mat-button  [routerLink]="['/dashboard']">Dashboard</a>
-    <a mat-button  [routerLink]="['/open-bids']">Active Bids</a>
-    <a mat-button  [routerLink]="['/close-bids']">Closed Bids</a>
+    <!-- <a mat-button  [routerLink]="['/dashboard']">Dashboard</a> -->
+    <a mat-button  [routerLink]="['/open-bids']">Awarded Contracts</a>
+    <!-- <a mat-button  [routerLink]="['/close-bids']">Closed Bids</a> -->
+    <!-- <a mat-button  [routerLink]="['/contract-awards']">Awarded Contracts</a> -->
     <a mat-button  [routerLink]="['/vendors']">Vendors</a>
-    <a mat-button  [routerLink]="['/report']">Report</a>
+    <!-- <a mat-button  [routerLink]="['/report']">Report</a> -->
     <a mat-button  [routerLink]="['/create-tender']">Create Tender</a>
   </div>
   <div fxShow="true" fxHide.gt-sm="true">
@@ -16,9 +17,10 @@
 <mat-sidenav-container fxFlexFill class="example-container">
   <mat-sidenav  #sidenav fxLayout="column" mode="side" opened="false">
     <div fxLayout="column">
-      <a mat-button  [routerLink]="['/dashboard']">Dashboard</a>
+      <!-- <a mat-button  [routerLink]="['/dashboard']">Dashboard</a> -->
       <a mat-button  [routerLink]="['/open-bids']">Active Bids</a>
-      <a mat-button  [routerLink]="['/close-bids']">Closed Bids</a>
+      <!-- <a mat-button  [routerLink]="['/close-bids']">Closed Bids</a> -->
+      <!-- <a mat-button  [routerLink]="['/contract-awards']">Awarded Contracts</a> -->
       <a mat-button  [routerLink]="['/vendors']">Vendors</a>
       <a mat-button  [routerLink]="['/report']">Report</a>
       <a mat-button  [routerLink]="['/create-tender']">Create Tender</a>

@@ -20,6 +20,7 @@ from .lteviews import *
 from .sqviews import *
 from .stviews import *
 from .defaultloapoconditions import *
+from .savetender import *
 
 def create_ot_notesheet(data):
     context = {
@@ -139,6 +140,12 @@ def get_open_bids(request):
                 'IndentDepartment': get_indentdept(get_bid),
                 'BidType': get_bid.bid_type
             }
+            try:
+                contractawarded = contractAward.objects.get(bid = get_bid)
+                bid['AwardedVendor'] = getVendor(contractawarded.awardedVendor.id)
+                bid['AwardedAmount'] = contractawarded.awardedAmount
+            except Exception as ex:
+                pass
             bids_data.append(bid)
         except Exception as e:
             continue
@@ -258,6 +265,7 @@ def getBidDetails(request):
         data = json.loads(request.body.decode('utf-8'))
         bid = Bid.objects.get(indent_number = int(data['indent_no']))
         pbid = Proposal.objects.get(bid = bid)
+        
         response = {
             'Indentno': bid.indent_number,
             'TenderSubject': bid.bid_subject,
@@ -265,11 +273,21 @@ def getBidDetails(request):
             'IndentDepartment': pbid.indentDept,
             'IndentDesignation': pbid.indentDesignation,
             'BidType': bid.bid_type,
-            'estCost': get_est_cost(bid),
-            'gstIncl':get_estcost_gst(bid),
-            'completionperiod' : get_completion_period(bid),
             'presentStage' : bid.bid_stage
         }
+        try:
+            response['completionperiod'] = get_completion_period(bid),
+        except Exception as ex:
+            response['completionperiod'] = bid.completionperiod
+        try:
+            contractawarded = contractAward.objects.get(bid = bid)
+            response['estCost'] = contractawarded.estCost
+            response['gstIncl'] = contractawarded.estGstIncl
+            response['awardedAmount'] = contractawarded.awardedAmount
+            response['awardedGstIncl'] = contractawarded.awardedGstIncl
+            response['AwardedVendor'] = getVendor(contractawarded.awardedVendor.id)
+        except Exception as ex:
+            pass
         try:
             stage_types = TenderStages.objects.filter(bid_type = bid.bid_type).order_by('stage_number')
             response['stages'] = [iter_stage.stage for iter_stage in stage_types]
@@ -405,8 +423,7 @@ def getBidDetails(request):
                     response['committeeMembers'].append(getEmployee(sqmem.committeeMember.id))
                 response['pvDetails'] = get_pvdetails(bid)
             except Exception as exx:
-                import pdb
-                pdb.set_trace()
+               pass
             ### Engineer Incharge ###
             try:
                 sqdetails = SpotEnquiryDetails.objects.get(bid = bid)
@@ -415,8 +432,6 @@ def getBidDetails(request):
                 response['engineerincharge'] = officerincharge
             except Exception as exx:
                 pass
-                import pdb
-                pdb.set_trace()
         elif(bid.bid_type == "SingleTender"):
             response['loapoconditions'] = getDefaultLoaPoConditions(bid)
         return JsonResponse(response)

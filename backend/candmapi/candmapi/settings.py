@@ -25,7 +25,7 @@ SECRET_KEY = 'atr#ln2_7#ap=qgu^uzr0y@=j%24!p-hs!g!x*1-jcv5u-&h--'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.57.52','127.0.0.1','192.168.0.104']
+ALLOWED_HOSTS = ['192.168.57.52','127.0.0.1','192.168.0.104','10.0.100.59','localhost','contracts.posoco.srldc.org']
 
 
 # Application definition
@@ -84,7 +84,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'USER': 'postgres',
-        'PASSWORD': 'rhr20h12',
+        'PASSWORD': 'srldc@123',
         'NAME': 'candm',
 
     }
@@ -127,4 +127,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'api/static/'
+
+STATIC_ROOT = 'static/'

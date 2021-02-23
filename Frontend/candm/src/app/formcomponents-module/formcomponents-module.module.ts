@@ -10,6 +10,10 @@ import { AmountDetailsComponent } from './amount-details/amount-details.componen
 import { CombineCommitteMembersComponent } from './combine-committe-members/combine-committe-members.component';
 import { SqtecdateComponent } from './sqtecdate/sqtecdate.component';
 import { SinglevendorComponent } from './singlevendor/singlevendor.component';
+import { IndenterDetailsComponent } from './indenter-details/indenter-details.component';
+import { LoaDetailsComponent } from './loa-details/loa-details.component';
+import { VendorFieldComponent } from './vendor-field/vendor-field.component';
+import { GenericAmountComponent } from './generic-amount/generic-amount.component';
 
 
 @NgModule({
@@ -20,6 +24,10 @@ import { SinglevendorComponent } from './singlevendor/singlevendor.component';
                 CombineCommitteMembersComponent,
                 SqtecdateComponent,
                 SinglevendorComponent,
+                IndenterDetailsComponent,
+                LoaDetailsComponent,
+                VendorFieldComponent,
+                GenericAmountComponent,
                 ],
   imports: [
     CommonModule,
@@ -34,7 +42,11 @@ import { SinglevendorComponent } from './singlevendor/singlevendor.component';
     AmountDetailsComponent,
     CombineCommitteMembersComponent,
     SqtecdateComponent,
-    SinglevendorComponent
+    SinglevendorComponent,
+    IndenterDetailsComponent,
+    LoaDetailsComponent,
+    GenericAmountComponent,
+    VendorFieldComponent
   ]
 })
 export class FormcomponentsModuleModule { }

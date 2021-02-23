@@ -26,7 +26,7 @@ import { CreateAmmendmentComponent } from './create-ammendment/create-ammendment
 import { FilterBidsComponent } from './filter-bids/filter-bids.component';
 import { DisplayBidsComponent } from './display-bids/display-bids.component';
 import { StepprogressbarModule } from './stepprogressbar/stepprogressbar.module';
-
+import { FormcomponentsModuleModule } from './formcomponents-module/formcomponents-module.module';
 
 @NgModule({
   declarations: [
@@ -57,7 +57,7 @@ import { StepprogressbarModule } from './stepprogressbar/stepprogressbar.module'
     HttpClientModule,
     FlexLayoutModule,
     RouterModule.forRoot([
-      { path: '', component: DashboardComponent },
+      { path: '', component: OpenBidsComponent },
       { path: 'dashboard', component: DashboardComponent},
       { path: 'open-bids', component: OpenBidsComponent},
       { path: 'close-bids', component: CloseBidsComponent},
@@ -67,7 +67,8 @@ import { StepprogressbarModule } from './stepprogressbar/stepprogressbar.module'
       { path: 'create-OpenTender', component: CreateOtComponent},
       { path: 'create-Ammendment', component: CreateAmmendmentComponent},
     ]),
-    StepprogressbarModule
+    StepprogressbarModule,
+    FormcomponentsModuleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

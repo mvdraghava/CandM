@@ -27,6 +27,7 @@ urlpatterns = [
     path('lteeprocbidopening', views.lteeprocbidopening),
     path('createsq',views.createsq),
     path('createst', views.createst),
+    path('savetender', views.savetender),
     path('createsqenquiry', views.createsqenquiry),
     path('preparesqtec',views.preparesqtec),
     path('updatesqtecdate',views.updateSqTecDate),

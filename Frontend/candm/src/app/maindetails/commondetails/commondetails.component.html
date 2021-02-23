@@ -30,7 +30,7 @@
     </mat-card-header>
     <mat-card-content class="comdetailscontent">
         <p class="comdetailsp">
-          <span class="maincontent">{{this.ds.biddetails.IndentDesignation}}, {{this.ds.biddetails.IndentDepartment}} ({{this.ds.biddetails.IndenterName}}) </span>
+          <span class="maincontent"> {{this.ds.biddetails.IndentDepartment}},  {{this.ds.biddetails.IndenterName}} </span>
         </p>
     </mat-card-content>
   </mat-card>
@@ -41,8 +41,11 @@
     </mat-card-header>
     <mat-card-content class="comdetailscontent">
         <p class="comdetailsp">
-          <span *ngIf="this.ds.biddetails.loapovalue;else elseBlock" class="maincontent"> {{this.ds.biddetails.engineerincharge}}</span>
+          <span>Rs.</span>
+          <span *ngIf="this.ds.biddetails.awardedAmount;else elseBlock" class="maincontent estCostp"> {{this.ds.biddetails.awardedAmount}}</span>
           <ng-template class="maincontent" #elseBlock>--</ng-template>
+          <span *ngIf="this.ds.biddetails.awardedGstIncl">Incl. of Taxes</span>
+          <span *ngIf="!this.ds.biddetails.awardedGstIncl">Excl. of Taxes</span>
         </p>
     </mat-card-content>
   </mat-card>
@@ -61,6 +64,18 @@
 
   <mat-card class="comdetailscard mat-elevation-z3">
     <mat-card-header class="comdetailsheader">
+      <mat-card-title>Awarded Vendor</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="comdetailscontent">
+        <p class="comdetailsp">
+          <span *ngIf="this.ds.biddetails.AwardedVendor;else elseBlock" class="maincontent"> M/s {{this.ds.biddetails.AwardedVendor.name}}</span>
+          <ng-template class="maincontent" #elseBlock>--</ng-template>
+        </p>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- <mat-card class="comdetailscard mat-elevation-z3">
+    <mat-card-header class="comdetailsheader">
       <mat-card-title>Engineer Incharge</mat-card-title>
     </mat-card-header>
     <mat-card-content class="comdetailscontent">
@@ -69,7 +84,7 @@
           <ng-template class="maincontent" #elseBlock>--</ng-template>
         </p>
     </mat-card-content>
-  </mat-card>
+  </mat-card> -->
 
 
 

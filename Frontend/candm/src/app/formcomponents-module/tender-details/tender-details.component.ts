@@ -10,7 +10,7 @@ import { FormBuilder,
          ReactiveFormsModule,
          FormsModule } from '@angular/forms';
 import { departments, tendercategories, contracttypes,
-                  productcategories } from './../../globalvariables';
+                  productcategories, modeofprocurments } from './../../globalvariables';
 
 @Component({
   selector: 'app-tender-details',
@@ -22,10 +22,12 @@ export class TenderDetailsComponent implements OnInit {
   productcategories = productcategories;
   tendercategories = tendercategories;
   contracttypes = contracttypes;
+  modeofprocurments = modeofprocurments;
   constructor(private fb: FormBuilder) { }
   tenderDetails;
   times = ['Days', 'Months', 'Years'];
   @Input() eproc = true;
+  @Input() modeOfProc = false;
   ngOnInit(): void {
     this.tenderDetails = this.fb.group({
       indent_no : ['', Validators.required],
@@ -36,6 +38,7 @@ export class TenderDetailsComponent implements OnInit {
       productcategory : ['', Validators.required],
       completionperiod: ['', Validators.required],
       durationmeasured: ['', Validators.required],
+      modeofprocurment: [this.modeOfProc, Validators.required],
     });
   }
 

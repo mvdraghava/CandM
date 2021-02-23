@@ -1,0 +1,53 @@
+<form id="loaDetails"
+      [formGroup] = "loaDetails"
+      autocomplete="off"
+      fxLayout="column"
+      fxLayoutAlign="start stretch"
+      fxLayoutGap="0px">
+  <mat-card-title class="loadetailsheader">Award Details</mat-card-title>
+  <div fxLayoutGap="10px" fxLayoutGap.xs="0px"  fxLayout.xs="column" fxFlex.xs fxFlex class="maxwidth1200">
+    <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Type of Award</mat-label>
+        <mat-select formControlName='typeofaward'>
+            <mat-option *ngFor="let type of awardtypes" [value]="type">
+                {{type}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Reference No</mat-label>
+        <input  matInput formControlName="award_ref" placeholder="Reference Number" type="number">
+    </mat-form-field>
+    <mat-form-field fxFlex  fxFlex.xs appearance="outline">
+        <mat-label>Award Date</mat-label>
+        <input matInput [matDatepicker]="picker1" placeholder="Award Date"   formControlName="award_date" (focus)="picker1.open()">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+    
+    <app-vendor-field [vnLabel]="'Awarded Vendor'" fxFlex></app-vendor-field>
+  </div>
+  <div fxLayoutGap="10px" fxLayoutGap.xs="0px"  fxLayout.xs="column" fxFlex.xs fxFlex class="maxwidth1200">
+    <mat-form-field fxFlex  fxFlex.xs appearance="outline">
+        <mat-label>Contract Start Date</mat-label>
+        <input matInput [matDatepicker]="picker2" placeholder="Contract Start Date"   formControlName="contract_start_date" (focus)="picker2.open()">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field fxFlex  fxFlex.xs appearance="outline">
+        <mat-label>Contract End Date</mat-label>
+        <input matInput [matDatepicker]="picker3" placeholder="Contract End Date"   formControlName="contract_end_date" (focus)="picker3.open()">
+        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+        <mat-datepicker #picker3></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline" fxFlex>
+        <mat-label>CPG</mat-label>
+        <mat-select formControlName='cpg'>
+            <mat-option *ngFor="let type of cpgtypes" [value]="type">
+                {{type}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+  </div>
+</form>
+

@@ -22,7 +22,7 @@ export class FiltervendorsComponent implements OnInit {
 
   sendDisplayVendors(){
     this.filteredVendors = this.allVendors.filter(vendor => {
-      if (vendor.name.includes(this.vendorname.toLowerCase())) {
+      if (vendor.name.toLowerCase().includes(this.vendorname.toLowerCase())) {
         return true;
       } else {
         return false;

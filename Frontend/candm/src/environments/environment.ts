@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiurl : 'http://127.0.0.1:8000/createbid/'
+  apiurl : 'http://127.0.0.1:8000/api/createbid/',
+  filesurl : 'http://10.0.100.59:8085/'
 };
 
 /*

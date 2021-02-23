@@ -20,4 +20,4 @@ import { FormcomponentsModuleModule } from './formcomponents-module/formcomponen
     FormcomponentsModuleModule
   ]
 })
-export class FormsReqModule {}
+export class FormsReqModule{}

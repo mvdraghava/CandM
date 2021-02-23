@@ -10,6 +10,14 @@
       <mat-label>Indent Number</mat-label>
       <input  matInput formControlName="indent_no" placeholder="IndentNumber" type="number">
     </mat-form-field>
+    <mat-form-field appearance="outline" fxFlex="20%" fxFlex.xs *ngIf=modeOfProc>
+      <mat-label>Mode of Procurment</mat-label>
+      <mat-select formControlName="modeofprocurment">
+        <mat-option *ngFor="let type of modeofprocurments" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <mat-form-field appearance="outline" *ngIf=eproc>
       <mat-label>Etender Number</mat-label>
       <input  matInput formControlName="eproc_no" placeholder="E Procurment Number" type="number">

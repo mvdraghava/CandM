@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  apiurl : '/api/createbid/',
+  filesurl : '/files/'
 };
