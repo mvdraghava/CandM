@@ -1,5 +1,13 @@
-<mat-toolbar color="primary">
-  <span>Contracts & Materials</span> <span class="menu-spacer"></span>
+<mat-toolbar>
+  <div class="imgdiv">
+    <img src= '/assets/POSOCO_Final_Logo.png'class="logoImage">
+  </div>
+  <div fxFlexLayout="column" class="headingsdiv" fxLayoutGap="3px">
+    <h5 class="text-primary m-0 srldchead">Southern Regional Load Despatch Center, POSOCO</h5>
+    <p class="leadP">Contracts and Materials</p>
+  </div>
+  <span class="menu-spacer"></span>
+  <!-- <span>Contracts & Materials</span> <span class="menu-spacer"></span> -->
   <div fxFlex fxShow="true" fxHide.lt-md="true" class="topbarcontent">
     <!-- <a mat-button  [routerLink]="['/dashboard']">Dashboard</a> -->
     <a mat-button  [routerLink]="['/open-bids']">Awarded Contracts</a>

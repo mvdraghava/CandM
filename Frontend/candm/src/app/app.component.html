@@ -1,7 +1,30 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
-<app-topbar></app-topbar>
+<!-- <div class="rxWorld" *ngIf="curtain" (click)="curtain_click()">
 
-<div class="container" >
-  <router-outlet></router-outlet>
+  <section class="rnOuter ">  
+      <div class='rnInner'>
+          <div class='rnUnit'></div>
+          <div class='rnUnit'></div>
+          <div class='rnUnit'></div>
+          <div class='rnUnit'></div>
+          <div class='rnUnit'></div>
+          <div class='rnUnit'></div>
+          <div class='rnUnit'></div>
+          <div class='rnUnit'></div>
+          <div class='rnUnit'></div>
+          <div class='rnUnit'></div>
+          <div class='rnUnit'></div>
+          <div class='rnUnit'></div>
+      </div>
+  </section>
+      
+       
+</div> -->
+<div *ngIf="!curtain">
+  <app-topbar></app-topbar>
+  <!-- <div class="container" >
+    <router-outlet></router-outlet>
+  </div> -->
 </div>
+

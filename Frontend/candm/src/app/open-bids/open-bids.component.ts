@@ -32,7 +32,6 @@ export class OpenBidsComponent implements OnInit {
 
   changeDisplayBids(bids: Array<Bid>) {
     this.displaybids = bids;
-    console.log(this.displaybids);
   }
 
 }

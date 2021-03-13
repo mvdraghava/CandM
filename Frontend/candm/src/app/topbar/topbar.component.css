@@ -25,3 +25,29 @@
 mat-toolbar{
   height: auto;
 }
+
+.logoImage{
+  width: 55px !important;
+}
+
+.leadP {
+  margin: 0px;
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+
+.imgdiv{
+ margin: 10px;
+}
+
+.srldchead{
+  margin-right: 3px;
+  margin-bottom: .5rem;
+  font-weight: 400;
+  line-height: 1.2;
+  font-size: 1.25rem;
+}
+
+.headingsdiv{
+  margin-left: 5px;
+}

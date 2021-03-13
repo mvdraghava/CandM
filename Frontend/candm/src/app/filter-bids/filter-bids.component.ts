@@ -44,9 +44,7 @@ export class FilterBidsComponent implements OnInit, OnChanges, AfterViewInit {
         return false;
       }
     } );
-    console.log(this.filterBid);
     this.emitDisplayBids.emit(this.filteredbids);
-    console.log('sent bids');
   }
 
   ngOnInit() {

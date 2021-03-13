@@ -1,4 +1,4 @@
-<div fxFlex fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px" class="displaybidsdiv" (scroll)="onScroll()">
+<div fxFlex fxLayout="row wrap" fxLayoutAlign="center" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="10px" class="displaybidsdiv" (scroll)="onScroll()">
   <div *ngFor="let bid of displaybids" fxFlex class="bidCardDiv">
     <a routerLink="/main-details/{{bid.Indentno}}/{{bid.TenderSubject}}">
     <mat-card class="bidCard" fxFlex fxLayout="column" [ngClass] = "checkType(bid.BidType)">

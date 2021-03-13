@@ -22,10 +22,11 @@ import { StepprogressbarModule } from './../stepprogressbar/stepprogressbar.modu
 import { CommondetailsComponent } from './commondetails/commondetails.component';
 import { ParticipatedvendordetailsComponent } from './participatedvendordetails/participatedvendordetails.component';
 import { CommitteeMembersComponent } from './committee-members/committee-members.component';
+import { ShowloaComponent } from './showloa/showloa.component';
 
 
 @NgModule({
-  declarations: [MaindetailsComponent, SidenavComponent, ShowfilesComponent, UploadfilesComponent, CandmmsgComponent, ParticipatedvendorsComponent, CommondetailsComponent, ParticipatedvendordetailsComponent, CommitteeMembersComponent],
+  declarations: [MaindetailsComponent, SidenavComponent, ShowfilesComponent, UploadfilesComponent, CandmmsgComponent, ParticipatedvendorsComponent, CommondetailsComponent, ParticipatedvendordetailsComponent, CommitteeMembersComponent, ShowloaComponent],
   imports: [
     CommonModule,
     MaindetailsRoutingModule,

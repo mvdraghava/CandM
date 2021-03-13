@@ -1,13 +1,16 @@
-<div class="detailsdiv" fxFlexFill fxLayoutAlign="center center">
+<div class="detailsdiv" fxFlexFill fxLayout="row" fxLayoutAlign="">
   <div fxLayoutAlign="center" >
     <app-spb-compnt *ngIf="this.ds.biddetails.stages"
                      [stages]="this.ds.biddetails.stages"
                      [presentStage]="this.ds.biddetails.bidStage"
                      [mainStages] = "this.ds.biddetails.mainStages"></app-spb-compnt>
   </div>
-  <div fxLayoutAlign="center">
+  <app-commondetails></app-commondetails>
+  <!-- <div fxLayoutAlign="center center">
       <app-commondetails></app-commondetails>
-  </div>
+  </div> -->
+  <app-showloa fxFlex></app-showloa>
+  
   <div fxLayoutAlign="center" *ngIf="this.ds.biddetails.BidType == 'SpotQuotation' && false">
     <app-committee-members typeCommittee = "Spot Quotaion Committee"
                         [CommitteeMembers] = "this.ds.biddetails.committeeMembers"></app-committee-members>

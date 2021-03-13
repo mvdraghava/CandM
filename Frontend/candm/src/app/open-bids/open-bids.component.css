@@ -1,16 +1,16 @@
 mat-card-header {
-  background: #1976d2;
+  background: cornflowerblue;
   color: #fff;
-  padding:5px;
+  /* padding:5px; */
 }
 
 mat-card {
   padding: 0px!important;
 }
 
-mat-card-content {
+/* mat-card-content {
   padding: 15px;
-}
+} */
 
 mat-card-title {
   width: 100%;
@@ -25,4 +25,18 @@ mat-card-title {
 
 .mat-card-header .mat-card-title {
    margin-bottom: 0px;
+}
+
+.loader{
+  background: none no-repeat scroll center center;
+  background-color: whitesmoke;
+  position: fixed;
+  display: none;
+  opacity: 0.8;
+  z-index: 1000001;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url(/assets/posocoLoader.gif);
 }

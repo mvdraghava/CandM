@@ -222,7 +222,7 @@ export class MaindetailsComponent implements OnInit {
         this.ds.biddetails = data;
         this.bid = data;
         console.log(this.bid);
-        this.nextstageMenu = this.menustages[this.bid.BidType][this.bid.BidStatus];
+        // this.nextstageMenu = this.menustages[this.bid.BidType][this.bid.BidStatus];
         this.loaded = true;
       }
     );

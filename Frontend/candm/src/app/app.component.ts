@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'candm';
+  curtain= false;
+  curtain_click(){
+    this.curtain = false;
+  }
 }

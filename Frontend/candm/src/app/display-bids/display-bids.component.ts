@@ -26,8 +26,8 @@ export class DisplayBidsComponent implements OnInit, OnChanges{
 
   ngOnChanges() {
     if (this.allBids) {
-      if (this.allBids.length > 10) {
-        this.bidsDisplayed = 10;
+      if (this.allBids.length > 25) {
+        this.bidsDisplayed = 25;
       } else {
         this.bidsDisplayed = this.allBids.length;
       }
@@ -60,21 +60,23 @@ export class DisplayBidsComponent implements OnInit, OnChanges{
 
   checkType(bidtype) {
     if (bidtype == 'LTE'){
-      return 'lte';
+      return 'singletender';
     }
     else if (bidtype == 'LTE-eproc'){
-      return 'lteeproc';
+      return 'singletender';
     }
     else if (bidtype == 'OpenTender'){
-      return 'lteeproc';
+      return 'singletender';
     }
     else if (bidtype == 'Ammendment'){
-      return 'ammendment';
+      return 'singletender';
     }
     else if (bidtype == 'SpotQuotation'){
-      return 'spotquotation';
+      return 'singletender';
     }
     else if (bidtype == 'SingleTender'){
+      return 'singletender';
+    }else if (bidtype == 'GeM(Bidding)'){
       return 'singletender';
     }
   }

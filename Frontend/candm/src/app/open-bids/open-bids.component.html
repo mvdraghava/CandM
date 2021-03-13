@@ -8,6 +8,18 @@
 
   </mat-card-content>
 </mat-card> -->
-<app-filter-bids [allbids]="allbids" (emitDisplayBids)="changeDisplayBids($event)"></app-filter-bids>
-<p *ngIf="!loaded">Loadddingg  ............... </p>
-<app-display-bids [allBids]="displaybids" *ngIf="loaded"></app-display-bids>
+<mat-card>
+  <mat-card-header >
+        <mat-card-title>
+             Awarded Contracts
+        </mat-card-title>
+    </mat-card-header>
+  <mat-card-content>
+    <app-filter-bids [allbids]="allbids" (emitDisplayBids)="changeDisplayBids($event)"></app-filter-bids>
+    <div *ngIf="!loaded" class="loader"></div>
+    <p *ngIf="!loaded">Loadddingg  ............... </p>
+  <app-display-bids [allBids]="displaybids" *ngIf="loaded"></app-display-bids>
+  </mat-card-content>
+</mat-card>
+
+
