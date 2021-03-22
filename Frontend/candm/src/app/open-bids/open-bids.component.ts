@@ -14,6 +14,7 @@ export class OpenBidsComponent implements OnInit {
   constructor(private openbidservice: GetopenbidsService) { }
 
   loaded = false;
+  errorOcuured = false;
   allbids: Array<Bid>;
   displaybids: Bid[] = [];
   ngOnInit() {
@@ -26,6 +27,8 @@ export class OpenBidsComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.loaded = true;
+        this.errorOcuured = true;
       }
     );
   }

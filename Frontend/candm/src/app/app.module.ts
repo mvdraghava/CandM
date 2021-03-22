@@ -27,6 +27,7 @@ import { FilterBidsComponent } from './filter-bids/filter-bids.component';
 import { DisplayBidsComponent } from './display-bids/display-bids.component';
 import { StepprogressbarModule } from './stepprogressbar/stepprogressbar.module';
 import { FormcomponentsModuleModule } from './formcomponents-module/formcomponents-module.module';
+import { ErrorcomponentComponent } from './errorcomponent/errorcomponent.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { FormcomponentsModuleModule } from './formcomponents-module/formcomponen
     CreateAmmendmentComponent,
     FilterBidsComponent,
     DisplayBidsComponent,
+    ErrorcomponentComponent,
   ],
   imports: [
     BrowserModule,

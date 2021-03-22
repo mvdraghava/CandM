@@ -84,9 +84,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'USER': 'postgres',
-        'PASSWORD': 'srldc@123',
+        'PASSWORD': 'rhr20h12',
         'NAME': 'candm',
-
+        # 'HOST' : '10.0.100.59',
+        # 'PORT' : '5432'
     }
 }
 
@@ -130,3 +131,4 @@ USE_TZ = True
 STATIC_URL = 'api/static/'
 
 STATIC_ROOT = 'static/'
+

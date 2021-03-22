@@ -18,6 +18,7 @@
     <app-filter-bids [allbids]="allbids" (emitDisplayBids)="changeDisplayBids($event)"></app-filter-bids>
     <div *ngIf="!loaded" class="loader"></div>
     <p *ngIf="!loaded">Loadddingg  ............... </p>
+    <app-errorcomponent *ngIf="errorOcuured"></app-errorcomponent>
   <app-display-bids [allBids]="displaybids" *ngIf="loaded"></app-display-bids>
   </mat-card-content>
 </mat-card>

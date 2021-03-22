@@ -40,3 +40,8 @@ mat-card-title {
   width: 100%;
   background-image: url(/assets/posocoLoader.gif);
 }
+
+.errorCard{
+  background-color: red;
+  color: white;
+}
